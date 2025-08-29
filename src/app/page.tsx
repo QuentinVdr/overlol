@@ -11,7 +11,17 @@ export default function Home() {
       redTeam: Array(5).fill({ playerName: '', championName: '', teamName: '' }),
     },
   });
-  const onSubmit: SubmitHandler<TOverlay> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<TOverlay> = async (data) => {
+    console.log(data);
+    await fetch('/api/overlay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }).then(async (res) => {
+      const result = await res.json();
+      console.log(result);
+    });
+  };
 
   return (
     <main className="flex h-screen w-screen flex-col gap-4 bg-zinc-100 px-3 py-2 md:px-8">
