@@ -1,6 +1,6 @@
 import { overlayService } from '@/db';
 
-export async function POST() {
+export async function POST(_: Request) {
   try {
     const cleanedCount = await overlayService.cleanupExpired();
     const stats = await overlayService.getStats();
