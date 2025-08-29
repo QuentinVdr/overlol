@@ -1,0 +1,15 @@
+services:
+  overlol:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      # Persist overlay storage data
+      - overlay-data:/app/.overlay-storage
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+volumes:
+  overlay-data:
+    driver: local
