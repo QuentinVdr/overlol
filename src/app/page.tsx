@@ -14,7 +14,7 @@ export default function Home() {
   const onSubmit: SubmitHandler<TOverlay> = (data) => console.log(data);
 
   return (
-    <main className="mx-8 mt-2 flex flex-col gap-4">
+    <main className="flex h-screen w-screen flex-col gap-4 bg-zinc-100 px-3 py-2 md:px-8">
       <h1>Lol spec overlay generator</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-row flex-wrap gap-4">
