@@ -151,7 +151,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Setup database
-        run: pnpm db:setup
+        run: pnpm db:ci
 
       - name: Build application
         run: pnpm build
