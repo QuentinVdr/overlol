@@ -1,8 +1,10 @@
+import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
+import { UseFormRegister } from 'react-hook-form';
 import { PlayerForm } from './PlayerForm';
 
 type TeamFormProps = {
-  register: any;
+  register: UseFormRegister<TOverlay>;
   teamName: TeamEnum;
 };
 

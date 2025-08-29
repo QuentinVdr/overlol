@@ -1,13 +1,15 @@
+import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
+import { UseFormRegister } from 'react-hook-form';
 
 type PlayerFormProps = {
-  register: any;
+  register: UseFormRegister<TOverlay>;
   teamName: TeamEnum;
   playerIndex: number;
 };
 
 export function PlayerForm({ register, teamName, playerIndex }: Readonly<PlayerFormProps>) {
-  const fieldPrefix = `${teamName}.${playerIndex}`;
+  const fieldPrefix: `${TeamEnum}.${number}` = `${teamName}.${playerIndex}`;
 
   return (
     <div className="flex flex-row gap-2">

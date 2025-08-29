@@ -5,9 +5,9 @@ export const overlays = sqliteTable(
   {
     id: text('id').primaryKey(),
     data: text('data', { mode: 'json' }).notNull(),
-    createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
-    expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
-    updatedAt: integer('updated_at', { mode: 'timestamp' }),
+    createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
+    expiresAt: integer('expiresAt', { mode: 'timestamp' }).notNull(),
+    updatedAt: integer('updatedAt', { mode: 'timestamp' }),
   },
   (table) => [index('expires_at_idx').on(table.expiresAt)],
 );
