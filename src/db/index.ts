@@ -2,7 +2,6 @@ import { TOverlay } from '@/types/OverlayType';
 import Database from 'better-sqlite3';
 import { and, eq, gt, lt } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
-import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import fs from 'fs';
 import path from 'path';
 import { overlays, type NewOverlay, type Overlay } from './schema';
@@ -20,43 +19,6 @@ const sqlite = new Database(dbPath);
 sqlite.pragma('journal_mode = WAL');
 
 export const db = drizzle(sqlite);
-
-// Function to check if table exists
-function tableExists(tableName: string): boolean {
-  try {
-    const result = sqlite
-      .prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?")
-      .get(tableName);
-    return !!result;
-  } catch {
-    return false;
-  }
-}
-
-// Initialize database with safe migrations
-function initializeDatabase() {
-  try {
-    // Only run migrations if the table doesn't exist
-    if (!tableExists('overlays')) {
-      console.log('Table does not exist, running migrations...');
-      migrate(db, { migrationsFolder: path.join(process.cwd(), 'src/db/migrations') });
-      console.log('Migrations completed successfully');
-    } else {
-      console.log('Table already exists, skipping migrations');
-    }
-  } catch (error) {
-    console.error('Database initialization error:', error);
-    // If there's an error and the table doesn't exist, we have a problem
-    if (!tableExists('overlays')) {
-      throw error;
-    }
-    // If table exists but migration failed, it's probably because table already exists
-    console.log('Table exists, continuing...');
-  }
-}
-
-// Initialize the database
-initializeDatabase();
 
 export class OverlayService {
   // Get overlay by ID (only if not expired)

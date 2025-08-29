@@ -21,7 +21,8 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN corepack enable pnpm && pnpm run build
+# Setup database and build application
+RUN corepack enable pnpm && pnpm run db:setup && pnpm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -44,6 +45,10 @@ RUN mkdir .next && \
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copy database files
+COPY --from=builder --chown=nextjs:nodejs /app/src/db ./src/db
+COPY --from=builder --chown=nextjs:nodejs /app/drizzle.config.ts ./drizzle.config.ts
 
 # Create overlay storage directory and set permissions
 RUN mkdir -p .overlay-storage && \
