@@ -1,7 +1,7 @@
 'use client';
 
 import { TOverlay } from '@/types/OverlayType';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { OverlayForm } from './OverlayForm';
 
@@ -11,11 +11,13 @@ type UpdateOverlayFormProps = {
 
 export function UpdateOverlayForm({ id }: Readonly<UpdateOverlayFormProps>) {
   const [overlayData, setOverlayData] = useState();
-  fetch(`/api/overlay/${id}`).then(async (res) => {
-    const data = await res.json();
-    console.log('🚀 ~ overlayData:', data);
-    setOverlayData(data);
-  });
+
+  useEffect(() => {
+    fetch(`/api/overlay/${id}`).then(async (res) => {
+      const data = await res.json();
+      setOverlayData(data);
+    });
+  }, [id]);
 
   const onSubmit: SubmitHandler<TOverlay> = async (data) => {
     await fetch(`/api/overlay/${id}`, {
@@ -23,8 +25,10 @@ export function UpdateOverlayForm({ id }: Readonly<UpdateOverlayFormProps>) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }).then(async (res) => {
-      const result = await res.json();
-      console.log('🚀 ~ onSubmit ~ result:', result);
+      if (res.ok) {
+        const updatedData = await res.json();
+        setOverlayData(updatedData);
+      }
     });
   };
 
