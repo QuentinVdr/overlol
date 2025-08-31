@@ -1,3 +1,5 @@
+'use client';
+
 import { TOverlay } from '@/types/OverlayType';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PlayerForm } from './PlayerForm';
