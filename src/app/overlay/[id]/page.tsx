@@ -1,5 +1,4 @@
 import { overlayService } from '@/db';
-import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
 
 export default async function Overlay({ params }: Readonly<{ params: Promise<{ id: string }> }>) {
@@ -15,7 +14,7 @@ export default async function Overlay({ params }: Readonly<{ params: Promise<{ i
     );
   }
 
-  const { blueTeam, redTeam } = overlay.data as TOverlay;
+  const { blueTeam, redTeam } = overlay.data;
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { UpdateOverlayForm } from '@/components/OverlayForm/UpdateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
+import { overlayService } from '@/db';
 import { getFullUrl } from '@/utils/url';
 import { redirect } from 'next/navigation';
 
@@ -12,12 +13,17 @@ export default async function UpdateOverlay({
   }
 
   const overlayUrl = await getFullUrl(`/overlay/${id}`);
+  const overlay = await overlayService.getOverlay(id);
+
+  if (!overlay) {
+    redirect('/');
+  }
 
   return (
     <main className="flex h-full w-full flex-col gap-4 px-3 py-2 md:px-8">
       <h1>Update Overlay</h1>
       <OverlayInfo id={id} overlayUrl={overlayUrl} />
-      <UpdateOverlayForm id={id} />
+      <UpdateOverlayForm id={id} overlay={overlay.data} />
     </main>
   );
 }
