@@ -33,12 +33,9 @@ ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs && \
-	adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-# Set the correct permission for prerender cache
-RUN mkdir .next && \
+	adduser --system --uid 1001 nextjs && \
+	mkdir public && \
+	mkdir .next && \
 	chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
