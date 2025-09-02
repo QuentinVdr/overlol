@@ -54,11 +54,14 @@ export class OverlayService {
   // Update existing overlay
   async updateOverlay(id: string, data: TOverlay): Promise<boolean> {
     const now = new Date();
+    const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+
     const result = await db
       .update(overlays)
       .set({
         data,
         updatedAt: now,
+        expiresAt,
       })
       .where(and(eq(overlays.id, id), gt(overlays.expiresAt, now)));
 
