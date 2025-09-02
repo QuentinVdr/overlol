@@ -28,8 +28,9 @@ export default function OverlayInfo({ overlayUrl }: Readonly<OverlayInfoProps>) 
         <p className="flex flex-row items-center gap-2">
           <span className="text-lg text-gray-600">Use Overlay:</span>
           <span>
-            add web source past the link bellow and set <b>width to 1920px</b> and{' '}
-            <b>height to 1080px</b>
+            Add web source past the link bellow and set <b>width to 1920px</b> and{' '}
+            <b>height to 1080px</b>. And Enable the option{' '}
+            <b>Refresh browser when scene becomes active</b> to auto-refresh overlay
           </span>
         </p>
 
