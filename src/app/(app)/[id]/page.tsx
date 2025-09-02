@@ -1,7 +1,7 @@
+import { UpdateOverlayForm } from '@/components/OverlayForm/UpdateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
-import { UpdateOverlayForm } from '@/components/UpdateOverlayForm';
-import { redirect } from 'next/navigation';
 import { getFullUrl } from '@/utils/url';
+import { redirect } from 'next/navigation';
 
 export default async function UpdateOverlay({
   params,

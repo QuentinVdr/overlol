@@ -1,4 +1,4 @@
-import { CreateOverlayForm } from '@/components/CreateOverlayForm';
+import { CreateOverlayForm } from '@/components/OverlayForm/CreateOverlayForm';
 
 export default function Home() {
   return (

@@ -2,7 +2,7 @@
 
 import { TOverlay } from '@/types/OverlayType';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { PlayersForm } from './PlayersForm';
+import { PlayersForm } from './PlayersForm/PlayersForm';
 
 type OverlayFormProps = {
   onSubmit: SubmitHandler<TOverlay>;
