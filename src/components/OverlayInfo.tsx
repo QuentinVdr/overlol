@@ -34,7 +34,7 @@ export default function OverlayInfo({ overlayUrl }: Readonly<OverlayInfoProps>) 
           </span>
         </p>
 
-        <p className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center gap-2">
           <span className="text-lg text-gray-600">Overlay URL:</span>
           <div className="flex items-center gap-3 rounded border bg-gray-50 px-2 py-1">
             <code className="flex-1 font-mono text-sm break-all">{overlayUrl}</code>
@@ -45,7 +45,7 @@ export default function OverlayInfo({ overlayUrl }: Readonly<OverlayInfoProps>) 
               {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
-        </p>
+        </div>
       </div>
     </div>
   );
