@@ -11,5 +11,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <html lang="en">{children}</html>;
+  return (
+    <html lang="en">
+      <head>
+        <script
+          defer
+          src="https://umami.quentin-verdier.com/script.js"
+          data-website-id="9c8e3cf9-d259-4bd1-b005-0fb28a20757c"
+        ></script>
+      </head>
+      {children}
+    </html>
+  );
 }
