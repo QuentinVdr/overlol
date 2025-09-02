@@ -8,7 +8,11 @@ export default async function Overlay({ params }: Readonly<{ params: Promise<{ i
   const overlay = await overlayService.getOverlay(id);
 
   if (!overlay) {
-    return <div>Overlay not found, id should be wrong</div>;
+    return (
+      <div className="h-full w-full text-center align-middle text-5xl leading-[100vh] font-bold text-red-500">
+        Overlay not found, id should be wrong
+      </div>
+    );
   }
 
   const { blueTeam, redTeam } = overlay.data as TOverlay;
