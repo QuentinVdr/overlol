@@ -2,7 +2,7 @@
 
 import { TOverlay } from '@/types/OverlayType';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { PlayerForm } from './PlayerForm';
+import { PlayersForm } from './PlayersForm';
 
 type OverlayFormProps = {
   onSubmit: SubmitHandler<TOverlay>;
@@ -15,7 +15,7 @@ export function OverlayForm({
   submitLabel = 'Generate Overlay',
   defaultValues,
 }: Readonly<OverlayFormProps>) {
-  const { register, handleSubmit } = useForm<TOverlay>({
+  const { register, handleSubmit, setValue } = useForm<TOverlay>({
     defaultValues: {
       ...(defaultValues || {
         blueTeam: Array(5).fill({ playerName: '', championName: '', teamName: '' }),
@@ -31,25 +31,13 @@ export function OverlayForm({
           className={`flex grow basis-xl flex-col gap-2 rounded-2xl border border-blue-600 bg-blue-50 px-5 py-3`}
         >
           <h2 className={`text-blue-600`}>Blue team</h2>
-          <div className="flex flex-col gap-2">
-            <PlayerForm register={register} fieldPrefix={'blueTeam.0'} />
-            <PlayerForm register={register} fieldPrefix={'blueTeam.1'} />
-            <PlayerForm register={register} fieldPrefix={'blueTeam.2'} />
-            <PlayerForm register={register} fieldPrefix={'blueTeam.3'} />
-            <PlayerForm register={register} fieldPrefix={'blueTeam.4'} />
-          </div>
+          <PlayersForm register={register} setValue={setValue} teamName="blueTeam" />
         </div>
         <div
           className={`flex grow basis-xl flex-col gap-2 rounded-2xl border border-red-600 bg-red-50 px-5 py-3`}
         >
           <h2 className={`text-red-600`}>Red team</h2>
-          <div className="flex flex-col gap-2">
-            <PlayerForm register={register} fieldPrefix={'redTeam.0'} />
-            <PlayerForm register={register} fieldPrefix={'redTeam.1'} />
-            <PlayerForm register={register} fieldPrefix={'redTeam.2'} />
-            <PlayerForm register={register} fieldPrefix={'redTeam.3'} />
-            <PlayerForm register={register} fieldPrefix={'redTeam.4'} />
-          </div>
+          <PlayersForm register={register} setValue={setValue} teamName="redTeam" />
         </div>
       </div>
       <button
