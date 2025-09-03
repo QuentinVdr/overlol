@@ -13,5 +13,5 @@ export const overlays = sqliteTable(
   (table) => [index('expires_at_idx').on(table.expiresAt)],
 );
 
-export type Overlay = typeof overlays.$inferSelect;
-export type NewOverlay = typeof overlays.$inferInsert;
+export type OverlayEntity = typeof overlays.$inferSelect;
+export type NewOverlayEntity = typeof overlays.$inferInsert;

@@ -4,7 +4,7 @@ import { and, eq, gt, lt } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import fs from 'fs';
 import path from 'path';
-import { overlays, type NewOverlay, type Overlay } from './schema';
+import { overlays, type NewOverlayEntity, type OverlayEntity } from './schema';
 
 const dbPath = path.join(process.cwd(), '.overlay-storage', 'overlays.db');
 
@@ -22,7 +22,7 @@ export const db = drizzle(sqlite);
 
 export class OverlayService {
   // Get overlay by ID (only if not expired)
-  async getOverlay(id: string): Promise<Overlay | null> {
+  async getOverlay(id: string): Promise<OverlayEntity | null> {
     const now = new Date();
     const result = await db
       .select()
@@ -39,7 +39,7 @@ export class OverlayService {
     const now = new Date();
     const expiresAt = new Date(now.getTime() + expirationHours * 60 * 60 * 1000);
 
-    const newOverlay: NewOverlay = {
+    const newOverlay: NewOverlayEntity = {
       id,
       data,
       createdAt: now,
