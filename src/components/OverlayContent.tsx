@@ -7,10 +7,10 @@ import { useEffect, useRef, useState } from 'react';
 export default function OverlayContent({
   blueTeam,
   redTeam,
-}: {
+}: Readonly<{
   blueTeam: TOverlay['blueTeam'];
   redTeam: TOverlay['redTeam'];
-}) {
+}>) {
   const blueRef = useRef<HTMLDivElement>(null);
   const redRef = useRef<HTMLDivElement>(null);
   const [blueFontSize, setBlueFontSize] = useState(40); // px
