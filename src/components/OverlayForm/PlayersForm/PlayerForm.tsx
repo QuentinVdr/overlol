@@ -1,6 +1,7 @@
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { ChampionField } from './ChampionField/ChampionField';
 
 type PlayerFormProps = {
   register: UseFormRegister<TOverlay>;
@@ -40,15 +41,7 @@ export function PlayerForm({ register, setValue, fieldPrefix }: Readonly<PlayerF
         />
       </div>
       <div className="flex grow flex-col">
-        <label htmlFor={`champion-${fieldPrefix}`} className="pb-1 pl-0.5 text-xs text-gray-500">
-          Champion
-        </label>
-        <input
-          id={`champion-${fieldPrefix}`}
-          type="text"
-          className="grow rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm transition-all outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-          {...register(`${fieldPrefix}.championName`)}
-        />
+        <ChampionField register={register} fieldPrefix={fieldPrefix} />
       </div>
       <div className="flex flex-col justify-end">
         <button
