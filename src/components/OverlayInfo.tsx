@@ -23,17 +23,15 @@ export default function OverlayInfo({ overlayUrl }: Readonly<OverlayInfoProps>) 
   return (
     <div className="rounded-lg border border-gray-300 p-4">
       <h2 className="mb-4 text-lg font-semibold">Overlay Information</h2>
-
       <div className="flex flex-col gap-3">
-        <p className="flex flex-row items-center gap-2">
-          <span className="text-lg text-gray-600">Use Overlay:</span>
+        <p className="inline">
+          <span className="text-lg text-gray-600">Use Overlay: </span>
           <span>
             Add web source past the link bellow and set <b>width to 1920px</b> and{' '}
             <b>height to 1080px</b>. And Enable the option{' '}
             <b>Refresh browser when scene becomes active</b> to auto-refresh overlay
           </span>
         </p>
-
         <div className="flex flex-row items-center gap-2">
           <span className="text-lg text-gray-600">Overlay URL:</span>
           <div className="flex items-center gap-3 rounded border bg-gray-50 px-2 py-1">
