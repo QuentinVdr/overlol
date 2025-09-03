@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  useFetchChampionByVersion,
-  useFetchLatestRiotApiVersion,
-} from '@/hooks/reactQuery/queries';
+import { useFetchLatestChampions } from '@/hooks/reactQuery/queries';
 import { TChampion } from '@/types/ChampionType';
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
@@ -15,10 +12,7 @@ type ChampionFieldProps = {
 };
 
 export function ChampionField({ register, fieldPrefix }: Readonly<ChampionFieldProps>) {
-  const { data: latestVersion } = useFetchLatestRiotApiVersion();
-  const { data: championData } = useFetchChampionByVersion(latestVersion as string, {
-    enabled: !!latestVersion,
-  });
+  const { data: championData } = useFetchLatestChampions();
 
   return (
     <>
