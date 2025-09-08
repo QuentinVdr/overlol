@@ -1,4 +1,5 @@
 import type { TChampion } from '@/types/ChampionType';
+import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 
 /**
  * docs: https://developer.riotgames.com/docs/lol#data-dragon_champions
@@ -23,6 +24,18 @@ export const fetchLatestLolVersion = (): Promise<string> =>
  */
 export const fetchChampionsByVersion = (lolVersion: string): Promise<TChampion[]> =>
   fetch(`/api/lol/${lolVersion}/champions`).then((res) => {
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    }
+    return res.json();
+  });
+
+/**
+ * Fetch KC leaderboard data.
+ * @returns {Promise<TPlayerLeaderboard[]>} A promise with the leaderboard data.
+ */
+export const fetchKcLeaderboard = (): Promise<TPlayerLeaderboard[]> =>
+  fetch('/api/lol/leaderboard').then((res) => {
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     }

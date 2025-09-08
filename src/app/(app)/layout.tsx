@@ -1,13 +1,9 @@
-import { ReactQueryProvider } from '@/contexts/ReactQueryProvider';
+import './style.css';
 
 export default function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <body className="bg-zinc-100">
-      <ReactQueryProvider>{children}</ReactQueryProvider>
-    </body>
-  );
+  return children;
 }

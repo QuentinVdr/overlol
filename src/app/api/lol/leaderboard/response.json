@@ -1,0 +1,643 @@
+{
+  "players": [
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1982,
+        "wins": 479,
+        "losses": 324,
+        "platform": "EUW1",
+        "puuid": "PKb_eyj9FwYVTvSDSNEx9EwrNGzWanxe36G2IShEFtP-y3sZqjxdzUdhNwGFEreDdZ-e8Mpa9yVptQ"
+      },
+      "puuid": "PKb_eyj9FwYVTvSDSNEx9EwrNGzWanxe36G2IShEFtP-y3sZqjxdzUdhNwGFEreDdZ-e8Mpa9yVptQ",
+      "gameName": "dmsdklb",
+      "tagLine": "vivi",
+      "displayName": "Vladi",
+      "profileIcon": 29,
+      "team": "KC",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "MIDDLE", "percentage": 70 },
+      "championIds": [13, 18, 268, 3],
+      "kda": 3.1208530805687205,
+      "isLive": false,
+      "leaderboardPosition": 1
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1845,
+        "wins": 362,
+        "losses": 245,
+        "platform": "EUW1",
+        "puuid": "YmaK2FeJbnKrieDp6xHEaSwpONhh7bdayqSkXy0P9Xvf8WOKORi2Ts2T7bqcLqidBW9v4vcjYgqbxQ"
+      },
+      "puuid": "YmaK2FeJbnKrieDp6xHEaSwpONhh7bdayqSkXy0P9Xvf8WOKORi2Ts2T7bqcLqidBW9v4vcjYgqbxQ",
+      "gameName": "yukino cat",
+      "tagLine": "blue",
+      "displayName": "Yukino",
+      "profileIcon": 3840,
+      "team": "KCB",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "JUNGLE", "percentage": 100 },
+      "championIds": [80, 950, 234, 64],
+      "kda": 3.431719532554257,
+      "isLive": true,
+      "leaderboardPosition": 2
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1693,
+        "wins": 413,
+        "losses": 330,
+        "platform": "EUW1",
+        "puuid": "Y6V9-orbTquf0AzhB2Bg55XWQDrpX-_yOPXtDArc-jZUjyntgAHUNyYBwheUqS3lfzivzOM8qJzIRw"
+      },
+      "puuid": "Y6V9-orbTquf0AzhB2Bg55XWQDrpX-_yOPXtDArc-jZUjyntgAHUNyYBwheUqS3lfzivzOM8qJzIRw",
+      "gameName": "Maynter",
+      "tagLine": "EUW",
+      "displayName": "Maynter",
+      "profileIcon": 1301,
+      "team": "KCB",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "TOP", "percentage": 91 },
+      "championIds": [799, 150, 887, 58],
+      "kda": 2.431470496409616,
+      "isLive": false,
+      "leaderboardPosition": 3
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1644,
+        "wins": 329,
+        "losses": 242,
+        "platform": "EUW1",
+        "puuid": "ENIYtq2g5p3bCeEcst1EG225D8sBRxtUtF_rek8zSRoCNJ-K_75ZyrRgdx60j2J10oAyUxuAewhaIQ"
+      },
+      "puuid": "ENIYtq2g5p3bCeEcst1EG225D8sBRxtUtF_rek8zSRoCNJ-K_75ZyrRgdx60j2J10oAyUxuAewhaIQ",
+      "gameName": "KC NEXT ADKING",
+      "tagLine": "EUW",
+      "displayName": "Caliste",
+      "profileIcon": 29,
+      "team": "KC",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "BOTTOM", "percentage": 94 },
+      "championIds": [145, 42, 21, 81],
+      "kda": 3.350982066609735,
+      "isLive": false,
+      "leaderboardPosition": 4
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1580,
+        "wins": 556,
+        "losses": 479,
+        "platform": "EUW1",
+        "puuid": "QEnDUUAw3p_YmlOG4fr_wFSy_T9t5Hlyr_lZyw-vCL32DvrHykoEk0ITmVwo3DTQpDtd4GDkB9UJlg"
+      },
+      "puuid": "QEnDUUAw3p_YmlOG4fr_wFSy_T9t5Hlyr_lZyw-vCL32DvrHykoEk0ITmVwo3DTQpDtd4GDkB9UJlg",
+      "gameName": "KC Yiken",
+      "tagLine": "1111",
+      "displayName": "Yike",
+      "profileIcon": 29,
+      "team": "KC",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "JUNGLE", "percentage": 88 },
+      "championIds": [254, 876, 234, 143],
+      "kda": 2.979978354978355,
+      "isLive": false,
+      "leaderboardPosition": 5
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1526,
+        "wins": 383,
+        "losses": 269,
+        "platform": "EUW1",
+        "puuid": "KDBoKLfarKkaqHSD9F72iHhcFIm3ZwzSrIALYowLLEgD61jGOGeRYNqQXJPmnjZEqkWCRKoePZ81eQ"
+      },
+      "puuid": "KDBoKLfarKkaqHSD9F72iHhcFIm3ZwzSrIALYowLLEgD61jGOGeRYNqQXJPmnjZEqkWCRKoePZ81eQ",
+      "gameName": "K C",
+      "tagLine": "kcwin",
+      "displayName": "Canna",
+      "profileIcon": 29,
+      "team": "KC",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "TOP", "percentage": 86 },
+      "championIds": [799, 126, 41, 893],
+      "kda": 2.5472154963680387,
+      "isLive": false,
+      "leaderboardPosition": 6
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1500,
+        "wins": 442,
+        "losses": 372,
+        "platform": "EUW1",
+        "puuid": "cF1Sn1V2wkhfzJkCzFnPoKixld0Slmx54ktOYXnruPvQlki4BCz2OiAMrk_4Ta2OMAAMjWtZ0PPi_g"
+      },
+      "puuid": "cF1Sn1V2wkhfzJkCzFnPoKixld0Slmx54ktOYXnruPvQlki4BCz2OiAMrk_4Ta2OMAAMjWtZ0PPi_g",
+      "gameName": "Targamas",
+      "tagLine": "5555",
+      "displayName": "Targamas",
+      "profileIcon": 22,
+      "team": "KC",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "UTILITY", "percentage": 89 },
+      "championIds": [518, 526, 432, 235],
+      "kda": 3.0712773465067045,
+      "isLive": false,
+      "leaderboardPosition": 7
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1314,
+        "wins": 549,
+        "losses": 491,
+        "platform": "EUW1",
+        "puuid": "ZXtZF4Sg3JM-ZMTJ5RHqR20fizS5FXRTDgiXMKK8Z7w0iKQgMVL4K0688dByNWUynlxM3jzPJysLHg"
+      },
+      "puuid": "ZXtZF4Sg3JM-ZMTJ5RHqR20fizS5FXRTDgiXMKK8Z7w0iKQgMVL4K0688dByNWUynlxM3jzPJysLHg",
+      "gameName": "yebit",
+      "tagLine": "haha",
+      "displayName": "SlowQ",
+      "profileIcon": 6753,
+      "team": "KCB",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "MIDDLE", "percentage": 72 },
+      "championIds": [268, 103, 517, 42],
+      "kda": 2.7307612528521052,
+      "isLive": false,
+      "leaderboardPosition": 8
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1258,
+        "wins": 206,
+        "losses": 126,
+        "platform": "EUW1",
+        "puuid": "m-kkBnv_wuGvq0TyaQvQ375Hu44dy-f06j8jpihUDMKH9zFcUPHKkGQNtmZlrRnwrfiNmkRn_L1m9A"
+      },
+      "puuid": "m-kkBnv_wuGvq0TyaQvQ375Hu44dy-f06j8jpihUDMKH9zFcUPHKkGQNtmZlrRnwrfiNmkRn_L1m9A",
+      "gameName": "I NEED SOLOQ",
+      "tagLine": "EUW",
+      "displayName": "Caliste",
+      "profileIcon": 29,
+      "team": "KC",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "BOTTOM", "percentage": 90 },
+      "championIds": [42, 145, 221, 523],
+      "kda": 3.249648382559775,
+      "isLive": false,
+      "leaderboardPosition": 9
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1107,
+        "wins": 355,
+        "losses": 302,
+        "platform": "EUW1",
+        "puuid": "svAmX9GEV7DYjMBcbbJRtVIQ5WuHNPIVulu_I7B6txLKXNcqO6qgnsPjbL7XY9fL40Vwy9QsMTCbVA"
+      },
+      "puuid": "svAmX9GEV7DYjMBcbbJRtVIQ5WuHNPIVulu_I7B6txLKXNcqO6qgnsPjbL7XY9fL40Vwy9QsMTCbVA",
+      "gameName": "Rose",
+      "tagLine": "HZL",
+      "displayName": "Hazel",
+      "profileIcon": 7,
+      "team": "KCBS",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "BOTTOM", "percentage": 92 },
+      "championIds": [523, 202, 42, 804],
+      "kda": 2.9374785297148747,
+      "isLive": false,
+      "leaderboardPosition": 10
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1093,
+        "wins": 439,
+        "losses": 359,
+        "platform": "EUW1",
+        "puuid": "_auSh8T8tHOIWll6pOPXy0zLUYfv2og0xaeLIQtqcDAiwIMb6x21SKEZxRC-nAnWMRD1umzWKMET3A"
+      },
+      "puuid": "_auSh8T8tHOIWll6pOPXy0zLUYfv2og0xaeLIQtqcDAiwIMb6x21SKEZxRC-nAnWMRD1umzWKMET3A",
+      "gameName": "Cola",
+      "tagLine": "4463",
+      "displayName": "Piero",
+      "profileIcon": 29,
+      "team": "KCB",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "UTILITY", "percentage": 93 },
+      "championIds": [526, 111, 89, 12],
+      "kda": 2.90032080659945,
+      "isLive": false,
+      "leaderboardPosition": 11
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "CHALLENGER",
+        "leaguePoints": 1076,
+        "wins": 560,
+        "losses": 522,
+        "platform": "EUW1",
+        "puuid": "uoYpNmVTyYWnPtgvJWlYAG2JCUziv79Hn27NW6C62p8tsKBPuYDUwwfC81nvtVpa7uCLTcQkWOsD7Q"
+      },
+      "puuid": "uoYpNmVTyYWnPtgvJWlYAG2JCUziv79Hn27NW6C62p8tsKBPuYDUwwfC81nvtVpa7uCLTcQkWOsD7Q",
+      "gameName": "Loose Ends999",
+      "tagLine": "EUW",
+      "displayName": "Tao",
+      "profileIcon": 4034,
+      "team": "KCBS",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "TOP", "percentage": 90 },
+      "championIds": [266, 799, 126, 58],
+      "kda": 2.303734756097561,
+      "isLive": false,
+      "leaderboardPosition": 12
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "GRANDMASTER",
+        "leaguePoints": 1048,
+        "wins": 284,
+        "losses": 234,
+        "platform": "EUW1",
+        "puuid": "ZvkdQmm8oqBK7sgLCB2Tfe0G6AcUnL6szi_PIkW_taNdEqiYirtaYPC_BmRzbj_1bjPrw10Sv52ndw"
+      },
+      "puuid": "ZvkdQmm8oqBK7sgLCB2Tfe0G6AcUnL6szi_PIkW_taNdEqiYirtaYPC_BmRzbj_1bjPrw10Sv52ndw",
+      "gameName": "Full Drip Nsurr",
+      "tagLine": "EUW",
+      "displayName": "Nsurr",
+      "profileIcon": 4096,
+      "team": "KCBS",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "UTILITY", "percentage": 96 },
+      "championIds": [526, 111, 412, 12],
+      "kda": 3.3292240754169686,
+      "isLive": false,
+      "leaderboardPosition": 13
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "GRANDMASTER",
+        "leaguePoints": 964,
+        "wins": 434,
+        "losses": 375,
+        "platform": "EUW1",
+        "puuid": "8pFK_USoDCsszj5ATbjACSsas9nMeLJGCS826LzulJ1SnYzZGzNk6kHNatMy64aeWuByFp9V8gRNYw"
+      },
+      "puuid": "8pFK_USoDCsszj5ATbjACSsas9nMeLJGCS826LzulJ1SnYzZGzNk6kHNatMy64aeWuByFp9V8gRNYw",
+      "gameName": "永遠の拷問",
+      "tagLine": "xox",
+      "displayName": "3XA",
+      "profileIcon": 6923,
+      "team": "KCB",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "BOTTOM", "percentage": 91 },
+      "championIds": [21, 81, 145, 42],
+      "kda": 3.2359863734902445,
+      "isLive": true,
+      "leaderboardPosition": 14
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "GRANDMASTER",
+        "leaguePoints": 889,
+        "wins": 327,
+        "losses": 300,
+        "platform": "EUW1",
+        "puuid": "Svcq1Tc_SxfkSls33-0x7oIiGBEsS_z700M-kscVPv7VvBRrNiHsDo1LppQMsGxvDXrlMxmNdCnxxQ"
+      },
+      "puuid": "Svcq1Tc_SxfkSls33-0x7oIiGBEsS_z700M-kscVPv7VvBRrNiHsDo1LppQMsGxvDXrlMxmNdCnxxQ",
+      "gameName": "vovalaclasse",
+      "tagLine": "EUW",
+      "displayName": "Maynter",
+      "profileIcon": 29,
+      "team": "KCB",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "TOP", "percentage": 92 },
+      "championIds": [126, 893, 887, 83],
+      "kda": 2.186385737439222,
+      "isLive": false,
+      "leaderboardPosition": 15
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "GRANDMASTER",
+        "leaguePoints": 821,
+        "wins": 360,
+        "losses": 322,
+        "platform": "EUW1",
+        "puuid": "8b01IF5tWlNw6ysP7fvsU-8IDBeLf3Q2XHZePzKHHSyzAsm3O3RyJtIEufdwiulbzlbT-W87WOHGFQ"
+      },
+      "puuid": "8b01IF5tWlNw6ysP7fvsU-8IDBeLf3Q2XHZePzKHHSyzAsm3O3RyJtIEufdwiulbzlbT-W87WOHGFQ",
+      "gameName": "TTV BAASHH",
+      "tagLine": "EUW",
+      "displayName": "Baashh",
+      "profileIcon": 3879,
+      "team": "KCBS",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "JUNGLE", "percentage": 98 },
+      "championIds": [799, 876, 80, 5],
+      "kda": 3.66108202443281,
+      "isLive": false,
+      "leaderboardPosition": 16
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "GRANDMASTER",
+        "leaguePoints": 722,
+        "wins": 626,
+        "losses": 593,
+        "platform": "EUW1",
+        "puuid": "ngdHm4bPQN_CvMMnwghsPJz_JhRIYHegXpJmljJkACIYotDMXzN-AllYv8Z4MrKGiYh4BgNqmNXZkA"
+      },
+      "puuid": "ngdHm4bPQN_CvMMnwghsPJz_JhRIYHegXpJmljJkACIYotDMXzN-AllYv8Z4MrKGiYh4BgNqmNXZkA",
+      "gameName": "MathisV",
+      "tagLine": "ARCHE",
+      "displayName": "MathisV",
+      "profileIcon": 6923,
+      "team": "KCBS",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "MIDDLE", "percentage": 79 },
+      "championIds": [238, 910, 157, 777],
+      "kda": 3.160361134995701,
+      "isLive": false,
+      "leaderboardPosition": 17
+    },
+    {
+      "rank": {
+        "rank": "I",
+        "tier": "DIAMOND",
+        "leaguePoints": 75,
+        "wins": 546,
+        "losses": 494,
+        "platform": "EUW1",
+        "puuid": "GRjSThFW5pDftgNNfxmotKqURNBTCjK6f9qnmP1EBj_ZElEmihHwagI0NDvAOLZL6aUmK1ldYg34sA"
+      },
+      "puuid": "GRjSThFW5pDftgNNfxmotKqURNBTCjK6f9qnmP1EBj_ZElEmihHwagI0NDvAOLZL6aUmK1ldYg34sA",
+      "gameName": "J1HUIV",
+      "tagLine": "000",
+      "displayName": "Vladi",
+      "profileIcon": 29,
+      "team": "KC",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "MIDDLE", "percentage": 79 },
+      "championIds": [126, 268, 517, 13],
+      "kda": 2.5834859025997803,
+      "isLive": false,
+      "leaderboardPosition": 18
+    },
+    {
+      "rank": {
+        "rank": "II",
+        "tier": "DIAMOND",
+        "leaguePoints": 75,
+        "wins": 129,
+        "losses": 96,
+        "platform": "EUW1",
+        "puuid": "1_OZv44SCjS-BafFu3ORxS6e0wRJPXHphNasHupltx1o-HOP1nBaoWserdGfsfCWhV-dM03g4wFN9g"
+      },
+      "puuid": "1_OZv44SCjS-BafFu3ORxS6e0wRJPXHphNasHupltx1o-HOP1nBaoWserdGfsfCWhV-dM03g4wFN9g",
+      "gameName": "one last dance",
+      "tagLine": "114",
+      "displayName": "Hazel",
+      "profileIcon": 29,
+      "team": "KCBS",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "BOTTOM", "percentage": 93 },
+      "championIds": [145, 523, 51, 42],
+      "kda": 2.6993275696445727,
+      "isLive": false,
+      "leaderboardPosition": 19
+    },
+    {
+      "rank": {
+        "rank": "II",
+        "tier": "DIAMOND",
+        "leaguePoints": 75,
+        "wins": 100,
+        "losses": 90,
+        "platform": "EUW1",
+        "puuid": "X8aLyKeg9-TYyt2kcDwe-cW1lQdOVkXXn-J_QXTOpMPGlgxAc2M6UlDv0pYtwK1MHi3X47bI2RXbmA"
+      },
+      "puuid": "X8aLyKeg9-TYyt2kcDwe-cW1lQdOVkXXn-J_QXTOpMPGlgxAc2M6UlDv0pYtwK1MHi3X47bI2RXbmA",
+      "gameName": "Nsurr",
+      "tagLine": "EUWFR",
+      "displayName": "Nsurr",
+      "profileIcon": 5980,
+      "team": "KCBS",
+      "role": "PRO",
+      "platform": "EUW1",
+      "lane": { "value": "UTILITY", "percentage": 98 },
+      "championIds": [526, 111, 412, 12],
+      "kda": 3.4723451327433628,
+      "isLive": false,
+      "leaderboardPosition": 20
+    }
+  ],
+  "lanesPickrate": { "TOP": 20, "JUNGLE": 15, "MIDDLE": 20, "BOTTOM": 25, "UTILITY": 20 },
+  "total": 20,
+  "leaderboardDetails": {
+    "name": "KC SoloQ",
+    "background": "team-KC",
+    "likes": 164,
+    "public": true,
+    "creator": {
+      "puuid": "HJfKmlT2jRNjUZPoZt2a0HHMhSL_doKwsZ-nbePggak8kIyL8o_eZdF4OxK_aSDbv2YPYyn3qqc2yg",
+      "displayName": "juliano",
+      "gameName": "juliano",
+      "tagLine": "0135",
+      "profileIcon": 5952,
+      "role": "ADMIN"
+    },
+    "description": "KC, KCB, KCBS players in SoloQ",
+    "players": [
+      {
+        "puuid": "1_OZv44SCjS-BafFu3ORxS6e0wRJPXHphNasHupltx1o-HOP1nBaoWserdGfsfCWhV-dM03g4wFN9g",
+        "gameName": "one last dance",
+        "tagLine": "114",
+        "displayName": "Hazel",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "8b01IF5tWlNw6ysP7fvsU-8IDBeLf3Q2XHZePzKHHSyzAsm3O3RyJtIEufdwiulbzlbT-W87WOHGFQ",
+        "gameName": "TTV BAASHH",
+        "tagLine": "EUW",
+        "displayName": "Baashh",
+        "profileIcon": 3879
+      },
+      {
+        "puuid": "8pFK_USoDCsszj5ATbjACSsas9nMeLJGCS826LzulJ1SnYzZGzNk6kHNatMy64aeWuByFp9V8gRNYw",
+        "gameName": "永遠の拷問",
+        "tagLine": "xox",
+        "displayName": "3XA",
+        "profileIcon": 6923
+      },
+      {
+        "puuid": "ENIYtq2g5p3bCeEcst1EG225D8sBRxtUtF_rek8zSRoCNJ-K_75ZyrRgdx60j2J10oAyUxuAewhaIQ",
+        "gameName": "KC NEXT ADKING",
+        "tagLine": "EUW",
+        "displayName": "Caliste",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "GRjSThFW5pDftgNNfxmotKqURNBTCjK6f9qnmP1EBj_ZElEmihHwagI0NDvAOLZL6aUmK1ldYg34sA",
+        "gameName": "J1HUIV",
+        "tagLine": "000",
+        "displayName": "Vladi",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "KDBoKLfarKkaqHSD9F72iHhcFIm3ZwzSrIALYowLLEgD61jGOGeRYNqQXJPmnjZEqkWCRKoePZ81eQ",
+        "gameName": "K C",
+        "tagLine": "kcwin",
+        "displayName": "Canna",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "PKb_eyj9FwYVTvSDSNEx9EwrNGzWanxe36G2IShEFtP-y3sZqjxdzUdhNwGFEreDdZ-e8Mpa9yVptQ",
+        "gameName": "dmsdklb",
+        "tagLine": "vivi",
+        "displayName": "Vladi",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "QEnDUUAw3p_YmlOG4fr_wFSy_T9t5Hlyr_lZyw-vCL32DvrHykoEk0ITmVwo3DTQpDtd4GDkB9UJlg",
+        "gameName": "KC Yiken",
+        "tagLine": "1111",
+        "displayName": "Yike",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "Svcq1Tc_SxfkSls33-0x7oIiGBEsS_z700M-kscVPv7VvBRrNiHsDo1LppQMsGxvDXrlMxmNdCnxxQ",
+        "gameName": "vovalaclasse",
+        "tagLine": "EUW",
+        "displayName": "Maynter",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "X8aLyKeg9-TYyt2kcDwe-cW1lQdOVkXXn-J_QXTOpMPGlgxAc2M6UlDv0pYtwK1MHi3X47bI2RXbmA",
+        "gameName": "Nsurr",
+        "tagLine": "EUWFR",
+        "displayName": "Nsurr",
+        "profileIcon": 5980
+      },
+      {
+        "puuid": "Y6V9-orbTquf0AzhB2Bg55XWQDrpX-_yOPXtDArc-jZUjyntgAHUNyYBwheUqS3lfzivzOM8qJzIRw",
+        "gameName": "Maynter",
+        "tagLine": "EUW",
+        "displayName": "Maynter",
+        "profileIcon": 1301
+      },
+      {
+        "puuid": "YmaK2FeJbnKrieDp6xHEaSwpONhh7bdayqSkXy0P9Xvf8WOKORi2Ts2T7bqcLqidBW9v4vcjYgqbxQ",
+        "gameName": "yukino cat",
+        "tagLine": "blue",
+        "displayName": "Yukino",
+        "profileIcon": 3840
+      },
+      {
+        "puuid": "ZXtZF4Sg3JM-ZMTJ5RHqR20fizS5FXRTDgiXMKK8Z7w0iKQgMVL4K0688dByNWUynlxM3jzPJysLHg",
+        "gameName": "yebit",
+        "tagLine": "haha",
+        "displayName": "SlowQ",
+        "profileIcon": 6753
+      },
+      {
+        "puuid": "ZvkdQmm8oqBK7sgLCB2Tfe0G6AcUnL6szi_PIkW_taNdEqiYirtaYPC_BmRzbj_1bjPrw10Sv52ndw",
+        "gameName": "Full Drip Nsurr",
+        "tagLine": "EUW",
+        "displayName": "Nsurr",
+        "profileIcon": 4096
+      },
+      {
+        "puuid": "_auSh8T8tHOIWll6pOPXy0zLUYfv2og0xaeLIQtqcDAiwIMb6x21SKEZxRC-nAnWMRD1umzWKMET3A",
+        "gameName": "Cola",
+        "tagLine": "4463",
+        "displayName": "Piero",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "cF1Sn1V2wkhfzJkCzFnPoKixld0Slmx54ktOYXnruPvQlki4BCz2OiAMrk_4Ta2OMAAMjWtZ0PPi_g",
+        "gameName": "Targamas",
+        "tagLine": "5555",
+        "displayName": "Targamas",
+        "profileIcon": 22
+      },
+      {
+        "puuid": "m-kkBnv_wuGvq0TyaQvQ375Hu44dy-f06j8jpihUDMKH9zFcUPHKkGQNtmZlrRnwrfiNmkRn_L1m9A",
+        "gameName": "I NEED SOLOQ",
+        "tagLine": "EUW",
+        "displayName": "Caliste",
+        "profileIcon": 29
+      },
+      {
+        "puuid": "ngdHm4bPQN_CvMMnwghsPJz_JhRIYHegXpJmljJkACIYotDMXzN-AllYv8Z4MrKGiYh4BgNqmNXZkA",
+        "gameName": "MathisV",
+        "tagLine": "ARCHE",
+        "displayName": "MathisV",
+        "profileIcon": 6923
+      },
+      {
+        "puuid": "svAmX9GEV7DYjMBcbbJRtVIQ5WuHNPIVulu_I7B6txLKXNcqO6qgnsPjbL7XY9fL40Vwy9QsMTCbVA",
+        "gameName": "Rose",
+        "tagLine": "HZL",
+        "displayName": "Hazel",
+        "profileIcon": 7
+      },
+      {
+        "puuid": "uoYpNmVTyYWnPtgvJWlYAG2JCUziv79Hn27NW6C62p8tsKBPuYDUwwfC81nvtVpa7uCLTcQkWOsD7Q",
+        "gameName": "Loose Ends999",
+        "tagLine": "EUW",
+        "displayName": "Tao",
+        "profileIcon": 4034
+      }
+    ]
+  }
+}
