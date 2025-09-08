@@ -1,0 +1,3 @@
+body {
+  @apply relative h-[1080px] w-[1920px] bg-transparent;
+}

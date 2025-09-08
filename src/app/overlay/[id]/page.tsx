@@ -1,8 +1,12 @@
 import OverlayContent from '@/components/OverlayContent';
 import { overlayService } from '@/db';
+import { redirect } from 'next/navigation';
 
 export default async function Overlay({ params }: Readonly<{ params: Promise<{ id: string }> }>) {
   const { id } = await params;
+  if (!id) {
+    redirect('/');
+  }
   const overlay = await overlayService.getOverlay(id);
 
   if (!overlay) {
