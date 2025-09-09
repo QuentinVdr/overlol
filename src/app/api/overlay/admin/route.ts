@@ -1,5 +1,6 @@
 import { overlayService } from '@/db';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function POST(_: Request) {
   try {
     const cleanedCount = await overlayService.cleanupExpired();
