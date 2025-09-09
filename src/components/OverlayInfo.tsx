@@ -3,11 +3,11 @@
 import { useState } from 'react';
 
 type OverlayInfoProps = {
-  id: string;
+  title: string;
   overlayUrl: string;
 };
 
-export default function OverlayInfo({ overlayUrl }: Readonly<OverlayInfoProps>) {
+export default function OverlayInfo({ title, overlayUrl }: Readonly<OverlayInfoProps>) {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = async () => {
@@ -21,8 +21,8 @@ export default function OverlayInfo({ overlayUrl }: Readonly<OverlayInfoProps>) 
   };
 
   return (
-    <div className="rounded-lg border border-gray-300 p-4">
-      <h2 className="mb-4 text-lg font-semibold">Overlay Information</h2>
+    <div className="rounded-lg border border-gray-300 bg-zinc-100 p-4">
+      <h2 className="mb-4 text-lg font-semibold">{title}</h2>
       <div className="flex flex-col gap-3">
         <p className="inline">
           <span className="text-lg text-gray-600">Use Overlay: </span>
