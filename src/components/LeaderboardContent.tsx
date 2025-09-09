@@ -11,7 +11,8 @@ export default function LeaderboardContent() {
       {leaderboard?.map((player) => (
         <div key={player.kcLeaderboardPosition + player.player}>
           #{player.kcLeaderboardPosition}. {player.player}:{' '}
-          <span className="capitalize">{player.tier.toLowerCase()}</span> {player.lp}LP
+          <span className="capitalize">{player.tier.toLowerCase()}</span> {player.lp}LP [Rank:{' '}
+          {player.regionRank}]
         </div>
       ))}
     </div>

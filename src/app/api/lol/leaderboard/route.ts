@@ -1,3 +1,4 @@
+import { fetchRegionRank } from '@/api/LolApi';
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 import { lolCache } from '@/utils/cache';
 
@@ -50,6 +51,8 @@ export async function GET() {
       );
 
       leaderboard = Array.from(uniquePlayersMap.values());
+
+      leaderboard = await fetchRegionRank(leaderboard);
 
       lolCache.set(cacheKey, leaderboard, 30);
     }
