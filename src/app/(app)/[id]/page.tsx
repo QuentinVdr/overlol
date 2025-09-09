@@ -12,7 +12,6 @@ export default async function UpdateOverlay({
     redirect('/');
   }
 
-  const overlayUrl = await getFullUrl(`/overlay/${id}`);
   const overlay = await overlayService.getOverlay(id);
 
   if (!overlay) {
@@ -22,7 +21,10 @@ export default async function UpdateOverlay({
   return (
     <main className="flex h-full w-full flex-col gap-4 px-3 py-2 md:px-8">
       <h1>Update Overlay</h1>
-      <OverlayInfo id={id} overlayUrl={overlayUrl} />
+      <OverlayInfo
+        title={`Overlay in game ${id}`}
+        overlayUrl={await getFullUrl(`/overlay/${id}`)}
+      />
       <UpdateOverlayForm id={id} overlay={overlay.data} />
     </main>
   );
