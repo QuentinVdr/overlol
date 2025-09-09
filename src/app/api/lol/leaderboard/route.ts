@@ -1,3 +1,4 @@
+import { TLeaderboardApiResponse, TLeaderboardPlayer } from '@/types/LeaderboardApiTypes';
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 import { lolCache } from '@/utils/cache';
 import { fetchRegionRank } from '@/utils/leaderboardUtils';
@@ -23,13 +24,17 @@ export async function GET() {
 
       const payload = (await response.json()) as unknown;
 
-      if (!payload || typeof payload !== 'object' || !Array.isArray((payload as any).players)) {
+      if (
+        !payload ||
+        typeof payload !== 'object' ||
+        !Array.isArray((payload as TLeaderboardApiResponse).players)
+      ) {
         throw new Error('Unexpected Data Dragon response shape');
       }
 
       let leaderboardIndex = 1;
-      const uniquePlayersMap = (payload as any).players.reduce(
-        (acc: Map<string, TPlayerLeaderboard>, player: any) => {
+      const uniquePlayersMap = (payload as TLeaderboardApiResponse).players.reduce(
+        (acc: Map<string, TPlayerLeaderboard>, player: TLeaderboardPlayer) => {
           const displayName = player.displayName;
           if (!acc.has(displayName)) {
             acc.set(displayName, {
