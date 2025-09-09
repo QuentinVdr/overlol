@@ -8,4 +8,5 @@ export type TPlayerLeaderboard = {
   tier: string;
   lp: number;
   isLive: boolean;
+  regionRank?: string;
 };

@@ -4,7 +4,7 @@ interface CacheEntry<T> {
 }
 
 class SimpleCache {
-  private cache = new Map<string, CacheEntry<unknown>>();
+  private readonly cache = new Map<string, CacheEntry<unknown>>();
   private cleanupInterval: NodeJS.Timeout | null = null;
 
   constructor(autoCleanupIntervalMinutes: number = 30) {
