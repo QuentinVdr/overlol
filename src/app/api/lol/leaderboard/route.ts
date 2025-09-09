@@ -29,7 +29,7 @@ export async function GET() {
         typeof payload !== 'object' ||
         !Array.isArray((payload as TLeaderboardApiResponse).players)
       ) {
-        throw new Error('Unexpected Data Dragon response shape');
+        throw new Error('Unexpected KC leaderboard response shape');
       }
 
       let leaderboardIndex = 1;
@@ -68,7 +68,7 @@ export async function GET() {
 
     return Response.json(leaderboard);
   } catch (error) {
-    console.error('Error fetching LoL latest version:', error);
-    return Response.json({ error: 'Failed to fetch latest version' }, { status: 500 });
+    console.error('Error fetching LoL leaderboard:', error);
+    return Response.json({ error: 'Failed to fetch LoL leaderboard' }, { status: 500 });
   }
 }
