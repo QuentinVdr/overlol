@@ -52,7 +52,11 @@ export async function GET() {
 
       leaderboard = Array.from(uniquePlayersMap.values());
 
-      leaderboard = await fetchRegionRank(leaderboard);
+      try {
+        leaderboard = await fetchRegionRank(leaderboard);
+      } catch (e) {
+        console.warn('fetchRegionRank failed, returning base leaderboard:', e);
+      }
 
       lolCache.set(cacheKey, leaderboard, 30);
     }
