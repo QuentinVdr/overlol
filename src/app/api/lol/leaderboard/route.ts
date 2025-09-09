@@ -1,6 +1,6 @@
-import { fetchRegionRank } from '@/api/LolApi';
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 import { lolCache } from '@/utils/cache';
+import { fetchRegionRank } from '@/utils/leaderboardUtils';
 
 export async function GET() {
   try {
