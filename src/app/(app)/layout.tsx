@@ -1,9 +1,5 @@
 import './style.css';
 
-export default function AppLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return children;
 }
