@@ -28,12 +28,14 @@ export class OverlayService {
   async getOverlay(id: string): Promise<OverlayEntity | null> {
     this.cleanupExpired();
     const now = new Date();
-    return db
-      .select()
-      .from(overlays)
-      .where(and(eq(overlays.id, id), gt(overlays.expiresAt, now)))
-      .limit(1)
-      .then((result) => result[0] || null);
+    const row =
+      db
+        .select()
+        .from(overlays)
+        .where(and(eq(overlays.id, id), gt(overlays.expiresAt, now)))
+        .limit(1)
+        .get() ?? null;
+    return row;
   }
 
   // Create a new overlay
@@ -61,36 +63,27 @@ export class OverlayService {
     const now = new Date();
     const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000);
 
-    return db
+    const res = db
       .update(overlays)
-      .set({
-        data,
-        updatedAt: now,
-        expiresAt,
-      })
+      .set({ data, updatedAt: now, expiresAt })
       .where(and(eq(overlays.id, id), gt(overlays.expiresAt, now)))
-      .then((res) => res.changes > 0);
+      .run();
+    return res.changes > 0;
   }
 
   // Delete overlay
   async deleteOverlay(id: string): Promise<boolean> {
     this.cleanupExpired();
-    return db
-      .delete(overlays)
-      .where(eq(overlays.id, id))
-      .then((res) => res.changes > 0);
+    const res = db.delete(overlays).where(eq(overlays.id, id)).run();
+    return res.changes > 0;
   }
 
   // Clean up expired overlays
   async cleanupExpired(): Promise<number> {
     const now = new Date();
-    return db
-      .delete(overlays)
-      .where(lt(overlays.expiresAt, now))
-      .then((res) => {
-        log.info(`Cleaned up ${res.changes} expired overlays`);
-        return res.changes;
-      });
+    const res = db.delete(overlays).where(lt(overlays.expiresAt, now)).run();
+    log.info(`Cleaned up ${res.changes} expired overlays`);
+    return res.changes;
   }
 
   // Get overlay count and stats
@@ -99,13 +92,12 @@ export class OverlayService {
   }> {
     this.cleanupExpired();
     const now = new Date();
-    return db
-      .select({ count: overlays.id })
+    const active = db
+      .select({ id: overlays.id })
       .from(overlays)
       .where(gt(overlays.expiresAt, now))
-      .then((res) => ({
-        active: res.length,
-      }));
+      .all().length;
+    return { active };
   }
 }
 
