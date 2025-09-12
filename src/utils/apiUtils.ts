@@ -5,7 +5,7 @@
  * @param timeoutMs - Timeout in milliseconds (default: 5000)
  * @returns Promise with parsed JSON response
  */
-export const jsonRequest = async <T = any>(
+export const jsonRequest = async <T = unknown>(
   url: string,
   options: Omit<RequestInit, 'signal'> = {},
   timeoutMs: number = 5000,
