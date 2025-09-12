@@ -22,9 +22,13 @@ export const fetchRegionRank = async (
 
           console.log(`Fetching: ${url}`);
           const response = await fetch(url, {
-            signal: AbortSignal.timeout(60000),
+            signal: AbortSignal.timeout(30000),
             headers: { 'User-Agent': 'Mozilla/5.0 (compatible; OverLoL/1.0)' },
           });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
 
           console.log(`Response for ${player.inGameName}: ${response.status}`);
           const html = await response.text();
