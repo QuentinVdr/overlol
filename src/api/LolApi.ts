@@ -25,4 +25,4 @@ export const fetchChampionsByVersion = (lolVersion: string): Promise<TChampion[]
  * @returns {Promise<TPlayerLeaderboard[]>} A promise with the leaderboard data.
  */
 export const fetchKcLeaderboard = (): Promise<TPlayerLeaderboard[]> =>
-  jsonRequest('/api/lol/leaderboard', {}, 10000);
+  jsonRequest('/api/lol/leaderboard', {}, 60000);

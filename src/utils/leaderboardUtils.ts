@@ -22,7 +22,7 @@ export const fetchRegionRank = async (
 
           console.log(`Fetching: ${url}`);
           const response = await fetch(url, {
-            signal: AbortSignal.timeout(5000),
+            signal: AbortSignal.timeout(60000),
             headers: { 'User-Agent': 'Mozilla/5.0 (compatible; OverLoL/1.0)' },
           });
 
