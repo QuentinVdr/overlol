@@ -1,4 +1,5 @@
 import { TOverlay } from '@/types/OverlayType';
+import { logger } from '@/utils/logger';
 import Database from 'better-sqlite3';
 import { and, eq, gt, lt } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
@@ -20,21 +21,24 @@ sqlite.pragma('journal_mode = WAL');
 
 export const db = drizzle(sqlite);
 
+const log = logger.child('db:overlay');
+
 export class OverlayService {
   // Get overlay by ID (only if not expired)
   async getOverlay(id: string): Promise<OverlayEntity | null> {
+    this.cleanupExpired();
     const now = new Date();
-    const result = await db
+    return db
       .select()
       .from(overlays)
       .where(and(eq(overlays.id, id), gt(overlays.expiresAt, now)))
-      .limit(1);
-
-    return result[0] || null;
+      .limit(1)
+      .then((result) => result[0] || null);
   }
 
   // Create a new overlay
   async createOverlay(data: TOverlay, expirationHours: number = 2): Promise<string> {
+    this.cleanupExpired();
     const id = crypto.randomUUID();
     const now = new Date();
     const expiresAt = new Date(now.getTime() + expirationHours * 60 * 60 * 1000);
@@ -53,98 +57,56 @@ export class OverlayService {
 
   // Update existing overlay
   async updateOverlay(id: string, data: TOverlay): Promise<boolean> {
+    this.cleanupExpired();
     const now = new Date();
     const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000);
 
-    const result = await db
+    return db
       .update(overlays)
       .set({
         data,
         updatedAt: now,
         expiresAt,
       })
-      .where(and(eq(overlays.id, id), gt(overlays.expiresAt, now)));
-
-    return result.changes > 0;
+      .where(and(eq(overlays.id, id), gt(overlays.expiresAt, now)))
+      .then((res) => res.changes > 0);
   }
 
   // Delete overlay
   async deleteOverlay(id: string): Promise<boolean> {
-    const result = await db.delete(overlays).where(eq(overlays.id, id));
-    return result.changes > 0;
+    this.cleanupExpired();
+    return db
+      .delete(overlays)
+      .where(eq(overlays.id, id))
+      .then((res) => res.changes > 0);
   }
 
   // Clean up expired overlays
   async cleanupExpired(): Promise<number> {
     const now = new Date();
-    const result = await db.delete(overlays).where(lt(overlays.expiresAt, now));
-    return result.changes;
+    return db
+      .delete(overlays)
+      .where(lt(overlays.expiresAt, now))
+      .then((res) => {
+        log.info(`Cleaned up ${res.changes} expired overlays`);
+        return res.changes;
+      });
   }
 
   // Get overlay count and stats
   async getStats(): Promise<{
     active: number;
   }> {
+    this.cleanupExpired();
     const now = new Date();
-    const activeResult = await db
+    return db
       .select({ count: overlays.id })
       .from(overlays)
-      .where(gt(overlays.expiresAt, now));
-
-    return {
-      active: activeResult.length,
-    };
+      .where(gt(overlays.expiresAt, now))
+      .then((res) => ({
+        active: res.length,
+      }));
   }
 }
 
-// Export singleton instance
 export const overlayService = new OverlayService();
-
-// Cleanup scheduler class
-class CleanupScheduler {
-  private intervalId: NodeJS.Timeout | null = null;
-  private readonly CLEANUP_INTERVAL = 30 * 60 * 1000; // 30 minutes in milliseconds
-
-  start() {
-    if (this.intervalId) {
-      return; // Already running
-    }
-
-    console.log(`Starting cleanup scheduler (every ${this.CLEANUP_INTERVAL / 60000} minutes)`);
-
-    // Run cleanup immediately
-    this.runCleanup();
-
-    // Schedule periodic cleanup
-    this.intervalId = setInterval(() => {
-      this.runCleanup();
-    }, this.CLEANUP_INTERVAL);
-  }
-
-  stop() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-      console.log('Cleanup scheduler stopped');
-    }
-  }
-
-  private async runCleanup() {
-    try {
-      const cleanedCount = await overlayService.cleanupExpired();
-      const timestamp = new Date().toISOString();
-      console.log(`[${timestamp}] Auto-cleanup: Removed ${cleanedCount} expired overlays`);
-    } catch (error) {
-      console.error('Error during auto-cleanup:', error);
-    }
-  }
-}
-
-// Export cleanup scheduler instance
-export const cleanupScheduler = new CleanupScheduler();
-
-// Auto-start cleanup scheduler in development and production
-if (typeof window === 'undefined') {
-  // Only run on server side
-  cleanupScheduler.start();
-}
