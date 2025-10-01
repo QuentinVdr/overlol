@@ -10,8 +10,8 @@ export const ReactQueryProvider = ({ children }: Readonly<{ children: React.Reac
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 7 * 24 * 60 * 60 * 1000, // 1 week
-            gcTime: 14 * 24 * 60 * 60 * 1000, // 2 weeks
+            staleTime: 60 * 60 * 1000, // 1 hour
+            gcTime: 30 * 60 * 1000, // 30 minutes
             refetchOnWindowFocus: false,
             refetchOnReconnect: false,
             refetchOnMount: false,

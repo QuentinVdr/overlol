@@ -14,7 +14,7 @@ export const CACHE_TAGS = {
   CHAMPIONS: 'champions',
   VERSION: 'version',
   LEADERBOARD: 'leaderboard',
-  LOL_DATA: 'lol-data',
+  DEFAULT: 'lol-data',
 } as const;
 
 /**
@@ -43,7 +43,7 @@ export function createCachedFunction<T extends (...args: unknown[]) => Promise<u
     keyParts,
     {
       revalidate: options?.revalidate ?? CACHE_DURATIONS.DEFAULT,
-      tags: options?.tags ?? [CACHE_TAGS.LOL_DATA],
+      tags: options?.tags ?? [CACHE_TAGS.DEFAULT],
     },
   );
 
@@ -71,7 +71,7 @@ export function cachedFetch<T = unknown>(
     ...options,
     next: {
       revalidate: options?.revalidate ?? CACHE_DURATIONS.DEFAULT,
-      tags: options?.tags ?? [CACHE_TAGS.LOL_DATA],
+      tags: options?.tags ?? [CACHE_TAGS.DEFAULT],
     },
     signal: options?.signal ?? AbortSignal.timeout(5000),
   })
