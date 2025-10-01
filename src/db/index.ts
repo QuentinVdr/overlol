@@ -26,6 +26,7 @@ export const db = drizzle(sqlite);
 const log = logger.child('db:overlay');
 
 export class OverlayService {
+  static #instance: OverlayService;
   private readonly cleanUpInterval: NodeJS.Timeout;
 
   constructor() {
@@ -49,6 +50,14 @@ export class OverlayService {
     process.on('SIGINT', cleanup);
     process.on('SIGTERM', cleanup);
     process.on('exit', cleanup);
+  }
+
+  public static get instance(): OverlayService {
+    if (!OverlayService.#instance) {
+      OverlayService.#instance = new OverlayService();
+    }
+
+    return OverlayService.#instance;
   }
 
   // Method to properly clean up the interval
@@ -135,4 +144,4 @@ export class OverlayService {
   }
 }
 
-export const overlayService = new OverlayService();
+export const overlayService = OverlayService.instance;
