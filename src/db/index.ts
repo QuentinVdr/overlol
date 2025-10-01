@@ -25,12 +25,18 @@ export const db = drizzle(sqlite);
 
 const log = logger.child('db:overlay');
 
+// Global singleton storage to survive hot reloads
+declare global {
+  var __overlayService: OverlayService | undefined;
+}
+
 export class OverlayService {
-  static #instance: OverlayService;
   private readonly cleanUpInterval: NodeJS.Timeout;
 
-  constructor() {
-    log.info(`Set up clean up interval for expired overlays every hour`);
+  private constructor() {
+    log.info(
+      `Creating new OverlayService instance - Set up clean up interval for expired overlays every 6 hours`,
+    );
     this.cleanUpInterval = setInterval(
       async () => {
         try {
@@ -39,7 +45,7 @@ export class OverlayService {
           log.error('Error during scheduled cleanup:', error);
         }
       },
-      6 * 60 * 60 * 1000, // 6 hours = 6 * 60 minutes * 60 seconds * 1000 milliseconds
+      6 * 60 * 60 * 1000, // 6 hours
     );
 
     // Clean up interval on process termination
@@ -53,11 +59,11 @@ export class OverlayService {
   }
 
   public static get instance(): OverlayService {
-    if (!OverlayService.#instance) {
-      OverlayService.#instance = new OverlayService();
+    // Use global storage to survive hot reloads
+    if (!global.__overlayService) {
+      global.__overlayService = new OverlayService();
     }
-
-    return OverlayService.#instance;
+    return global.__overlayService;
   }
 
   // Method to properly clean up the interval
@@ -126,7 +132,9 @@ export class OverlayService {
   async cleanupExpired(): Promise<number> {
     const now = new Date();
     const res = db.delete(overlays).where(lt(overlays.expiresAt, now)).run();
-    log.info(`Cleaned up ${res.changes} expired overlays`);
+    if (res.changes > 0) {
+      log.info(`Cleaned up ${res.changes} expired overlays`);
+    }
     return res.changes;
   }
 
