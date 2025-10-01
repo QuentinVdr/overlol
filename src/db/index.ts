@@ -18,12 +18,47 @@ if (!fs.existsSync(dir)) {
 // Create database connection
 const sqlite = new Database(dbPath);
 sqlite.pragma('journal_mode = WAL');
+sqlite.pragma('wal_autocheckpoint = 1000');
+sqlite.pragma('cache_size = -2000');
 
 export const db = drizzle(sqlite);
 
 const log = logger.child('db:overlay');
 
 export class OverlayService {
+  private readonly cleanUpInterval: NodeJS.Timeout;
+
+  constructor() {
+    log.info(`Set up clean up interval for expired overlays every hour`);
+    this.cleanUpInterval = setInterval(
+      async () => {
+        try {
+          await this.cleanupExpired();
+        } catch (error) {
+          log.error('Error during scheduled cleanup:', error);
+        }
+      },
+      6 * 60 * 60 * 1000, // 6 hours = 6 * 60 minutes * 60 seconds * 1000 milliseconds
+    );
+
+    // Clean up interval on process termination
+    const cleanup = () => {
+      this.destroy();
+    };
+
+    process.on('SIGINT', cleanup);
+    process.on('SIGTERM', cleanup);
+    process.on('exit', cleanup);
+  }
+
+  // Method to properly clean up the interval
+  destroy(): void {
+    if (this.cleanUpInterval) {
+      clearInterval(this.cleanUpInterval);
+      log.info('Cleanup interval cleared');
+    }
+  }
+
   // Get overlay by ID (only if not expired)
   async getOverlay(id: string): Promise<OverlayEntity | null> {
     this.cleanupExpired();
@@ -90,7 +125,6 @@ export class OverlayService {
   async getStats(): Promise<{
     active: number;
   }> {
-    this.cleanupExpired();
     const now = new Date();
     const active = db
       .select({ id: overlays.id })
