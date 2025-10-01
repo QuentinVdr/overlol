@@ -60,9 +60,7 @@ export class OverlayService {
 
   public static get instance(): OverlayService {
     // Use global storage to survive hot reloads
-    if (!global.__overlayService) {
-      global.__overlayService = new OverlayService();
-    }
+    global.__overlayService ??= new OverlayService();
     return global.__overlayService;
   }
 
