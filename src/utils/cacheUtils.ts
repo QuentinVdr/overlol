@@ -3,7 +3,7 @@ import { logger } from './logger';
 
 // Cache durations in seconds
 export const CACHE_DURATIONS = {
-  CHAMPIONS: 30 * 24 * 60 * 60, // 30 days
+  CHAMPIONS: 24 * 60 * 60, // 1 day
   VERSION: 30 * 60, // 30 minutes
   LEADERBOARD: 30 * 60, // 30 minutes
   DEFAULT: 30 * 60, // 30 minutes
