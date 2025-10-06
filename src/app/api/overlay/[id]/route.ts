@@ -1,5 +1,7 @@
 import { overlayService } from '@/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(_: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const params = await context.params;

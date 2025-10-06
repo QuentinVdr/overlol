@@ -1,6 +1,6 @@
 import { TChampion } from '@/types/ChampionType';
-import { CACHE_DURATIONS, CACHE_TAGS, cachedFetch } from '@/utils/cacheUtils';
 import { logger } from '@/utils/logger';
+import { NextResponse } from 'next/server';
 
 const log = logger.child('api:champions');
 
@@ -43,19 +43,24 @@ interface ChampionsApiResponse {
 export async function GET(_: Request, context: { params: Promise<{ version: string }> }) {
   const { version } = await context.params;
 
-  return cachedFetch<ChampionsApiResponse>(
-    `https://ddragon.leagueoflegends.com/cdn/${version}/data/fr_FR/champion.json`,
-    {
-      headers: { Accept: 'application/json' },
-      revalidate: CACHE_DURATIONS.CHAMPIONS,
-      tags: [CACHE_TAGS.CHAMPIONS, `champions-${version}`],
-      logPrefix: 'champions',
+  return fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/fr_FR/champion.json`, {
+    headers: { Accept: 'application/json' },
+    signal: AbortSignal.timeout(5000),
+    // Next.js Data Cache
+    next: {
+      revalidate: 604800, // 7 days
+      tags: ['lol-champions', `champions-${version}`],
     },
-  )
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      return response.json() as Promise<ChampionsApiResponse>;
+    })
     .then(({ data }) => {
       const champions: TChampion[] = Object.keys(data).map((key) => {
         const champion = data[key];
-
         return {
           name: champion.name,
           id: champion.id,
@@ -64,10 +69,24 @@ export async function GET(_: Request, context: { params: Promise<{ version: stri
       });
 
       log.info(`Returning ${champions.length} champions for version ${version}`);
-      return Response.json(champions);
+
+      return NextResponse.json(champions, {
+        headers: {
+          // Browser cache: 1 day (stable data)
+          'Cache-Control': 'public, max-age=86400, stale-while-revalidate=3600',
+        },
+      });
     })
     .catch((error) => {
       log.error('Failed to fetch champions', error);
-      return Response.json({ error: 'Failed to fetch champions' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Failed to fetch champions' },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'no-store',
+          },
+        },
+      );
     });
 }
