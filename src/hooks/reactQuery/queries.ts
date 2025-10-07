@@ -1,50 +1,47 @@
 import { fetchChampionsByVersion, fetchKcLeaderboard, fetchLatestLolVersion } from '@/api/LolApi';
-import { TChampion } from '@/types/ChampionType';
-import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 
-export const useFetchLatestLolVersion = (
-  options?: Omit<UseQueryOptions<string, Error>, 'queryKey' | 'queryFn'>,
-) =>
-  useQuery({
+export const latestLolVersionOptions = () =>
+  queryOptions({
+    queryKey: ['lol-latest-version'] as const,
+    queryFn: () => fetchLatestLolVersion(),
     staleTime: 30 * 60 * 1000, // 30 minutes
     gcTime: 60 * 60 * 1000, // 1 hour
-    ...options,
-    queryKey: ['lol-latest-version'],
-    queryFn: () => fetchLatestLolVersion(),
   });
 
-export const useFetchChampionsByVersion = (
-  lolVersion?: string,
-  options?: Omit<UseQueryOptions<TChampion[], Error>, 'queryKey' | 'queryFn'>,
-) =>
-  useQuery({
+export const championsByVersionOptions = (lolVersion: string) =>
+  queryOptions({
+    queryKey: ['lol-champions-by-version', lolVersion] as const,
+    queryFn: () => fetchChampionsByVersion(lolVersion),
     staleTime: 7 * 24 * 60 * 60 * 1000, // 1 week
     gcTime: 14 * 24 * 60 * 60 * 1000, // 2 weeks
-    enabled: !!lolVersion,
-    ...options,
-    queryKey: ['lol-champions-by-version', lolVersion],
-    queryFn: () => fetchChampionsByVersion(lolVersion!),
   });
 
-export const useFetchLatestChampions = (
-  options?: Omit<UseQueryOptions<TChampion[], Error>, 'queryKey' | 'queryFn'>,
-) => {
-  const { data: latestVersion } = useFetchLatestLolVersion();
+export const kcLeaderboardOptions = () =>
+  queryOptions({
+    queryKey: ['kc-leaderboard'] as const,
+    queryFn: () => fetchKcLeaderboard(),
+    staleTime: 30 * 60 * 1000, // 30 minutes
+    gcTime: 60 * 60 * 1000, // 1 hour
+  });
 
-  return useFetchChampionsByVersion(latestVersion, {
-    enabled: !!latestVersion,
-    ...options,
+export const useFetchLatestLolVersion = () => {
+  return useQuery(latestLolVersionOptions());
+};
+
+export const useFetchChampionsByVersion = (lolVersion?: string) => {
+  return useQuery({
+    ...championsByVersionOptions(lolVersion ?? ''),
+    enabled: !!lolVersion,
   });
 };
 
-export const useFetchKcLeaderboard = (
-  options?: Omit<UseQueryOptions<TPlayerLeaderboard[], Error>, 'queryKey' | 'queryFn'>,
-) =>
-  useQuery({
-    staleTime: 30 * 60 * 1000, // 30 minutes
-    gcTime: 60 * 60 * 1000, // 1 hour
-    ...options,
-    queryKey: ['kc-leaderboard'],
-    queryFn: () => fetchKcLeaderboard(),
-  });
+export const useFetchLatestChampions = () => {
+  const { data: latestVersion } = useFetchLatestLolVersion();
+
+  return useFetchChampionsByVersion(latestVersion);
+};
+
+export const useFetchKcLeaderboard = () => {
+  return useQuery(kcLeaderboardOptions());
+};
