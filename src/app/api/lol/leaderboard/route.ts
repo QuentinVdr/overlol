@@ -31,7 +31,6 @@ export function GET() {
         throw new Error('Unexpected KC leaderboard response shape');
       }
 
-      let leaderboardIndex = 1;
       const uniquePlayersMap = payload.players.reduce(
         (acc: Map<string, TPlayerLeaderboard>, player: TLeaderboardPlayer) => {
           const displayName = player.displayName;
@@ -45,7 +44,6 @@ export function GET() {
               tier: player.rank.tier,
               lp: player.rank.leaguePoints,
             });
-            leaderboardIndex++;
           }
           return acc;
         },
@@ -77,14 +75,13 @@ export function GET() {
           }
         })
         .then((data) => {
-          if (uniquePlayersMap.get('Hazel')?.lp! < data[0]?.leaguePoints) {
-            log.info(
-              `Overriding Hazel's LP from ${uniquePlayersMap.get('Hazel')?.lp} to ${data[0]?.leaguePoints}`,
-            );
-            uniquePlayersMap.get('Hazel')!.lp = data[0]?.leaguePoints;
-            uniquePlayersMap.get('Hazel')!.tier = data[0]?.tier;
-            uniquePlayersMap.get('Hazel')!.inGameName = 'Antarctica';
-            uniquePlayersMap.get('Hazel')!.tagLine = 'S B';
+          const hazelPlayer = uniquePlayersMap.get('Hazel');
+          if (hazelPlayer && data[0]?.leaguePoints && hazelPlayer.lp < data[0].leaguePoints) {
+            log.info(`Overriding Hazel's LP from ${hazelPlayer.lp} to ${data[0].leaguePoints}`);
+            hazelPlayer.lp = data[0].leaguePoints;
+            hazelPlayer.tier = data[0].tier;
+            hazelPlayer.inGameName = 'Antarctica';
+            hazelPlayer.tagLine = 'S B';
           }
         })
         .catch((error) => {
