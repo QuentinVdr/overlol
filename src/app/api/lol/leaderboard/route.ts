@@ -26,7 +26,7 @@ export function GET() {
       }
       return response.json() as Promise<TLeaderboardApiResponse>;
     })
-    .then((payload) => {
+    .then(async (payload) => {
       if (!payload?.players || !Array.isArray(payload.players)) {
         throw new Error('Unexpected KC leaderboard response shape');
       }
@@ -41,11 +41,9 @@ export function GET() {
               player: displayName,
               inGameName: player.gameName,
               tagLine: player.tagLine,
-              kcLeaderboardPosition: leaderboardIndex,
               rank: player.rank.rank,
               tier: player.rank.tier,
               lp: player.rank.leaguePoints,
-              isLive: player.isLive,
             });
             leaderboardIndex++;
           }
@@ -53,6 +51,45 @@ export function GET() {
         },
         new Map<string, TPlayerLeaderboard>(),
       );
+
+      const encryptedPUUID =
+        'WJhTXSEJFMgTMYiYdPxqt3m2F7v-Rqnba18343CKED1276nK7tsdAXQuGz-cNW1XqNkHfo9Ym-Bndw';
+      await fetch(
+        `https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${encryptedPUUID}`,
+        {
+          headers: {
+            accept: 'application/json',
+            'X-Riot-Token': process.env.NEXT_RIOT_API_KEY || '',
+          },
+          signal: AbortSignal.timeout(5000),
+          // Next.js Data Cache
+          next: {
+            revalidate,
+            tags: ['lol-leaderboard'],
+          },
+        },
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+        })
+        .then((data) => {
+          if (uniquePlayersMap.get('Hazel')?.lp! < data[0]?.leaguePoints) {
+            log.info(
+              `Overriding Hazel's LP from ${uniquePlayersMap.get('Hazel')?.lp} to ${data[0]?.leaguePoints}`,
+            );
+            uniquePlayersMap.get('Hazel')!.lp = data[0]?.leaguePoints;
+            uniquePlayersMap.get('Hazel')!.tier = data[0]?.tier;
+            uniquePlayersMap.get('Hazel')!.inGameName = 'Antarctica';
+            uniquePlayersMap.get('Hazel')!.tagLine = 'S B';
+          }
+        })
+        .catch((error) => {
+          log.error('Failed to fetch Override of Hazel', error);
+        });
 
       const leaderboard = Array.from(uniquePlayersMap.values());
       log.info(`Created leaderboard with ${leaderboard.length} unique players`);

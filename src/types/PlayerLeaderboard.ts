@@ -3,10 +3,8 @@ export type TPlayerLeaderboard = {
   player: string;
   inGameName: string;
   tagLine: string;
-  kcLeaderboardPosition: number;
   rank: string;
   tier: string;
   lp: number;
-  isLive: boolean;
   regionRank?: string;
 };
