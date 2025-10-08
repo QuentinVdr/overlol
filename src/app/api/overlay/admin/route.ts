@@ -1,11 +1,11 @@
-import { overlayService } from '@/db';
+import { OverlayService } from '@/lib/overlayService';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(_: Request) {
   try {
-    const cleanedCount = await overlayService.cleanupExpired();
-    const stats = await overlayService.getStats();
+    const cleanedCount = await OverlayService.cleanupExpired();
+    const stats = await OverlayService.getStats();
 
     const timestamp = new Date().toISOString();
     console.log(`[${timestamp}] Manual cleanup: Removed ${cleanedCount} expired overlays`);

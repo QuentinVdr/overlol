@@ -1,4 +1,4 @@
-import { overlayService } from '@/db';
+import { OverlayService } from '@/lib/overlayService';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +10,7 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       return Response.json({ error: "ID de l'overlay manquant" }, { status: 400 });
     }
 
-    const overlay = await overlayService.getOverlay(params.id);
+    const overlay = await OverlayService.getOverlay(params.id);
 
     if (!overlay) {
       return Response.json({ error: 'Overlay introuvable' }, { status: 404 });
@@ -33,7 +33,7 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
 
     const newData = await request.json();
 
-    const success = await overlayService.updateOverlay(params.id, newData);
+    const success = await OverlayService.updateOverlay(params.id, newData);
 
     if (!success) {
       return Response.json({ error: 'Overlay introuvable ou expiré' }, { status: 404 });
@@ -54,7 +54,7 @@ export async function DELETE(_: Request, context: { params: Promise<{ id: string
       return Response.json({ error: "ID de l'overlay manquant" }, { status: 400 });
     }
 
-    const success = await overlayService.deleteOverlay(params.id);
+    const success = await OverlayService.deleteOverlay(params.id);
 
     if (!success) {
       return Response.json({ error: 'Overlay introuvable' }, { status: 404 });

@@ -1,6 +1,6 @@
-import { overlayService } from '@/db';
 import { logger } from '@/utils/logger';
 import * as cron from 'node-cron';
+import { OverlayService } from './overlayService';
 
 const log = logger.child('scheduler');
 
@@ -33,7 +33,7 @@ export function startScheduler() {
     try {
       log.info('Running scheduled cleanup...');
 
-      await overlayService.cleanupExpired();
+      await OverlayService.cleanupExpired();
     } catch (error) {
       log.error('Error during scheduled cleanup:', error);
     }
@@ -45,7 +45,7 @@ export function startScheduler() {
   (async () => {
     try {
       log.info('Running initial cleanup on startup...');
-      await overlayService.cleanupExpired();
+      await OverlayService.cleanupExpired();
     } catch (error) {
       log.error('Error during initial cleanup:', error);
     }

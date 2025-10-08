@@ -1,11 +1,11 @@
-import { overlayService } from '@/db';
+import { OverlayService } from '@/lib/overlayService';
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const stats = await overlayService.getStats();
+    const stats = await OverlayService.getStats();
 
     return NextResponse.json(
       {
