@@ -8,6 +8,10 @@ const log = logger.child('scheduler');
  * Cleanup scheduler configuration
  */
 const CLEANUP_SCHEDULE = process.env.CLEANUP_CRON_SCHEDULE || '0 */6 * * *'; // Every 6 hours by default
+// Validate cron expression
+if (!cron.validate(CLEANUP_SCHEDULE)) {
+  log.error(`Invalid cron expression: ${CLEANUP_SCHEDULE}`);
+}
 const SCHEDULER_ENABLED = process.env.ENABLE_SCHEDULER !== 'false'; // Enabled by default
 
 let cleanupTask: ReturnType<typeof cron.schedule> | null = null;
