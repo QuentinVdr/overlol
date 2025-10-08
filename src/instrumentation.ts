@@ -9,7 +9,11 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
     // Only run on Node.js runtime (not Edge)
-    const { startScheduler } = await import('./lib/scheduler');
-    startScheduler();
+    try {
+      const { startScheduler } = await import('./lib/scheduler');
+      startScheduler();
+    } catch (error) {
+      console.error('Failed to initialize scheduler:', error);
+    }
   }
 }
