@@ -1,6 +1,6 @@
 import { UpdateOverlayForm } from '@/components/OverlayForm/UpdateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
-import { overlayService } from '@/db';
+import { OverlayService } from '@/lib/overlayService';
 import { getFullUrl } from '@/utils/url';
 import { redirect } from 'next/navigation';
 
@@ -12,7 +12,7 @@ export default async function UpdateOverlay({
     redirect('/');
   }
 
-  const overlay = await overlayService.getOverlay(id);
+  const overlay = await OverlayService.getOverlay(id);
 
   if (!overlay) {
     redirect('/');
