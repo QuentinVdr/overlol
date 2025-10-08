@@ -2,6 +2,7 @@ import { TLeaderboardApiResponse, TLeaderboardPlayer } from '@/types/Leaderboard
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 import { fetchRegionRank } from '@/utils/leaderboardUtils';
 import { logger } from '@/utils/logger';
+import { Strings } from '@/utils/stringUtils';
 import { NextResponse } from 'next/server';
 
 const log = logger.child('api:leaderboard');
@@ -50,43 +51,45 @@ export function GET() {
         new Map<string, TPlayerLeaderboard>(),
       );
 
-      const encryptedPUUID =
-        'WJhTXSEJFMgTMYiYdPxqt3m2F7v-Rqnba18343CKED1276nK7tsdAXQuGz-cNW1XqNkHfo9Ym-Bndw';
-      await fetch(
-        `https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${encryptedPUUID}`,
-        {
-          headers: {
-            accept: 'application/json',
-            'X-Riot-Token': process.env.NEXT_RIOT_API_KEY || '',
+      if (Strings.isNotBlank(process.env.NEXT_RIOT_API_KEY)) {
+        const encryptedPUUID =
+          'WJhTXSEJFMgTMYiYdPxqt3m2F7v-Rqnba18343CKED1276nK7tsdAXQuGz-cNW1XqNkHfo9Ym-Bndw';
+        await fetch(
+          `https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${encryptedPUUID}`,
+          {
+            headers: {
+              accept: 'application/json',
+              'X-Riot-Token': process.env.NEXT_RIOT_API_KEY!,
+            },
+            signal: AbortSignal.timeout(5000),
+            // Next.js Data Cache
+            next: {
+              revalidate,
+              tags: ['lol-leaderboard'],
+            },
           },
-          signal: AbortSignal.timeout(5000),
-          // Next.js Data Cache
-          next: {
-            revalidate,
-            tags: ['lol-leaderboard'],
-          },
-        },
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-        })
-        .then((data) => {
-          const hazelPlayer = uniquePlayersMap.get('Hazel');
-          if (hazelPlayer && data[0]?.leaguePoints && hazelPlayer.lp < data[0].leaguePoints) {
-            log.info(`Overriding Hazel's LP from ${hazelPlayer.lp} to ${data[0].leaguePoints}`);
-            hazelPlayer.lp = data[0].leaguePoints;
-            hazelPlayer.tier = data[0].tier;
-            hazelPlayer.inGameName = 'Antarctica';
-            hazelPlayer.tagLine = 'S B';
-          }
-        })
-        .catch((error) => {
-          log.error('Failed to fetch Override of Hazel', error);
-        });
+        )
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+          })
+          .then((data) => {
+            const hazelPlayer = uniquePlayersMap.get('Hazel');
+            if (hazelPlayer && data[0]?.leaguePoints && hazelPlayer.lp < data[0].leaguePoints) {
+              log.info(`Overriding Hazel's LP from ${hazelPlayer.lp} to ${data[0].leaguePoints}`);
+              hazelPlayer.lp = data[0].leaguePoints;
+              hazelPlayer.tier = data[0].tier;
+              hazelPlayer.inGameName = 'Antarctica';
+              hazelPlayer.tagLine = 'S B';
+            }
+          })
+          .catch((error) => {
+            log.error('Failed to fetch Override of Hazel', error);
+          });
+      }
 
       const leaderboard = Array.from(uniquePlayersMap.values());
       log.info(`Created leaderboard with ${leaderboard.length} unique players`);
