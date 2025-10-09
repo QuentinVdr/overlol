@@ -2,7 +2,7 @@
 
 import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const MAX_WIDTH = 334;
 const MAX_HEIGHT = 219;
@@ -18,11 +18,7 @@ export default function OverlayContent({
   const blueRef = useRef<HTMLDivElement>(null);
   const redRef = useRef<HTMLDivElement>(null);
 
-  // Memoize team data to prevent unnecessary recalculations when arrays have same content
-  const blueTeamKey = useMemo(() => JSON.stringify(blueTeam), [blueTeam]);
-  const redTeamKey = useMemo(() => JSON.stringify(redTeam), [redTeam]);
-
-  // Helper to fit font size for both width and height
+  // Adjust font size to fit content within container constraints
   useEffect(() => {
     if (blueRef.current) {
       let fontSize = 40;
@@ -36,7 +32,7 @@ export default function OverlayContent({
         height = blueRef.current.scrollHeight;
       }
     }
-  }, [blueTeamKey]);
+  }, [blueTeam]);
 
   useEffect(() => {
     if (redRef.current) {
@@ -51,7 +47,7 @@ export default function OverlayContent({
         height = redRef.current.scrollHeight;
       }
     }
-  }, [redTeamKey]);
+  }, [redTeam]);
 
   return (
     <>
