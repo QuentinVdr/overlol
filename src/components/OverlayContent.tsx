@@ -4,6 +4,10 @@ import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
 import { useEffect, useMemo, useRef } from 'react';
 
+const MAX_WIDTH = 334;
+const MAX_HEIGHT = 219;
+const MIN_FONT_SIZE = 12;
+
 export default function OverlayContent({
   blueTeam,
   redTeam,
@@ -13,9 +17,6 @@ export default function OverlayContent({
 }>) {
   const blueRef = useRef<HTMLDivElement>(null);
   const redRef = useRef<HTMLDivElement>(null);
-  const MAX_WIDTH = 334;
-  const MAX_HEIGHT = 219;
-  const MIN_FONT_SIZE = 12;
 
   // Memoize team data to prevent unnecessary recalculations when arrays have same content
   const blueTeamKey = useMemo(() => JSON.stringify(blueTeam), [blueTeam]);
