@@ -8,7 +8,7 @@ const log = logger.child('db:overlay');
 
 export const OverlayService = {
   // Get overlay by ID (only if not expired)
-  async getOverlay(id: string): Promise<OverlayEntity | null> {
+  getOverlay(id: string): OverlayEntity | null {
     try {
       const now = new Date();
       const row =
@@ -26,7 +26,7 @@ export const OverlayService = {
   },
 
   // Create a new overlay
-  async createOverlay(data: TOverlay, expirationHours: number = 2): Promise<string> {
+  createOverlay(data: TOverlay, expirationHours: number = 2): string {
     try {
       const id = crypto.randomUUID();
       const now = new Date();
@@ -40,7 +40,7 @@ export const OverlayService = {
         updatedAt: now,
       };
 
-      await db.insert(overlays).values(newOverlay);
+      db.insert(overlays).values(newOverlay).run();
       log.debug(`Created overlay with ID: ${id}`);
       return id;
     } catch (error) {
@@ -50,7 +50,7 @@ export const OverlayService = {
   },
 
   // Update existing overlay
-  async updateOverlay(id: string, data: TOverlay): Promise<boolean> {
+  updateOverlay(id: string, data: TOverlay): boolean {
     try {
       const now = new Date();
       const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000);
@@ -72,7 +72,7 @@ export const OverlayService = {
   },
 
   // Delete overlay
-  async deleteOverlay(id: string): Promise<boolean> {
+  deleteOverlay(id: string): boolean {
     try {
       const res = db.delete(overlays).where(eq(overlays.id, id)).run();
       if (res.changes > 0) {
@@ -86,7 +86,7 @@ export const OverlayService = {
   },
 
   // Clean up expired overlays
-  async cleanupExpired(): Promise<number> {
+  cleanupExpired(): number {
     try {
       const now = new Date();
       const res = db.delete(overlays).where(lt(overlays.expiresAt, now)).run();
@@ -101,7 +101,7 @@ export const OverlayService = {
   },
 
   // Get overlay count and stats
-  async getStats(): Promise<{ active: number }> {
+  getStats(): { active: number } {
     try {
       const now = new Date();
       const active = db

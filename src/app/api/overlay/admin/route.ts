@@ -4,8 +4,8 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(_: Request) {
   try {
-    const cleanedCount = await OverlayService.cleanupExpired();
-    const stats = await OverlayService.getStats();
+    const cleanedCount = OverlayService.cleanupExpired();
+    const stats = OverlayService.getStats();
 
     const timestamp = new Date().toISOString();
     console.log(`[${timestamp}] Manual cleanup: Removed ${cleanedCount} expired overlays`);

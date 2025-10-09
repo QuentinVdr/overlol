@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const stats = await OverlayService.getStats();
+    const stats = OverlayService.getStats();
 
     return NextResponse.json(
       {

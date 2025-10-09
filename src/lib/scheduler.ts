@@ -37,7 +37,7 @@ export function startScheduler() {
     try {
       log.info('Running scheduled cleanup...');
 
-      await OverlayService.cleanupExpired();
+      OverlayService.cleanupExpired();
     } catch (error) {
       log.error('Error during scheduled cleanup:', error);
     }
@@ -49,7 +49,7 @@ export function startScheduler() {
   (async () => {
     try {
       log.info('Running initial cleanup on startup...');
-      await OverlayService.cleanupExpired();
+      OverlayService.cleanupExpired();
     } catch (error) {
       log.error('Error during initial cleanup:', error);
     }
