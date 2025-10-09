@@ -2,7 +2,7 @@
 
 import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 export default function OverlayContent({
   blueTeam,
@@ -13,11 +13,13 @@ export default function OverlayContent({
 }>) {
   const blueRef = useRef<HTMLDivElement>(null);
   const redRef = useRef<HTMLDivElement>(null);
-  const [blueFontSize, setBlueFontSize] = useState(40); // px
-  const [redFontSize, setRedFontSize] = useState(40); // px
-  const maxWidth = 334;
-  const maxHeight = 219;
-  const minFontSize = 12;
+  const MAX_WIDTH = 334;
+  const MAX_HEIGHT = 219;
+  const MIN_FONT_SIZE = 12;
+
+  // Memoize team data to prevent unnecessary recalculations when arrays have same content
+  const blueTeamKey = useMemo(() => JSON.stringify(blueTeam), [blueTeam]);
+  const redTeamKey = useMemo(() => JSON.stringify(redTeam), [redTeam]);
 
   // Helper to fit font size for both width and height
   useEffect(() => {
@@ -26,15 +28,14 @@ export default function OverlayContent({
       blueRef.current.style.fontSize = fontSize + 'px';
       let width = blueRef.current.scrollWidth;
       let height = blueRef.current.scrollHeight;
-      while ((width > maxWidth || height > maxHeight) && fontSize > minFontSize) {
+      while ((width > MAX_WIDTH || height > MAX_HEIGHT) && fontSize > MIN_FONT_SIZE) {
         fontSize -= 1;
         blueRef.current.style.fontSize = fontSize + 'px';
         width = blueRef.current.scrollWidth;
         height = blueRef.current.scrollHeight;
       }
-      setBlueFontSize(fontSize);
     }
-  }, [blueTeam]);
+  }, [blueTeamKey]);
 
   useEffect(() => {
     if (redRef.current) {
@@ -42,20 +43,19 @@ export default function OverlayContent({
       redRef.current.style.fontSize = fontSize + 'px';
       let width = redRef.current.scrollWidth;
       let height = redRef.current.scrollHeight;
-      while ((width > maxWidth || height > maxHeight) && fontSize > minFontSize) {
+      while ((width > MAX_WIDTH || height > MAX_HEIGHT) && fontSize > MIN_FONT_SIZE) {
         fontSize -= 1;
         redRef.current.style.fontSize = fontSize + 'px';
         width = redRef.current.scrollWidth;
         height = redRef.current.scrollHeight;
       }
-      setRedFontSize(fontSize);
     }
-  }, [redTeam]);
+  }, [redTeamKey]);
 
   return (
     <>
       <div className="absolute bottom-0 left-[288px] flex max-h-[219px] w-[334px] flex-col bg-zinc-900/40 backdrop-blur-sm">
-        <div ref={blueRef} style={{ fontSize: blueFontSize }}>
+        <div ref={blueRef}>
           {blueTeam
             .filter(
               (player) =>
@@ -73,7 +73,7 @@ export default function OverlayContent({
         </div>
       </div>
       <div className="absolute right-[276px] bottom-0 flex max-h-[219px] w-[334px] flex-col bg-zinc-900/40 backdrop-blur-sm">
-        <div ref={redRef} style={{ fontSize: redFontSize }}>
+        <div ref={redRef}>
           {redTeam
             .filter(
               (player) =>
