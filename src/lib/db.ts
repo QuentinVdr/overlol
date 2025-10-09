@@ -21,56 +21,91 @@ export const db = drizzle(sqlite);
 
 const log = logger.child('db');
 
+// Track if handlers are already registered (prevents HMR duplicates)
+let handlersRegistered = false;
+// Track if database is closed to prevent double-close
+let isDatabaseClosed = false;
+
 /**
  * Close the database connection gracefully
  * Should be called when the application is shutting down
  */
 export function closeDatabase(): void {
+  // Prevent closing an already-closed database
+  if (!sqlite || isDatabaseClosed) {
+    log.debug('Database already closed, skipping');
+    return;
+  }
+
   try {
     sqlite.close();
+    isDatabaseClosed = true;
     log.info('Database connection closed');
   } catch (error) {
     log.error('Error closing database:', error);
   }
 }
 
-// Setup cleanup handlers for graceful shutdown
-const cleanup = () => {
-  log.info('Cleaning up database connection...');
+// Named handler functions for proper deduplication
+
+const handleSigint = () => {
+  log.info('Received SIGINT, cleaning up...');
+  closeDatabase();
+  process.exit(0);
+};
+
+const handleSigterm = () => {
+  log.info('Received SIGTERM, cleaning up...');
+  closeDatabase();
+  process.exit(0);
+};
+
+const handleBeforeExit = () => {
+  log.info('Process beforeExit, cleaning up...');
   closeDatabase();
 };
 
-// Handle different shutdown signals with deduplication to prevent memory leaks
-// Only add listeners if they haven't been added yet (prevents accumulation in HMR)
-if (!process.listenerCount('SIGINT')) {
-  process.on('SIGINT', cleanup);
-}
-
-if (!process.listenerCount('SIGTERM')) {
-  process.on('SIGTERM', cleanup);
-}
-
-if (!process.listenerCount('beforeExit')) {
-  process.on('beforeExit', cleanup);
-}
-
-// Handle uncaught errors with deduplication
-const uncaughtExceptionHandler = (error: Error) => {
+const handleUncaughtException = (error: Error) => {
   log.error('Uncaught exception:', error);
   closeDatabase();
   process.exit(1);
 };
 
-if (!process.listenerCount('uncaughtException')) {
-  process.on('uncaughtException', uncaughtExceptionHandler);
-}
-
-const unhandledRejectionHandler = (reason: unknown, promise: Promise<unknown>) => {
+const handleUnhandledRejection = (reason: unknown, promise: Promise<unknown>) => {
   log.error('Unhandled rejection at:', promise, 'reason:', reason);
   closeDatabase();
   process.exit(1);
 };
 
-if (!process.listenerCount('unhandledRejection')) {
-  process.on('unhandledRejection', unhandledRejectionHandler);
+// Register handlers only once (prevents accumulation in HMR)
+if (!handlersRegistered) {
+  // Check if specific handlers are already registered
+  const sigintListeners = process.listeners('SIGINT');
+  const sigtermListeners = process.listeners('SIGTERM');
+  const beforeExitListeners = process.listeners('beforeExit');
+  const uncaughtExceptionListeners = process.listeners('uncaughtException');
+  const unhandledRejectionListeners = process.listeners('unhandledRejection');
+
+  if (!sigintListeners.includes(handleSigint)) {
+    process.on('SIGINT', handleSigint);
+  }
+
+  if (!sigtermListeners.includes(handleSigterm)) {
+    process.on('SIGTERM', handleSigterm);
+  }
+
+  if (!beforeExitListeners.includes(handleBeforeExit)) {
+    process.on('beforeExit', handleBeforeExit);
+  }
+
+  if (!uncaughtExceptionListeners.includes(handleUncaughtException)) {
+    process.on('uncaughtException', handleUncaughtException);
+  }
+
+  if (!unhandledRejectionListeners.includes(handleUnhandledRejection)) {
+    process.on('unhandledRejection', handleUnhandledRejection);
+  }
+
+  handlersRegistered = true;
+  log.debug('Database cleanup handlers registered');
 }
