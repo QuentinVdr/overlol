@@ -21,8 +21,6 @@ export const db = drizzle(sqlite);
 
 const log = logger.child('db');
 
-// Track if handlers are already registered (prevents HMR duplicates)
-let handlersRegistered = false;
 // Track if database is closed to prevent double-close
 let isDatabaseClosed = false;
 
@@ -46,66 +44,89 @@ export function closeDatabase(): void {
   }
 }
 
-// Named handler functions for proper deduplication
+// Persist handlers and registration state on globalThis to survive HMR reloads
+// This prevents duplicate process listeners across module reloads
+declare global {
+  // eslint-disable-next-line no-var
+  var __overlol_dbHandlers:
+    | {
+        registered: boolean;
+        handleSigint: () => void;
+        handleSigterm: () => void;
+        handleBeforeExit: () => void;
+        handleUncaughtException: (error: Error) => void;
+        handleUnhandledRejection: (reason: unknown, promise: Promise<unknown>) => void;
+      }
+    | undefined;
+}
 
-const handleSigint = () => {
-  log.info('Received SIGINT, cleaning up...');
-  closeDatabase();
-  process.exit(0);
+// Initialize or reuse handlers from globalThis (survives HMR reloads)
+globalThis.__overlol_dbHandlers ??= {
+  registered: false,
+
+  handleSigint: () => {
+    log.info('Received SIGINT, cleaning up...');
+    closeDatabase();
+    process.exit(0);
+  },
+
+  handleSigterm: () => {
+    log.info('Received SIGTERM, cleaning up...');
+    closeDatabase();
+    process.exit(0);
+  },
+
+  handleBeforeExit: () => {
+    log.info('Process beforeExit, cleaning up...');
+    closeDatabase();
+  },
+
+  handleUncaughtException: (error: Error) => {
+    log.error('Uncaught exception:', error);
+    closeDatabase();
+    process.exit(1);
+  },
+
+  handleUnhandledRejection: (reason: unknown, promise: Promise<unknown>) => {
+    log.error('Unhandled rejection at:', promise, 'reason:', reason);
+    closeDatabase();
+    process.exit(1);
+  },
 };
 
-const handleSigterm = () => {
-  log.info('Received SIGTERM, cleaning up...');
-  closeDatabase();
-  process.exit(0);
-};
+// Get handlers from global storage
+const handlers = globalThis.__overlol_dbHandlers;
 
-const handleBeforeExit = () => {
-  log.info('Process beforeExit, cleaning up...');
-  closeDatabase();
-};
-
-const handleUncaughtException = (error: Error) => {
-  log.error('Uncaught exception:', error);
-  closeDatabase();
-  process.exit(1);
-};
-
-const handleUnhandledRejection = (reason: unknown, promise: Promise<unknown>) => {
-  log.error('Unhandled rejection at:', promise, 'reason:', reason);
-  closeDatabase();
-  process.exit(1);
-};
-
-// Register handlers only once (prevents accumulation in HMR)
-if (!handlersRegistered) {
-  // Check if specific handlers are already registered
+// Register handlers only once using the persisted flag and function references
+if (!handlers.registered) {
+  // Check if specific handlers are already registered (extra safety)
   const sigintListeners = process.listeners('SIGINT');
   const sigtermListeners = process.listeners('SIGTERM');
   const beforeExitListeners = process.listeners('beforeExit');
   const uncaughtExceptionListeners = process.listeners('uncaughtException');
   const unhandledRejectionListeners = process.listeners('unhandledRejection');
 
-  if (!sigintListeners.includes(handleSigint)) {
-    process.on('SIGINT', handleSigint);
+  if (!sigintListeners.includes(handlers.handleSigint)) {
+    process.on('SIGINT', handlers.handleSigint);
   }
 
-  if (!sigtermListeners.includes(handleSigterm)) {
-    process.on('SIGTERM', handleSigterm);
+  if (!sigtermListeners.includes(handlers.handleSigterm)) {
+    process.on('SIGTERM', handlers.handleSigterm);
   }
 
-  if (!beforeExitListeners.includes(handleBeforeExit)) {
-    process.on('beforeExit', handleBeforeExit);
+  if (!beforeExitListeners.includes(handlers.handleBeforeExit)) {
+    process.on('beforeExit', handlers.handleBeforeExit);
   }
 
-  if (!uncaughtExceptionListeners.includes(handleUncaughtException)) {
-    process.on('uncaughtException', handleUncaughtException);
+  if (!uncaughtExceptionListeners.includes(handlers.handleUncaughtException)) {
+    process.on('uncaughtException', handlers.handleUncaughtException);
   }
 
-  if (!unhandledRejectionListeners.includes(handleUnhandledRejection)) {
-    process.on('unhandledRejection', handleUnhandledRejection);
+  if (!unhandledRejectionListeners.includes(handlers.handleUnhandledRejection)) {
+    process.on('unhandledRejection', handlers.handleUnhandledRejection);
   }
 
-  handlersRegistered = true;
+  // Mark as registered in the persisted global state
+  handlers.registered = true;
   log.debug('Database cleanup handlers registered');
 }
