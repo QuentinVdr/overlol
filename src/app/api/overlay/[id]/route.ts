@@ -1,4 +1,7 @@
 import { OverlayService } from '@/lib/overlayService';
+import { logger } from '@/utils/logger';
+
+const log = logger.child('api:overlay');
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +21,7 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
 
     return Response.json(overlay.data);
   } catch (error) {
-    console.error('Error in GET /api/overlay/[id]:', error);
+    log.error('Error in GET /api/overlay/[id]:', error);
     return Response.json({ error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
@@ -41,7 +44,7 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
 
     return Response.json({ success: true });
   } catch (error) {
-    console.error('Error in PUT /api/overlay/[id]:', error);
+    log.error('Error in PUT /api/overlay/[id]:', error);
     return Response.json({ error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
@@ -62,7 +65,7 @@ export async function DELETE(_: Request, context: { params: Promise<{ id: string
 
     return Response.json({ success: true });
   } catch (error) {
-    console.error('Error in DELETE /api/overlay/[id]:', error);
+    log.error('Error in DELETE /api/overlay/[id]:', error);
     return Response.json({ error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }

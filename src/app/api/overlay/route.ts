@@ -1,4 +1,7 @@
 import { OverlayService } from '@/lib/overlayService';
+import { logger } from '@/utils/logger';
+
+const log = logger.child('api:overlay');
 
 export async function POST(request: Request) {
   try {
@@ -8,7 +11,7 @@ export async function POST(request: Request) {
 
     return Response.json({ overlayId });
   } catch (error) {
-    console.error('Error creating overlay:', error);
-    return Response.json({ error: 'Erreur serveur' }, { status: 500 });
+    log.error('Error creating overlay:', error);
+    return Response.json({ error: 'Server error' }, { status: 500 });
   }
 }
