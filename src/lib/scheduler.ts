@@ -10,8 +10,8 @@ const log = logger.child('scheduler');
 let cleanupCronSchedule = process.env.CLEANUP_CRON_SCHEDULE;
 // Validate cron expression
 if (cleanupCronSchedule && !cron.validate(cleanupCronSchedule)) {
-  cleanupCronSchedule = undefined;
   log.error(`Invalid cron expression: ${cleanupCronSchedule}`);
+  cleanupCronSchedule = undefined;
 }
 const CLEANUP_SCHEDULE = cleanupCronSchedule || '0 */6 * * *'; // Every 6 hours by default
 const SCHEDULER_ENABLED = process.env.ENABLE_SCHEDULER !== 'false'; // Enabled by default
@@ -35,7 +35,7 @@ export function startScheduler() {
 
   log.info(`Starting cleanup scheduler with schedule: ${CLEANUP_SCHEDULE}`);
 
-  cleanupTask = cron.schedule(CLEANUP_SCHEDULE, async () => {
+  cleanupTask = cron.schedule(CLEANUP_SCHEDULE, () => {
     try {
       log.info('Running scheduled cleanup...');
 
@@ -48,7 +48,7 @@ export function startScheduler() {
   log.info('Cleanup scheduler started successfully');
 
   // Run initial cleanup on startup
-  (async () => {
+  (() => {
     try {
       log.info('Running initial cleanup on startup...');
       OverlayService.cleanupExpired();
