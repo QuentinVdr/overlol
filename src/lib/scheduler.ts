@@ -48,14 +48,12 @@ export function startScheduler() {
   log.info('Cleanup scheduler started successfully');
 
   // Run initial cleanup on startup
-  (() => {
-    try {
-      log.info('Running initial cleanup on startup...');
-      OverlayService.cleanupExpired();
-    } catch (error) {
-      log.error('Error during initial cleanup:', error);
-    }
-  })();
+  try {
+    log.info('Running initial cleanup on startup...');
+    OverlayService.cleanupExpired();
+  } catch (error) {
+    log.error('Error during initial cleanup:', error);
+  }
 }
 
 /**

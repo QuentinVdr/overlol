@@ -50,10 +50,10 @@ export const OverlayService = {
   },
 
   // Update existing overlay
-  updateOverlay(id: string, data: TOverlay): boolean {
+  updateOverlay(id: string, data: TOverlay, expirationHours: number = 2): boolean {
     try {
       const now = new Date();
-      const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+      const expiresAt = new Date(now.getTime() + expirationHours * 60 * 60 * 1000);
 
       const res = db
         .update(overlays)
