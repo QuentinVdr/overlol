@@ -12,7 +12,7 @@ export default async function UpdateOverlay({
     redirect('/');
   }
 
-  const overlay = await OverlayService.getOverlay(id);
+  const overlay = OverlayService.getOverlay(id);
 
   if (!overlay) {
     redirect('/');

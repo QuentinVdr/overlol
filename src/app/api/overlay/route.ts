@@ -4,7 +4,7 @@ export async function POST(request: Request) {
   try {
     const config = await request.json();
 
-    const overlayId = await OverlayService.createOverlay(config);
+    const overlayId = OverlayService.createOverlay(config);
 
     return Response.json({ overlayId });
   } catch (error) {

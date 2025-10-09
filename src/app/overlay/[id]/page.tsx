@@ -7,7 +7,7 @@ export default async function Overlay({ params }: Readonly<{ params: Promise<{ i
   if (!id) {
     redirect('/');
   }
-  const overlay = await OverlayService.getOverlay(id);
+  const overlay = OverlayService.getOverlay(id);
 
   if (!overlay) {
     return (
