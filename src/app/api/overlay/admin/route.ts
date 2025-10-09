@@ -2,7 +2,7 @@ import { OverlayService } from '@/lib/overlayService';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(_: Request) {
+export async function POST(_request: Request) {
   try {
     const cleanedCount = OverlayService.cleanupExpired();
     const stats = OverlayService.getStats();

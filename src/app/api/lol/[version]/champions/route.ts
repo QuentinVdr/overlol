@@ -40,7 +40,7 @@ interface ChampionsApiResponse {
   data: Record<string, ChampionApiData>;
 }
 
-export async function GET(_: Request, context: { params: Promise<{ version: string }> }) {
+export async function GET(_request: Request, context: { params: Promise<{ version: string }> }) {
   const { version } = await context.params;
 
   return fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/fr_FR/champion.json`, {
