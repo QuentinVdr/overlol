@@ -1,8 +1,13 @@
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
-import * as cheerio from 'cheerio';
 import { logger } from './logger';
 
 const log = logger.child('api:leaderboard:fetchRegionRank');
+
+const extractRegionRank = (html: string): string => {
+  // Pattern supports numbers with commas (e.g., "1,234")
+  const match = /Ladder Rank\s+<span[^>]*>([\d,]+)<\/span>/.exec(html);
+  return match?.[1] ?? '';
+};
 
 /**
  * Fetch regional rank for players with batching to reduce memory usage
@@ -24,7 +29,7 @@ export const fetchRegionRank = async (
       player.inGameName,
     )}-${encodeURIComponent(player.tagLine)}`;
 
-    log.debug(`Fetching: ${index + 1}/${total} ${player.inGameName}`);
+    log.debug(`Fetching: ${index + 1}/${total} ${player.inGameName}#${player.tagLine}`);
 
     try {
       const response = await fetch(url, {
@@ -41,31 +46,15 @@ export const fetchRegionRank = async (
 
       const html = await response.text();
 
-      // Load with minimal options to reduce memory usage
-      const $ = cheerio.load(html, { xml: false });
+      const regionRank = extractRegionRank(html);
 
-      const selectors = [
-        '#content-header > div:nth-child(1) > div > div > div > div > div > div > div.flex.flex-wrap.items-center.gap-2 > div > ul > li:nth-child(2) > a > span > span',
-        '#content-header > div:nth-child(1) > div > div > div > div > div > div > div.flex.flex-wrap.items-center.gap-2 > div > ul > li:nth-child(3) > a > span > span',
-      ];
-
-      let regionRank = '';
-      for (const selector of selectors) {
-        const text = $(selector).text().trim();
-        if (text) {
-          regionRank = text;
-          break;
-        }
-      }
-
-      log.debug(`Found region rank for ${player.inGameName}: ${regionRank || 'N/A'}`);
-
-      // Explicitly clean up Cheerio instance
-      $.root().empty();
+      log.debug(
+        `Found region rank for ${player.inGameName}#${player.tagLine}: ${regionRank || 'N/A'}`,
+      );
 
       return { ...player, regionRank };
     } catch (error) {
-      log.error(`Error fetching rank for ${player.inGameName}:`, error);
+      log.error(`Error fetching rank for ${player.inGameName}#${player.tagLine}:`, error);
       return { ...player, regionRank: '' };
     }
   };
