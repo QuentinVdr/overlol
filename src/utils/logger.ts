@@ -6,12 +6,15 @@ interface LoggerConfig {
 }
 
 class Logger {
-  private prefix: string;
-  private enableDebug: boolean;
+  private readonly prefix: string;
+  private readonly enableDebug: boolean;
+  // Cache child loggers to prevent creating duplicate instances
+  private readonly childrenCache: Map<string, Logger>;
 
   constructor(config: LoggerConfig = {}) {
     this.prefix = config.prefix || '';
     this.enableDebug = config.enableDebug ?? process.env.NODE_ENV === 'development';
+    this.childrenCache = new Map();
   }
 
   private formatMessage(level: LogLevel, message: string): string {
@@ -47,10 +50,33 @@ class Logger {
   }
 
   child(prefix: string): Logger {
-    return new Logger({
+    // Return cached child logger if it exists
+    if (this.childrenCache.has(prefix)) {
+      return this.childrenCache.get(prefix)!;
+    }
+
+    // Create new child logger and cache it
+    const childLogger = new Logger({
       prefix: this.prefix ? `${this.prefix}:${prefix}` : prefix,
       enableDebug: this.enableDebug,
     });
+
+    this.childrenCache.set(prefix, childLogger);
+    return childLogger;
+  }
+
+  /**
+   * Clear the child logger cache (useful for testing or memory cleanup)
+   */
+  clearCache(): void {
+    this.childrenCache.clear();
+  }
+
+  /**
+   * Get the number of cached child loggers
+   */
+  getCacheSize(): number {
+    return this.childrenCache.size;
   }
 }
 
