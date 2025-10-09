@@ -5,7 +5,7 @@ const log = logger.child('api:overlay');
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(_: Request, context: { params: Promise<{ id: string }> }) {
+export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const params = await context.params;
 
@@ -49,7 +49,7 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
   }
 }
 
-export async function DELETE(_: Request, context: { params: Promise<{ id: string }> }) {
+export async function DELETE(_request: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const params = await context.params;
 
