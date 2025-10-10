@@ -207,6 +207,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            NEXT_RIOT_API_KEY=${{ secrets.NEXT_RIOT_API_KEY }}
+            NEXT_HAZEL_ALT_PUUID=${{ secrets.NEXT_HAZEL_ALT_PUUID }}
 
   deploy:
     name: Deploy to Coolify

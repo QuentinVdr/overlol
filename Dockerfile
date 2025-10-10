@@ -16,6 +16,15 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Define build arguments for private environment variables
+ARG NEXT_RIOT_API_KEY
+ARG NEXT_HAZEL_ALT_PUUID
+# Add any other private variables your app needs during build
+
+# Make them available as environment variables during build
+ENV NEXT_RIOT_API_KEY=$NEXT_RIOT_API_KEY
+ENV NEXT_HAZEL_ALT_PUUID=$NEXT_HAZEL_ALT_PUUID
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
