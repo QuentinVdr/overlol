@@ -40,6 +40,8 @@ interface ChampionsApiResponse {
   data: Record<string, ChampionApiData>;
 }
 
+export const revalidate = 604800; // 7 days
+
 export async function GET(_request: Request, context: { params: Promise<{ version: string }> }) {
   const { version } = await context.params;
 
