@@ -51,15 +51,16 @@ export function GET() {
         new Map<string, TPlayerLeaderboard>(),
       );
 
-      if (Strings.isNotBlank(process.env.NEXT_RIOT_API_KEY)) {
-        const encryptedPUUID =
-          'WJhTXSEJFMgTMYiYdPxqt3m2F7v-Rqnba18343CKED1276nK7tsdAXQuGz-cNW1XqNkHfo9Ym-Bndw';
+      const riotApiKey = process.env.NEXT_RIOT_API_KEY;
+      const encryptedPUUID = process.env.NEXT_HAZEL_ALT_PUUID;
+
+      if (Strings.isNotBlank(riotApiKey) && Strings.isNotBlank(encryptedPUUID)) {
         await fetch(
           `https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${encryptedPUUID}`,
           {
             headers: {
               accept: 'application/json',
-              'X-Riot-Token': process.env.NEXT_RIOT_API_KEY!,
+              'X-Riot-Token': riotApiKey!,
             },
             signal: AbortSignal.timeout(5000),
             // Next.js Data Cache
