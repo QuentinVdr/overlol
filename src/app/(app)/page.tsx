@@ -1,6 +1,6 @@
 import { CreateOverlayForm } from '@/components/OverlayForm/CreateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
-import { getLatestChampions } from '@/lib/serverApi';
+import { getLatestChampions } from '@/lib/championApi';
 import { TChampion } from '@/types/ChampionType';
 import { getFullUrl } from '@/utils/url';
 
