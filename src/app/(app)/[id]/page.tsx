@@ -1,6 +1,8 @@
 import { UpdateOverlayForm } from '@/components/OverlayForm/UpdateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
 import { OverlayService } from '@/lib/overlayService';
+import { getLatestChampions } from '@/lib/serverApi';
+import { TChampion } from '@/types/ChampionType';
 import { getFullUrl } from '@/utils/url';
 import { redirect } from 'next/navigation';
 
@@ -18,6 +20,15 @@ export default async function UpdateOverlay({
     redirect('/');
   }
 
+  let champions: TChampion[];
+
+  try {
+    champions = await getLatestChampions();
+  } catch (error) {
+    console.error('Failed to fetch champions data:', error);
+    champions = [];
+  }
+
   return (
     <main className="flex h-full w-full flex-col gap-4 px-3 py-2 md:px-8">
       <h1>Update Overlay</h1>
@@ -25,7 +36,7 @@ export default async function UpdateOverlay({
         title={`Overlay in game ${id}`}
         overlayUrl={await getFullUrl(`/overlay/${id}`)}
       />
-      <UpdateOverlayForm id={id} overlay={overlay.data} />
+      <UpdateOverlayForm id={id} overlay={overlay.data} champions={champions} />
     </main>
   );
 }

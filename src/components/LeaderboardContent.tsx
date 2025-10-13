@@ -1,21 +1,32 @@
-'use client';
+import { getKcLeaderboard } from '@/lib/serverApi';
+import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 
-import { useFetchKcLeaderboard } from '@/hooks/reactQuery/queries';
+export default async function LeaderboardContent() {
+  let leaderboard: TPlayerLeaderboard[];
 
-export default function LeaderboardContent() {
-  const { data: leaderboard } = useFetchKcLeaderboard();
+  try {
+    leaderboard = await getKcLeaderboard();
+  } catch (error) {
+    console.warn('Failed to fetch leaderboard data:', error);
+    leaderboard = [];
+  }
 
-  leaderboard?.sort((a, b) => b.lp - a.lp);
+  // Sort leaderboard by LP in descending order
+  const sortedLeaderboard = [...leaderboard].sort((a, b) => b.lp - a.lp);
 
   return (
     <div className="absolute top-[148px] left-[72px] flex h-174 w-[454px] flex-col justify-around gap-2 bg-zinc-900/40 text-[21px] font-bold text-white">
-      {leaderboard?.map((player, index) => (
-        <div key={index + player.player}>
-          #{index + 1}. {player.player}:{' '}
-          <span className="capitalize">{player.tier.toLowerCase()}</span> {player.lp}LP [Rank:{' '}
-          {player.regionRank}]
-        </div>
-      ))}
+      {sortedLeaderboard.length > 0 ? (
+        sortedLeaderboard.map((player, index) => (
+          <div key={player.player}>
+            #{index + 1}. {player.player}:{' '}
+            <span className="capitalize">{player.tier.toLowerCase()}</span> {player.lp}LP [Rank:{' '}
+            {player.regionRank}]
+          </div>
+        ))
+      ) : (
+        <div>No leaderboard data available.</div>
+      )}
     </div>
   );
 }
