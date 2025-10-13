@@ -1,7 +1,7 @@
 import { UpdateOverlayForm } from '@/components/OverlayForm/UpdateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
+import { getLatestChampions } from '@/lib/championApi';
 import { OverlayService } from '@/lib/overlayService';
-import { getLatestChampions } from '@/lib/serverApi';
 import { TChampion } from '@/types/ChampionType';
 import { getFullUrl } from '@/utils/url';
 import { redirect } from 'next/navigation';

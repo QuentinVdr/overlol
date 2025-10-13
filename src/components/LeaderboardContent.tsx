@@ -1,4 +1,4 @@
-import { getKcLeaderboard } from '@/lib/serverApi';
+import { getKcLeaderboard } from '@/lib/leaderboardApi';
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 
 export default async function LeaderboardContent() {
