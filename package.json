@@ -14,8 +14,6 @@
     "db:ci": "mkdir -p .overlay-storage && pnpm db:generate && drizzle-kit migrate"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.85.9",
-    "@tanstack/react-query-devtools": "^5.85.9",
     "better-sqlite3": "^12.2.0",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.5",
@@ -28,7 +26,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.12",
-    "@tanstack/eslint-plugin-query": "^5.83.1",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^20.19.11",
     "@types/react": "^19.1.12",
