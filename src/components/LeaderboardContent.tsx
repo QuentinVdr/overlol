@@ -15,7 +15,7 @@ export default async function LeaderboardContent() {
   const sortedLeaderboard = [...leaderboard].sort((a, b) => b.lp - a.lp);
 
   return (
-    <div className="absolute top-[148px] left-[72px] flex h-174 w-[454px] flex-col justify-around gap-2 bg-zinc-900/40 text-[21px] font-bold text-white">
+    <div className="absolute top-[148px] left-[72px] flex h-174 w-[454px] flex-col justify-around gap-2 bg-zinc-900/40 text-[20px] font-bold text-white">
       {sortedLeaderboard.length > 0 ? (
         sortedLeaderboard.map((player, index) => (
           <div key={player.player}>
