@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 const MAX_WIDTH = 334;
 const MAX_HEIGHT = 219;
 const MIN_FONT_SIZE = 12;
+const MAX_FONT_SIZE = 36;
 
 export default function OverlayContent({
   blueTeam,
@@ -21,7 +22,7 @@ export default function OverlayContent({
   // Adjust font size to fit content within container constraints
   useEffect(() => {
     if (blueRef.current) {
-      let fontSize = 40;
+      let fontSize = MAX_FONT_SIZE;
       blueRef.current.style.fontSize = fontSize + 'px';
       let width = blueRef.current.scrollWidth;
       let height = blueRef.current.scrollHeight;
@@ -36,7 +37,7 @@ export default function OverlayContent({
 
   useEffect(() => {
     if (redRef.current) {
-      let fontSize = 40;
+      let fontSize = MAX_FONT_SIZE;
       redRef.current.style.fontSize = fontSize + 'px';
       let width = redRef.current.scrollWidth;
       let height = redRef.current.scrollHeight;
