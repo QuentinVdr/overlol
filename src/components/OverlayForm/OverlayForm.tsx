@@ -21,8 +21,16 @@ export function OverlayForm({
   const { register, handleSubmit, setValue } = useForm<TOverlay>({
     defaultValues: {
       ...(defaultValues || {
-        blueTeam: Array(5).fill({ playerName: '', championName: '', teamName: '' }),
-        redTeam: Array(5).fill({ playerName: '', championName: '', teamName: '' }),
+        blueTeam: Array.from({ length: 5 }, () => ({
+          playerName: '',
+          championName: '',
+          teamName: '',
+        })),
+        redTeam: Array.from({ length: 5 }, () => ({
+          playerName: '',
+          championName: '',
+          teamName: '',
+        })),
       }),
     },
   });
