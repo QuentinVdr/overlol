@@ -34,10 +34,10 @@ export const fetchRegionRank = async (
     try {
       const response = await fetch(url, {
         signal: AbortSignal.timeout(15000),
+        cache: 'no-store',
         headers: {
           Accept: 'text/html',
           'Accept-Encoding': 'gzip, deflate',
-          cache: 'no-store',
         },
       });
 
