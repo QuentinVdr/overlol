@@ -37,6 +37,7 @@ export const fetchRegionRank = async (
         headers: {
           Accept: 'text/html',
           'Accept-Encoding': 'gzip, deflate',
+          cache: 'no-store',
         },
       });
 

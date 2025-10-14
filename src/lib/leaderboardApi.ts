@@ -20,6 +20,7 @@ async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
     {
       headers: { accept: 'application/json' },
       signal: AbortSignal.timeout(5000),
+      cache: 'no-store',
     },
   );
 
@@ -66,6 +67,7 @@ async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
           headers: {
             accept: 'application/json',
             'X-Riot-Token': riotApiKey!,
+            cache: 'no-store',
           },
           signal: AbortSignal.timeout(5000),
         },
