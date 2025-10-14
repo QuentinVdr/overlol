@@ -5,14 +5,10 @@ import { TChampion } from '@/types/ChampionType';
 import { getFullUrl } from '@/utils/url';
 
 export default async function Home() {
-  let champions: TChampion[];
-
-  try {
-    champions = await getLatestChampions();
-  } catch (error) {
+  const champions = await getLatestChampions().catch((error) => {
     console.error('Failed to fetch champions data:', error);
-    champions = [];
-  }
+    return [] as TChampion[];
+  });
 
   return (
     <main className="flex h-full w-full flex-col gap-4 px-3 py-2 md:px-8">

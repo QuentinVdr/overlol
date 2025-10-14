@@ -73,18 +73,16 @@ async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
 
       if (riotResponse.ok) {
         const riotData = await riotResponse.json();
-        if (Array.isArray(riotData) && riotData[0]) {
-          const hazelData = riotData[0];
-          uniquePlayersMap.set('Hazel Alt', {
-            team: 'KC',
-            player: 'Hazel Alt',
-            inGameName: 'Hazel Alt',
-            tagLine: 'ALT',
-            rank: hazelData.rank || 'I',
-            tier: hazelData.tier || 'CHALLENGER',
-            lp: hazelData.leaguePoints || 0,
-            regionRank: '',
-          });
+        const hazelData = riotData[0];
+        if (Array.isArray(riotData) && hazelData) {
+          const hazelPlayer = uniquePlayersMap.get('Hazel');
+          if (hazelPlayer && hazelData?.leaguePoints && hazelPlayer.lp < hazelData.leaguePoints) {
+            log.info(`Overriding Hazel's LP from ${hazelPlayer.lp} to ${hazelData.leaguePoints}`);
+            hazelPlayer.lp = hazelData.leaguePoints;
+            hazelPlayer.tier = hazelData.tier;
+            hazelPlayer.inGameName = 'Antarctica';
+            hazelPlayer.tagLine = 'S B';
+          }
         }
       }
     } catch (error) {
@@ -125,11 +123,6 @@ const getCachedKcLeaderboard = unstable_cache(
  * @returns {Promise<TPlayerLeaderboard[]>} A promise with the leaderboard data.
  */
 export async function getKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
-  // During build time, return empty array to avoid network calls
-  if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL) {
-    return [];
-  }
-
   try {
     return await getCachedKcLeaderboard();
   } catch (error) {
