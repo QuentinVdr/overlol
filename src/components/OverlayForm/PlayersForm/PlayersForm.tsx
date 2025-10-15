@@ -12,11 +12,14 @@ type PlayersFormProps = {
 export function PlayersForm({ register, setValue, teamName }: Readonly<PlayersFormProps>) {
   return (
     <div className="flex flex-col gap-2">
-      <PlayerForm register={register} setValue={setValue} fieldPrefix={`${teamName}.0`} />
-      <PlayerForm register={register} setValue={setValue} fieldPrefix={`${teamName}.1`} />
-      <PlayerForm register={register} setValue={setValue} fieldPrefix={`${teamName}.2`} />
-      <PlayerForm register={register} setValue={setValue} fieldPrefix={`${teamName}.3`} />
-      <PlayerForm register={register} setValue={setValue} fieldPrefix={`${teamName}.4`} />
+      {[0, 1, 2, 3, 4].map((i) => (
+        <PlayerForm
+          key={`${teamName}-${i}`}
+          register={register}
+          setValue={setValue}
+          fieldPrefix={`${teamName}.${i}`}
+        />
+      ))}
     </div>
   );
 }

@@ -1,6 +1,5 @@
 'use client';
 
-import { getLatestChampions } from '@/lib/championApi';
 import type { TChampion } from '@/types/ChampionType';
 import { createContext, useContext, useMemo } from 'react';
 
@@ -24,11 +23,4 @@ export function useChampions(): TChampion[] {
     throw new Error('useChampions must be used within a ChampionsProvider');
   }
   return ctx.champions;
-}
-
-export default async function ChampionsServerProvider({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  const champions = await getLatestChampions().catch(() => []);
-  return <ChampionsProvider champions={champions}>{children}</ChampionsProvider>;
 }

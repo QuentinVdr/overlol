@@ -1,9 +1,9 @@
 'use client';
 
 import { useChampions } from '@/context/ChampionsContext';
-import { TChampion } from '@/types/ChampionType';
-import { TOverlay } from '@/types/OverlayType';
-import { TeamEnum } from '@/types/TeamEnum';
+import type { TChampion } from '@/types/ChampionType';
+import type { TOverlay } from '@/types/OverlayType';
+import type { TeamEnum } from '@/types/TeamEnum';
 import type { UseFormRegister } from 'react-hook-form';
 
 type ChampionFieldProps = {
