@@ -1,7 +1,6 @@
 'use client';
 
 import { updateOverlayAction } from '@/lib/overlayActions';
-import type { TChampion } from '@/types/ChampionType';
 import type { TOverlay } from '@/types/OverlayType';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -10,12 +9,11 @@ import { OverlayForm } from './OverlayForm';
 type UpdateOverlayFormProps = {
   id: string;
   overlay: TOverlay;
-  champions: TChampion[];
 };
 
 type UpdateStatus = { success: boolean; error?: string } | 'loading';
 
-export function UpdateOverlayForm({ id, overlay, champions }: Readonly<UpdateOverlayFormProps>) {
+export function UpdateOverlayForm({ id, overlay }: Readonly<UpdateOverlayFormProps>) {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus | null>(null);
 
   const onSubmit: SubmitHandler<TOverlay> = async (data) => {
@@ -43,7 +41,6 @@ export function UpdateOverlayForm({ id, overlay, champions }: Readonly<UpdateOve
         onSubmit={onSubmit}
         submitLabel={isUpdating ? 'Updating...' : 'Update Overlay'}
         defaultValues={overlay}
-        champions={champions}
       />
       {updateStatus && updateStatus !== 'loading' && (
         <div

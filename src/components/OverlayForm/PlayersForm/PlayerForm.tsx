@@ -1,4 +1,3 @@
-import { TChampion } from '@/types/ChampionType';
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
@@ -8,15 +7,9 @@ type PlayerFormProps = {
   register: UseFormRegister<TOverlay>;
   setValue: UseFormSetValue<TOverlay>;
   fieldPrefix: `${TeamEnum}.${number}`;
-  champions: TChampion[];
 };
 
-export function PlayerForm({
-  register,
-  setValue,
-  fieldPrefix,
-  champions,
-}: Readonly<PlayerFormProps>) {
+export function PlayerForm({ register, setValue, fieldPrefix }: Readonly<PlayerFormProps>) {
   const clearPlayer = () => {
     setValue(`${fieldPrefix}.championName`, '');
     setValue(`${fieldPrefix}.playerName`, '');
@@ -48,7 +41,7 @@ export function PlayerForm({
         />
       </div>
       <div className="flex grow flex-col">
-        <ChampionField register={register} fieldPrefix={fieldPrefix} champions={champions} />
+        <ChampionField register={register} fieldPrefix={fieldPrefix} />
       </div>
       <div className="flex flex-col justify-end">
         <button

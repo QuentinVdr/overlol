@@ -1,17 +1,12 @@
 'use client';
 
 import { createOverlay } from '@/lib/overlayActions';
-import type { TChampion } from '@/types/ChampionType';
 import type { TOverlay } from '@/types/OverlayType';
 import { useRouter } from 'next/navigation';
 import type { SubmitHandler } from 'react-hook-form';
 import { OverlayForm } from './OverlayForm';
 
-type CreateOverlayFormProps = {
-  champions: TChampion[];
-};
-
-export function CreateOverlayForm({ champions }: Readonly<CreateOverlayFormProps>) {
+export function CreateOverlayForm() {
   const router = useRouter();
 
   const handleSubmit: SubmitHandler<TOverlay> = async (data) => {
@@ -31,5 +26,5 @@ export function CreateOverlayForm({ champions }: Readonly<CreateOverlayFormProps
     }
   };
 
-  return <OverlayForm onSubmit={handleSubmit} champions={champions} />;
+  return <OverlayForm onSubmit={handleSubmit} />;
 }
