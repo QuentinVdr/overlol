@@ -1,17 +1,19 @@
 'use client';
 
+import { useChampions } from '@/context/ChampionsContext';
 import { TChampion } from '@/types/ChampionType';
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
-import { UseFormRegister } from 'react-hook-form';
+import type { UseFormRegister } from 'react-hook-form';
 
 type ChampionFieldProps = {
   register: UseFormRegister<TOverlay>;
   fieldPrefix: `${TeamEnum}.${number}`;
-  champions: TChampion[];
 };
 
-export function ChampionField({ register, fieldPrefix, champions }: Readonly<ChampionFieldProps>) {
+export function ChampionField({ register, fieldPrefix }: Readonly<ChampionFieldProps>) {
+  const champions = useChampions();
+
   return (
     <>
       <label htmlFor={`champion-${fieldPrefix}`} className="pb-1 pl-0.5 text-xs text-gray-500">
@@ -26,9 +28,9 @@ export function ChampionField({ register, fieldPrefix, champions }: Readonly<Cha
         {...register(`${fieldPrefix}.championName`)}
       />
       <datalist id={`champion-list-${fieldPrefix}`}>
-        {champions && Array.isArray(champions)
-          ? champions.map((champ: TChampion) => <option key={champ.id} value={champ.name} />)
-          : null}
+        {champions?.map((champ: TChampion) => (
+          <option key={champ.id} value={champ.name} />
+        ))}
       </datalist>
     </>
   );
