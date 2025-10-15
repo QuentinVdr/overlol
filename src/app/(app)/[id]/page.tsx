@@ -1,6 +1,6 @@
 import { UpdateOverlayForm } from '@/components/OverlayForm/UpdateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
-import ChampionsServerProvider from '@/context/ChampionsContext';
+import ChampionsServerProvider from '@/context/ChampionsServerProvider';
 import { OverlayService } from '@/lib/overlayService';
 import { getFullUrl } from '@/utils/url';
 import { redirect } from 'next/navigation';

@@ -1,6 +1,6 @@
 import { CreateOverlayForm } from '@/components/OverlayForm/CreateOverlayForm';
 import OverlayInfo from '@/components/OverlayInfo';
-import ChampionsServerProvider from '@/context/ChampionsContext';
+import ChampionsServerProvider from '@/context/ChampionsServerProvider';
 import { getFullUrl } from '@/utils/url';
 
 export default async function Home() {
