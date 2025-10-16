@@ -2,6 +2,7 @@
 
 import { getCurrentMatchByGameNameAndTagLine } from '@/lib/matchApi';
 import { TOverlay } from '@/types/OverlayType';
+import { Strings } from '@/utils/stringUtils';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PlayersForm } from './PlayersForm/PlayersForm';
 
@@ -42,6 +43,11 @@ export function OverlayForm({
 
   const handleSearchMatchOf = async (data: { matchOf: string }) => {
     const { matchOf } = data;
+
+    if (Strings.isBlank(matchOf)) {
+      return;
+    }
+
     const [gameName, tagLine] = matchOf.split('#');
     try {
       const participants = await getCurrentMatchByGameNameAndTagLine(gameName, tagLine);

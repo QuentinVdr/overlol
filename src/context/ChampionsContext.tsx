@@ -1,7 +1,7 @@
 'use client';
 
 import type { TChampion } from '@/types/ChampionType';
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 type ChampionsContextValue = {
   champions: TChampion[];
@@ -12,7 +12,7 @@ const ChampionsContext = createContext<ChampionsContextValue | undefined>(undefi
 export function ChampionsProvider({
   champions,
   children,
-}: Readonly<{ champions: TChampion[]; children: React.ReactNode }>) {
+}: Readonly<{ champions: TChampion[]; children: ReactNode }>) {
   const value = useMemo<ChampionsContextValue>(() => ({ champions }), [champions]);
   return <ChampionsContext.Provider value={value}>{children}</ChampionsContext.Provider>;
 }

@@ -1,5 +1,6 @@
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
+import { DragEvent } from 'react';
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { ChampionField } from './ChampionField/ChampionField';
 
@@ -9,9 +10,9 @@ type PlayerFormProps = {
   fieldPrefix: `${TeamEnum}.${number}`;
   onDragStart?: () => void;
   onDragEnd?: () => void;
-  onDragOver?: (e: React.DragEvent) => void;
+  onDragOver?: (e: DragEvent) => void;
   onDragLeave?: () => void;
-  onDrop?: (e: React.DragEvent) => void;
+  onDrop?: (e: DragEvent) => void;
   isDragging?: boolean;
   isDragOver?: boolean;
   showIndicatorAbove?: boolean;
