@@ -93,6 +93,7 @@ export async function getChampionsByVersion(lolVersion: string): Promise<TChampi
     return {
       name: champion.name,
       id: champion.id,
+      key: champion.key,
       image: `https://ddragon.leagueoflegends.com/cdn/${lolVersion}/img/champion/${champion.image.full}`,
     };
   });
