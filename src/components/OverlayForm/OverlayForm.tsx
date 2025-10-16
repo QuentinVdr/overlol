@@ -70,13 +70,13 @@ export function OverlayForm({
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <form
         className="flex w-full flex-row items-center gap-4"
         onSubmit={handleMatchOfSubmit(handleSearchMatchOf)}
       >
         <div className="flex w-100 flex-col">
-          <label htmlFor="matchOf" className="pb-1 pl-0.5 text-xs text-gray-500">
+          <label htmlFor="matchOf" className="pb-1 pl-0.5 text-gray-500">
             Load data from match of :
           </label>
           <input
@@ -124,6 +124,6 @@ export function OverlayForm({
           {submitLabel}
         </button>
       </form>
-    </>
+    </div>
   );
 }
