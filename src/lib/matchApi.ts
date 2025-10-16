@@ -19,7 +19,7 @@ async function getPlayerPUUIDByGameNameAndTagLine(
   }
 
   const response = await fetch(
-    `https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`,
+    `https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName)}/${encodeURIComponent(tagLine)}`,
     {
       headers: {
         accept: 'application/json',
@@ -80,15 +80,17 @@ async function getCurrentMatchByPUUID(puuid: string): Promise<TParticipant[]> {
   const data = await response.json();
   const champions = await getLatestChampions();
 
-  return data.participants.map((participant: TParticipant) => ({
-    puuid: participant.puuid,
-    teamId: participant.teamId,
-    riotId: participant.riotId,
-    championId: participant.championId,
-    championName:
-      champions.find((champion) => champion.key === String(participant.championId))?.name ||
-      'Unknown Champion',
-  })) as TParticipant[];
+  return data.participants.map(
+    (participant: { puuid: string; teamId: number; riotId: string; championId: number }) => ({
+      puuid: participant.puuid,
+      teamId: participant.teamId,
+      riotId: participant.riotId,
+      championId: participant.championId,
+      championName:
+        champions.find((champion) => champion.key === String(participant.championId))?.name ||
+        'Unknown Champion',
+    }),
+  ) as TParticipant[];
 }
 
 /**

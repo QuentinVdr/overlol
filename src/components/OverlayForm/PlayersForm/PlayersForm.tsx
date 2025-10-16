@@ -1,6 +1,6 @@
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
-import { useState } from 'react';
+import { DragEvent, useState } from 'react';
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { PlayerForm } from './PlayerForm';
 
@@ -25,7 +25,7 @@ export function PlayersForm({ register, setValue, teamName }: Readonly<PlayersFo
     setShowIndicatorAbove(false);
   };
 
-  const handleDragOver = (e: React.DragEvent, index: number) => {
+  const handleDragOver = (e: DragEvent, index: number) => {
     e.preventDefault();
     if (draggedIndex !== null && draggedIndex !== index) {
       setDragOverIndex(index);
@@ -39,7 +39,7 @@ export function PlayersForm({ register, setValue, teamName }: Readonly<PlayersFo
     setShowIndicatorAbove(false);
   };
 
-  const handleDrop = (e: React.DragEvent, dropIndex: number) => {
+  const handleDrop = (e: DragEvent, dropIndex: number) => {
     e.preventDefault();
 
     if (draggedIndex === null || draggedIndex === dropIndex) {
