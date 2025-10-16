@@ -3,9 +3,10 @@ import { logger } from './logger';
 
 const log = logger.child('api:leaderboard:fetchRegionRank');
 
+// Pattern supports numbers with commas (e.g., "1,234")
+// Limit quantifiers to prevent ReDoS attacks
 const extractRegionRank = (html: string): string => {
-  // Pattern supports numbers with commas (e.g., "1,234")
-  const match = /Ladder Rank\s+<span[^>]*>([\d,]+)<\/span>/.exec(html);
+  const match = /Ladder Rank\s{1,10}<span[^>]{0,100}>([\d,]{1,20})<\/span>/.exec(html);
   return match?.[1] ?? '';
 };
 
