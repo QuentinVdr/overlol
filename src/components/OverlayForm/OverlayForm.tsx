@@ -1,6 +1,5 @@
 'use client';
 
-import { getCurrentMatchByGameNameAndTagLine } from '@/lib/matchApi';
 import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
 import { useState } from 'react';
@@ -53,17 +52,26 @@ export function OverlayForm({
     const [gameName, tagLine] = matchOf.split('#');
     try {
       setLoading(true);
-      const participants = await getCurrentMatchByGameNameAndTagLine(gameName, tagLine);
+      const response = await fetch(
+        `/api/match/current?gameName=${encodeURIComponent(gameName)}&tagLine=${encodeURIComponent(tagLine)}`,
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to load match data');
+      }
+
+      const { participants } = await response.json();
       const blueTeam = participants
-        .filter((p) => p.teamId === 100)
-        .map((p) => ({
+        .filter((p: { teamId: number }) => p.teamId === 100)
+        .map((p: { riotId?: string; championName?: string }) => ({
           playerName: p.riotId?.replace(/#[^#]*$/, '') || '',
           championName: p.championName || '',
           teamName: '',
         }));
       const redTeam = participants
-        .filter((p) => p.teamId === 200)
-        .map((p) => ({
+        .filter((p: { teamId: number }) => p.teamId === 200)
+        .map((p: { riotId?: string; championName?: string }) => ({
           playerName: p.riotId?.replace(/#[^#]*$/, '') || '',
           championName: p.championName || '',
           teamName: '',
