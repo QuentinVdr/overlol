@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const gameName = searchParams.get('gameName');
-  const tagLine = searchParams.get('tagLine');
+  const gameName = searchParams.get('gameName')?.trim();
+  const tagLine = searchParams.get('tagLine')?.trim();
 
   if (!gameName || !tagLine) {
     return NextResponse.json(

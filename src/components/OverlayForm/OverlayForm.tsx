@@ -50,6 +50,14 @@ export function OverlayForm({
     }
 
     const [gameName, tagLine] = matchOf.split('#');
+    if (Strings.isBlank(gameName) || Strings.isBlank(tagLine)) {
+      setError('matchOf', {
+        type: 'manual',
+        message: 'Format must be gameName#tagLine',
+      });
+      return;
+    }
+
     try {
       setLoading(true);
       const response = await fetch(
