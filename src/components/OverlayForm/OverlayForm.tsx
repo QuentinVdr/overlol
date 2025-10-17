@@ -73,7 +73,7 @@ export function OverlayForm({
     } catch (error: unknown) {
       setError('matchOf', {
         type: 'manual',
-        message: (error as Error)?.message ?? 'Failed to load match data',
+        message: error instanceof Error ? error.message : 'Failed to load match data',
       });
     } finally {
       setLoading(false);
@@ -107,8 +107,9 @@ export function OverlayForm({
           )}
         </div>
         <button
-          className="self-center rounded-2xl bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          className="self-center rounded-2xl bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           type="submit"
+          disabled={loading}
         >
           {loading ? 'Loading...' : 'Load data'}
         </button>
