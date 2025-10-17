@@ -1,6 +1,7 @@
 'use server';
 
 import { TParticipant } from '@/types/MatchParticipantType';
+import { logger } from '@/utils/logger';
 import { Strings } from '@/utils/stringUtils';
 import { getLatestChampions } from './championApi';
 
@@ -34,6 +35,8 @@ async function getPlayerPUUIDByGameNameAndTagLine(
   );
 
   if (!response.ok) {
+    const log = logger.child('match-service:fetch-puuid-player');
+    log.error(`Failed to fetch player PUUID: ${response.status}, ${response.statusText}`);
     throw new Error(`Failed to fetch player PUUID: ${response.status}`);
   }
 
@@ -67,13 +70,17 @@ async function getCurrentMatchByPUUID(puuid: string): Promise<TParticipant[]> {
       },
       signal: AbortSignal.timeout(5000),
       next: {
-        revalidate: 1800, // 30 minutes cache
+        revalidate: 120, // 2 minutes cache
         tags: ['CurrentMatch', `CurrentMatch-${puuid}`],
       },
     },
   );
 
   if (!response.ok) {
+    const log = logger.child('match-service:fetch-current-match');
+    log.error(
+      `Failed to fetch current match for PUUID ${puuid}: ${response.status}, ${response.statusText}`,
+    );
     throw new Error(`Failed to fetch current match data: ${response.status}`);
   }
 
