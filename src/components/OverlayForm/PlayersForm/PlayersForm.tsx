@@ -1,16 +1,24 @@
+'use client';
+
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
 import { DragEvent, useState } from 'react';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { UseFormGetValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { PlayerForm } from './PlayerForm';
 
 type PlayersFormProps = {
   register: UseFormRegister<TOverlay>;
   setValue: UseFormSetValue<TOverlay>;
+  getValues: UseFormGetValues<TOverlay>;
   teamName: TeamEnum;
 };
 
-export function PlayersForm({ register, setValue, teamName }: Readonly<PlayersFormProps>) {
+export function PlayersForm({
+  register,
+  setValue,
+  getValues,
+  teamName,
+}: Readonly<PlayersFormProps>) {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [showIndicatorAbove, setShowIndicatorAbove] = useState<boolean>(false);
@@ -47,33 +55,21 @@ export function PlayersForm({ register, setValue, teamName }: Readonly<PlayersFo
       return;
     }
 
-    // Get current values from the form
-    const players = [0, 1, 2, 3, 4].map((i) => ({
-      playerName:
-        (document.getElementById(`player-${teamName}.${i}`) as HTMLInputElement)?.value || '',
-      championName:
-        (document.getElementById(`champion-${teamName}.${i}`) as HTMLInputElement)?.value || '',
-      teamName: (document.getElementById(`team-${teamName}.${i}`) as HTMLInputElement)?.value || '',
-    }));
+    // Get current values from the form using react-hook-form
+    const teamPlayers = getValues(teamName);
+    if (!teamPlayers) return;
 
-    // Insert the dragged player at the drop position
-    // Remove the dragged player from its original position
+    // Create a new array with the reordered players
+    const players = [...teamPlayers];
+
+    // Remove the dragged player
     const [draggedPlayer] = players.splice(draggedIndex, 1);
 
-    // Calculate the correct insertion index
-    // If dragging down, the index doesn't need adjustment
-    // If dragging up, insert at the exact dropIndex
-    const insertIndex = draggedIndex < dropIndex ? dropIndex : dropIndex;
+    // Insert it at the drop position
+    players.splice(dropIndex, 0, draggedPlayer);
 
-    // Insert at the target position
-    players.splice(insertIndex, 0, draggedPlayer);
-
-    // Update all players in the form
-    players.forEach((player, index) => {
-      setValue(`${teamName}.${index}.playerName`, player.playerName);
-      setValue(`${teamName}.${index}.championName`, player.championName);
-      setValue(`${teamName}.${index}.teamName`, player.teamName);
-    });
+    // Update the entire team array at once
+    setValue(teamName, players, { shouldDirty: true });
 
     setDraggedIndex(null);
     setDragOverIndex(null);

@@ -24,7 +24,7 @@ export function OverlayForm({
     setError,
   } = useForm<{ matchOf: string }>();
 
-  const { register, handleSubmit, setValue } = useForm<TOverlay>({
+  const { register, handleSubmit, setValue, getValues } = useForm<TOverlay>({
     defaultValues: {
       ...(defaultValues || {
         blueTeam: Array.from({ length: 5 }, () => ({
@@ -42,7 +42,7 @@ export function OverlayForm({
   });
 
   const handleSearchMatchOf = async (data: { matchOf: string }) => {
-    const { matchOf } = data;
+    const matchOf = data.matchOf.trim();
 
     if (Strings.isBlank(matchOf)) {
       return;
@@ -54,23 +54,23 @@ export function OverlayForm({
       const blueTeam = participants
         .filter((p) => p.teamId === 100)
         .map((p) => ({
-          playerName: p.riotId.replace(/#[^#]*$/, '') || '',
+          playerName: (String(p.riotId) || '').replace(/#[^#]*$/, '') || '',
           championName: p.championName || '',
           teamName: '',
         }));
       const redTeam = participants
         .filter((p) => p.teamId === 200)
         .map((p) => ({
-          playerName: p.riotId.replace(/#[^#]*$/, '') || '',
+          playerName: (String(p.riotId) || '').replace(/#[^#]*$/, '') || '',
           championName: p.championName || '',
           teamName: '',
         }));
       setValue('blueTeam', blueTeam);
       setValue('redTeam', redTeam);
-    } catch (error: any) {
+    } catch (error: unknown) {
       setError('matchOf', {
         type: 'manual',
-        message: error.message,
+        message: (error as Error)?.message ?? 'Failed to load match data',
       });
     }
   };
@@ -114,13 +114,23 @@ export function OverlayForm({
             className={`flex grow basis-xl flex-col gap-2 rounded-2xl border border-blue-600 bg-blue-50 px-5 py-3`}
           >
             <h2 className={`text-blue-600`}>Blue team</h2>
-            <PlayersForm register={register} setValue={setValue} teamName="blueTeam" />
+            <PlayersForm
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              teamName="blueTeam"
+            />
           </div>
           <div
             className={`flex grow basis-xl flex-col gap-2 rounded-2xl border border-red-600 bg-red-50 px-5 py-3`}
           >
             <h2 className={`text-red-600`}>Red team</h2>
-            <PlayersForm register={register} setValue={setValue} teamName="redTeam" />
+            <PlayersForm
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              teamName="redTeam"
+            />
           </div>
         </div>
         <button
