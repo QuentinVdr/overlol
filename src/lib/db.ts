@@ -47,7 +47,6 @@ export function closeDatabase(): void {
 // Persist handlers and registration state on globalThis to survive HMR reloads
 // This prevents duplicate process listeners across module reloads
 declare global {
-  // eslint-disable-next-line no-var
   var __overlol_dbHandlers:
     | {
         registered: boolean;
