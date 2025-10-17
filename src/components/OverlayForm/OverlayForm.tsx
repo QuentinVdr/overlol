@@ -3,6 +3,7 @@
 import { getCurrentMatchByGameNameAndTagLine } from '@/lib/matchApi';
 import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PlayersForm } from './PlayersForm/PlayersForm';
 
@@ -23,6 +24,7 @@ export function OverlayForm({
     formState: { errors: matchOfErrors },
     setError,
   } = useForm<{ matchOf: string }>();
+  const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit, setValue, getValues } = useForm<TOverlay>({
     defaultValues: {
@@ -50,6 +52,7 @@ export function OverlayForm({
 
     const [gameName, tagLine] = matchOf.split('#');
     try {
+      setLoading(true);
       const participants = await getCurrentMatchByGameNameAndTagLine(gameName, tagLine);
       const blueTeam = participants
         .filter((p) => p.teamId === 100)
@@ -72,6 +75,8 @@ export function OverlayForm({
         type: 'manual',
         message: (error as Error)?.message ?? 'Failed to load match data',
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,7 +110,7 @@ export function OverlayForm({
           className="self-center rounded-2xl bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           type="submit"
         >
-          Load data
+          {loading ? 'Loading...' : 'Load data'}
         </button>
       </form>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
