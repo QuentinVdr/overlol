@@ -27,12 +27,15 @@ export async function GET(request: NextRequest) {
   } catch (error: unknown) {
     // Handle custom MatchApiError with proper status codes
     if (error instanceof MatchApiError) {
-      log.error(`Unexpected error fetching match data: ${error.statusCode} ${error.message}`);
+      log.error(
+        `MatchApiError while fetching match data: ${error.statusCode} ${error.message}`,
+        error,
+      );
       return NextResponse.json({ error: error.message }, { status: error.statusCode });
     }
 
     // Fallback for unexpected errors
-    log.error(`Unexpected error fetching match data: ${error}`);
+    log.error('Unexpected error fetching match data', error);
     return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 });
   }
 }
