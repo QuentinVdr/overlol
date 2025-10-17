@@ -54,14 +54,14 @@ export function OverlayForm({
       const blueTeam = participants
         .filter((p) => p.teamId === 100)
         .map((p) => ({
-          playerName: (String(p.riotId) || '').replace(/#[^#]*$/, '') || '',
+          playerName: p.riotId?.replace(/#[^#]*$/, '') || '',
           championName: p.championName || '',
           teamName: '',
         }));
       const redTeam = participants
         .filter((p) => p.teamId === 200)
         .map((p) => ({
-          playerName: (String(p.riotId) || '').replace(/#[^#]*$/, '') || '',
+          playerName: p.riotId?.replace(/#[^#]*$/, '') || '',
           championName: p.championName || '',
           teamName: '',
         }));
