@@ -14,7 +14,6 @@ RUN corepack enable pnpm && pnpm i --frozen-lockfile
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
 
 # Define build arguments for private environment variables
 ARG NEXT_RIOT_API_KEY
@@ -29,6 +28,14 @@ ENV NEXT_HAZEL_ALT_PUUID=$NEXT_HAZEL_ALT_PUUID
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
+
+# Copy package files and config files first (for better caching)
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* ./
+COPY next.config.ts tsconfig.json postcss.config.mjs tailwind.config.* ./
+COPY drizzle.config.ts ./
+
+# Copy source code
+COPY src ./src
 
 # Setup database and build application
 RUN corepack enable pnpm && pnpm run db:ci && pnpm run build
