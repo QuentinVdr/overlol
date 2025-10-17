@@ -1,23 +1,10 @@
 'use server';
 
+import { MatchApiError } from '@/types/MatchApiError';
 import { TParticipant } from '@/types/MatchParticipantType';
 import { logger } from '@/utils/logger';
 import { Strings } from '@/utils/stringUtils';
 import { getLatestChampions } from './championApi';
-
-/**
- * Custom error class for match API errors with HTTP status codes
- */
-export class MatchApiError extends Error {
-  constructor(
-    message: string,
-    public statusCode: number,
-    public context?: Record<string, unknown>,
-  ) {
-    super(message);
-    this.name = 'MatchApiError';
-  }
-}
 
 /**
  * Server-side function to fetch the puuid of a player by their game name and tag line.
