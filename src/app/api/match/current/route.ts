@@ -1,4 +1,5 @@
-import { getCurrentMatchByGameNameAndTagLine, MatchApiError } from '@/lib/matchApi';
+import { getCurrentMatchByGameNameAndTagLine } from '@/lib/matchApi';
+import { MatchApiError } from '@/types/MatchApiError';
 import { logger } from '@/utils/logger';
 import { NextRequest, NextResponse } from 'next/server';
 
