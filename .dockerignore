@@ -40,5 +40,24 @@ next-env.d.ts
 # Docker
 Dockerfile*
 docker-compose*
-Dockerfile*
-docker-compose*
+
+# Development files
+.git
+.github
+.vscode
+.idea
+.eslintcache
+.prettierrc
+.prettierignore
+
+# Documentation (don't need in build)
+*.md
+!README.md
+
+# Tests
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__
+__mocks__
