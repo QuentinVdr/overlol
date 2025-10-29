@@ -56,7 +56,7 @@ export function PlayerForm({
         onDrop={onDrop}
       >
         <div
-          className="flex cursor-move flex-col justify-center self-center rounded-lg bg-gray-200 px-[3px] py-1.5 font-bold text-gray-600 transition-colors hover:bg-gray-300 hover:text-gray-800"
+          className="cursor-move self-center rounded-lg bg-gray-200 px-[3px] py-1.5 font-bold text-gray-600 transition-colors hover:bg-gray-300 hover:text-gray-800"
           title="Drag to reorder"
           aria-label="Drag to reorder"
         >
