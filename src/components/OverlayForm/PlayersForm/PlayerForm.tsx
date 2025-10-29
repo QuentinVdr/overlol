@@ -55,10 +55,11 @@ export function PlayerForm({
         onDragLeave={onDragLeave}
         onDrop={onDrop}
       >
-        <div className="flex cursor-move flex-col justify-center rounded bg-gray-200 px-1.5 text-gray-600 transition-colors hover:bg-gray-300 hover:text-gray-800">
-          <span className="font-bold" title="Drag to reorder">
-            ⋮⋮
-          </span>
+        <div
+          className="flex cursor-move flex-col justify-center self-center rounded-lg bg-gray-200 px-[3px] py-1.5 text-center align-text-top font-bold text-gray-600 transition-colors hover:bg-gray-300 hover:text-gray-800"
+          title="Drag to reorder"
+        >
+          ⋮
         </div>
         <div className="flex w-20 flex-col">
           <label htmlFor={`team-${fieldPrefix}`} className="pb-1 pl-0.5 text-xs text-gray-500">
