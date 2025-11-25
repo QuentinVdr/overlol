@@ -5,42 +5,52 @@ import { unstable_cache } from 'next/cache';
 
 const kcPlayerList: { [key: string]: TRiotAccount[] } = {
   // KC LEC Roster
-  Canna: [{ riotPseudo: 'K C', tagLine: 'kcwin' }],
-  Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111' }],
-  Vladi: [{ riotPseudo: 'dmsdklb', tagLine: 'vivi' }],
+  Canna: [{ riotPseudo: 'K C', tagLine: 'kcwin', region: 'EUW' }],
+  Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111', region: 'EUW' }],
+  Vladi: [{ riotPseudo: 'dmsdklb', tagLine: 'vivi', region: 'EUW' }],
   Caliste: [
-    { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW' },
-    { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW' },
+    { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' },
+    { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW', region: 'EUW' },
   ],
-  Targamas: [{ riotPseudo: 'Targamas', tagLine: '5555' }],
+  Targamas: [{ riotPseudo: 'Targamas', tagLine: '5555', region: 'EUW' }],
   // KC Blue Roster
   Maynter: [
-    { riotPseudo: 'Maynter', tagLine: 'EUW' },
-    { riotPseudo: 'vovalaclasse', tagLine: 'EUW' },
-  ],
-  '3XA': [
-    { riotPseudo: '永遠の拷問', tagLine: 'xox' },
-    { riotPseudo: 'Atomic Habits', tagLine: '2809' },
-    { riotPseudo: 'Requiem', tagLine: '1302' },
+    { riotPseudo: 'Maynter', tagLine: 'EUW', region: 'EUW' },
+    { riotPseudo: 'vovalaclasse', tagLine: 'EUW', region: 'EUW' },
   ],
   Yukino: [
-    { riotPseudo: 'yukino cat', tagLine: 'blue' },
-    { riotPseudo: 'yukino cat', tagLine: 'cat' },
+    { riotPseudo: 'yukino cat', tagLine: 'blue', region: 'EUW' },
+    { riotPseudo: 'yukino cat', tagLine: 'cat', region: 'EUW' },
+  ],
+  'KR Kamiloo': [{ riotPseudo: 'ÜN ÜN ÜN', tagLine: 'NIKA', region: 'KR' }],
+  Kamiloo: [
+    { riotPseudo: 'Limitless limits', tagLine: 'FIRE', region: 'EUW' },
+    { riotPseudo: 'TODOROKI RAICHI', tagLine: 'rank1', region: 'EUW' },
+    { riotPseudo: 'Labubu IRL', tagLine: 'macha', region: 'EUW' },
+  ],
+  '3XA': [
+    { riotPseudo: '永遠の拷問', tagLine: 'xox', region: 'EUW' },
+    { riotPseudo: 'Atomic Habits', tagLine: '2809', region: 'EUW' },
+    { riotPseudo: 'Requiem', tagLine: '1302', region: 'EUW' },
+  ],
+  Prime: [
+    { riotPseudo: 'Céleste', tagLine: '6162', region: 'EUW' },
+    { riotPseudo: 'POBC', tagLine: '6162', region: 'EUW' },
   ],
   // KC BS Roster
-  Tao: [{ riotPseudo: 'Loose Ends999', tagLine: 'EUW' }],
-  BAASHH: [{ riotPseudo: 'TTV BAASHH', tagLine: 'EUW' }],
-  MathisV: [{ riotPseudo: 'MathisV', tagLine: 'ARCHE' }],
+  Tao: [{ riotPseudo: 'Loose Ends999', tagLine: 'EUW', region: 'EUW' }],
+  BAASHH: [{ riotPseudo: 'TTV BAASHH', tagLine: 'EUW', region: 'EUW' }],
+  MathisV: [{ riotPseudo: 'MathisV', tagLine: 'ARCHE', region: 'EUW' }],
   Hazel: [
-    { riotPseudo: 'Antarctica', tagLine: 'S B' },
-    { riotPseudo: 'Hazel', tagLine: 'KCorp' },
-    { riotPseudo: 'one last dance', tagLine: '114' },
-    { riotPseudo: '114', tagLine: '1405' },
+    { riotPseudo: 'Antarctica', tagLine: 'S B', region: 'EUW' },
+    { riotPseudo: 'Hazel', tagLine: 'KCorp', region: 'EUW' },
+    { riotPseudo: 'one last dance', tagLine: '114', region: 'EUW' },
+    { riotPseudo: '114', tagLine: '1405', region: 'EUW' },
   ],
   Nsurr: [
-    { riotPseudo: 'TripleMonstre', tagLine: 'EUWFR' },
-    { riotPseudo: 'Full Drip Nsurr', tagLine: 'EUW' },
-    { riotPseudo: 'Nsurr', tagLine: 'EUWFR' },
+    { riotPseudo: 'TripleMonstre', tagLine: 'EUWFR', region: 'EUW' },
+    { riotPseudo: 'Full Drip Nsurr', tagLine: 'EUW', region: 'EUW' },
+    { riotPseudo: 'Nsurr', tagLine: 'EUWFR', region: 'EUW' },
   ],
 };
 
@@ -91,7 +101,8 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
 async function fetchAccountInfo(riotAccount: TRiotAccount): Promise<TPlayerLeaderboard> {
   const log = logger.child('api:leaderboard:fetchAccountInfo');
 
-  const url = `https://op.gg/lol/summoners/euw/${encodeURIComponent(
+  const region = riotAccount.region.toLowerCase();
+  const url = `https://op.gg/lol/summoners/${region}/${encodeURIComponent(
     riotAccount.riotPseudo,
   )}-${encodeURIComponent(riotAccount.tagLine)}`;
 
