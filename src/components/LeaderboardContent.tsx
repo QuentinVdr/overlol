@@ -11,8 +11,9 @@ export default async function LeaderboardContent() {
     leaderboard = [];
   }
 
-  // Sort leaderboard by LP in descending order
-  const sortedLeaderboard = [...leaderboard].sort((a, b) => b.lp - a.lp);
+  const sortedLeaderboard = [...leaderboard].sort(
+    (a, b) => parseInt(a.regionRank.replace(/,/g, '')) - parseInt(b.regionRank.replace(/,/g, '')),
+  );
 
   return (
     <div className="absolute top-[148px] left-[72px] flex h-174 w-[454px] flex-col justify-evenly gap-2 bg-zinc-900/40 text-[20px] font-bold text-white">
