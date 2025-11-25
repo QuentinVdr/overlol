@@ -15,17 +15,17 @@ export default async function LeaderboardContent() {
   const sortedLeaderboard = [...leaderboard].sort((a, b) => b.lp - a.lp);
 
   return (
-    <div className="absolute top-[148px] left-[72px] flex h-174 w-[454px] flex-col justify-around gap-2 bg-zinc-900/40 text-[20px] font-bold text-white">
+    <div className="absolute top-[148px] left-[72px] flex h-174 w-[454px] flex-col justify-evenly gap-2 bg-zinc-900/40 text-[20px] font-bold text-white">
       {sortedLeaderboard.length > 0 ? (
         sortedLeaderboard.map((player, index) => (
-          <div key={player.player}>
-            #{index + 1}. {player.player}:{' '}
-            <span className="capitalize">{player.tier.toLowerCase()}</span> {player.lp}LP [Rank:{' '}
+          <div key={player.playerName}>
+            #{index + 1}. {player.playerName}:{' '}
+            <span className="capitalize">{player.rank.toLowerCase()}</span> {player.lp}LP [Rank:{' '}
             {player.regionRank}]
           </div>
         ))
       ) : (
-        <div>No leaderboard data available.</div>
+        <div className="self-center">No leaderboard data available.</div>
       )}
     </div>
   );

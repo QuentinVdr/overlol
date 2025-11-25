@@ -1,9 +1,48 @@
-import { TLeaderboardApiResponse, TLeaderboardPlayer } from '@/types/LeaderboardApiTypes';
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
-import { fetchRegionRank } from '@/utils/leaderboardUtils';
+import { TRiotAccount } from '@/types/RiotAccountType';
 import { logger } from '@/utils/logger';
-import { Strings } from '@/utils/stringUtils';
 import { unstable_cache } from 'next/cache';
+
+const kcPlayerList: { [key: string]: TRiotAccount[] } = {
+  // KC LEC Roster
+  Canna: [{ riotPseudo: 'K C', tagLine: 'kcwin' }],
+  Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111' }],
+  Vladi: [{ riotPseudo: 'dmsdklb', tagLine: 'vivi' }],
+  Caliste: [
+    { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW' },
+    { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW' },
+  ],
+  Targamas: [{ riotPseudo: 'Targamas', tagLine: '5555' }],
+  // KC Blue Roster
+  Maynter: [
+    { riotPseudo: 'Maynter', tagLine: 'EUW' },
+    { riotPseudo: 'vovalaclasse', tagLine: 'EUW' },
+  ],
+  '3XA': [
+    { riotPseudo: '永遠の拷問', tagLine: 'xox' },
+    { riotPseudo: 'Atomic Habits', tagLine: '2809' },
+    { riotPseudo: 'Requiem', tagLine: '1302' },
+  ],
+  Yukino: [
+    { riotPseudo: 'yukino cat', tagLine: 'blue' },
+    { riotPseudo: 'yukino cat', tagLine: 'cat' },
+  ],
+  // KC BS Roster
+  Tao: [{ riotPseudo: 'Loose Ends999', tagLine: 'EUW' }],
+  BAASHH: [{ riotPseudo: 'TTV BAASHH', tagLine: 'EUW' }],
+  MathisV: [{ riotPseudo: 'MathisV', tagLine: 'ARCHE' }],
+  Hazel: [
+    { riotPseudo: 'Antarctica', tagLine: 'S B' },
+    { riotPseudo: 'Hazel', tagLine: 'KCorp' },
+    { riotPseudo: 'one last dance', tagLine: '114' },
+    { riotPseudo: '114', tagLine: '1405' },
+  ],
+  Nsurr: [
+    { riotPseudo: 'TripleMonstre', tagLine: 'EUWFR' },
+    { riotPseudo: 'Full Drip Nsurr', tagLine: 'EUW' },
+    { riotPseudo: 'Nsurr', tagLine: 'EUWFR' },
+  ],
+};
 
 /**
  * Internal function to fetch and process KC leaderboard data.
@@ -11,99 +50,113 @@ import { unstable_cache } from 'next/cache';
  */
 async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
   const log = logger.child('leaderboard-service:leaderboard');
+  log.debug('Fetching and processing KC leaderboard data');
 
-  log.info('Fetching leaderboard from API');
-
-  // Fetch from the external leaderboard API
-  const response = await fetch(
-    'https://dpm.lol/v1/leaderboards/custom/29e4e979-4c43-4ac7-bf5f-5f5195551f66',
-    {
-      headers: { accept: 'application/json' },
-      signal: AbortSignal.timeout(5000),
-      cache: 'no-store',
-    },
+  const allGroups = await Promise.all(
+    Object.keys(kcPlayerList).map((kcPlayer) => getPlayerLeaderboardData(kcPlayer)),
   );
 
+  return allGroups.filter((player): player is TPlayerLeaderboard => player !== undefined);
+}
+
+async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeaderboard | undefined> {
+  const log = logger.child('leaderboard-service:player-data');
+
+  let bestAccount: TPlayerLeaderboard | undefined = undefined;
+  for (const account of kcPlayerList[kcPlayer]) {
+    try {
+      const playerData = await fetchAccountInfo(account);
+      if (!bestAccount || playerData.lp > bestAccount.lp) {
+        bestAccount = playerData;
+      }
+    } catch (error) {
+      log.error(`Failed to fetch data for ${account.riotPseudo}#${account.tagLine}:`, error);
+    }
+  }
+  if (bestAccount) {
+    bestAccount.playerName = kcPlayer;
+  }
+
+  return bestAccount;
+}
+
+async function fetchAccountInfo(riotAccount: TRiotAccount): Promise<TPlayerLeaderboard> {
+  const log = logger.child('api:leaderboard:fetchAccountInfo');
+
+  const url = `https://op.gg/lol/summoners/euw/${encodeURIComponent(
+    riotAccount.riotPseudo,
+  )}-${encodeURIComponent(riotAccount.tagLine)}`;
+
+  const response = await fetch(url, {
+    signal: AbortSignal.timeout(15000),
+    cache: 'no-store',
+    headers: {
+      Accept: 'text/html',
+      'Accept-Encoding': 'gzip, deflate',
+    },
+  });
+
   if (!response.ok) {
+    log.error(
+      `Failed to fetch account info for ${riotAccount.riotPseudo}#${riotAccount.tagLine}: HTTP ${response.status} ${response.statusText}`,
+    );
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
 
-  const payload = (await response.json()) as TLeaderboardApiResponse;
+  const html = await response.text();
+  const { regionRank, rank, lp } = extractData(html);
 
-  if (!payload?.players || !Array.isArray(payload.players)) {
-    throw new Error('Unexpected KC leaderboard response shape');
-  }
-
-  // Create unique players map
-  const uniquePlayersMap = payload.players.reduce(
-    (acc: Map<string, TPlayerLeaderboard>, player: TLeaderboardPlayer) => {
-      const displayName = player.displayName;
-      if (!acc.has(displayName)) {
-        acc.set(displayName, {
-          team: player.team,
-          player: displayName,
-          inGameName: player.gameName,
-          tagLine: player.tagLine,
-          rank: player.rank.rank,
-          tier: player.rank.tier,
-          lp: player.rank.leaguePoints,
-          regionRank: '', // Will be populated by fetchRegionRank
-        });
-      }
-      return acc;
-    },
-    new Map<string, TPlayerLeaderboard>(),
+  log.debug(
+    `Found data for ${riotAccount.riotPseudo}#${riotAccount.tagLine}: ${rank || 'N/A'} ${lp !== null ? lp + ' LP' : ''} - Region Rank: ${regionRank || 'N/A'}`,
   );
 
-  // Add Hazel Alt if environment variables are set
-  const riotApiKey = process.env.NEXT_RIOT_API_KEY;
-  const encryptedPUUID = process.env.NEXT_HAZEL_ALT_PUUID;
+  return {
+    inGameName: riotAccount.riotPseudo,
+    tagLine: riotAccount.tagLine,
+    rank: rank || 'Unranked',
+    lp: lp ?? 0,
+    regionRank,
+  } as TPlayerLeaderboard;
+}
 
-  if (Strings.isNotBlank(riotApiKey) && Strings.isNotBlank(encryptedPUUID)) {
-    try {
-      const riotResponse = await fetch(
-        `https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${encryptedPUUID}`,
-        {
-          headers: {
-            accept: 'application/json',
-            'X-Riot-Token': riotApiKey!,
-          },
-          cache: 'no-store',
-          signal: AbortSignal.timeout(5000),
-        },
-      );
+const formatRank = (tierString: string): string => {
+  if (!tierString) return '';
+  return tierString
+    .trim()
+    .split(/\s+/)
+    .map((w, i) => (i === 0 ? w.charAt(0).toUpperCase() + w.slice(1) : w))
+    .join(' ');
+};
 
-      if (riotResponse.ok) {
-        const riotData = await riotResponse.json();
-        const hazelData = riotData[0];
-        if (Array.isArray(riotData) && hazelData) {
-          const hazelPlayer = uniquePlayersMap.get('Hazel');
-          if (hazelPlayer && hazelData?.leaguePoints && hazelPlayer.lp < hazelData.leaguePoints) {
-            log.info(`Overriding Hazel's LP from ${hazelPlayer.lp} to ${hazelData.leaguePoints}`);
-            hazelPlayer.lp = hazelData.leaguePoints;
-            hazelPlayer.tier = hazelData.tier;
-            hazelPlayer.inGameName = 'Antarctica';
-            hazelPlayer.tagLine = 'S B';
-          }
-        }
-      }
-    } catch (error) {
-      log.warn('Failed to fetch Hazel Alt data:', error);
+const extractData = (html: string): { regionRank: string; rank: string; lp: number | null } => {
+  const regionRankRaw = RegExp(/Ladder Rank\s*<span[^>]*>([\d,]+)<\/span>/).exec(html)?.[1] ?? '';
+  const regionRank = regionRankRaw; // keep formatting (commas) for display consistency
+
+  let rank = '';
+  let lp: number | null = null;
+
+  if (!rank || lp === null) {
+    const escapedMatch = RegExp(
+      /rank_entries\\":\{\\"high_rank_info\\":\{\\"tier\\":\\"([^"\\]+)\\",\\"lp\\":\\"([\d,]+)\\"/,
+    ).exec(html);
+    if (escapedMatch) {
+      rank = formatRank(escapedMatch[1]);
+      lp = parseInt(escapedMatch[2].replace(/,/g, ''), 10);
     }
   }
 
-  const players = Array.from(uniquePlayersMap.values());
-  log.info(`Created leaderboard with ${players.length} unique players`);
+  if (!rank || lp === null) {
+    const htmlRankMatch = RegExp(
+      /<strong[^>]*first-letter:uppercase[^>]*>([^<]+)<\/strong><span[^>]*>([\d,]+)<!--[^>]*-->\s*LP<\/span>/,
+    ).exec(html);
+    if (htmlRankMatch) {
+      rank = formatRank(htmlRankMatch[1]);
+      lp = parseInt(htmlRankMatch[2].replace(/,/g, ''), 10);
+    }
+  }
 
-  // Fetch region ranks - this is the most expensive operation
-  log.info('Fetching region ranks...');
-  const startTime = Date.now();
-  const playersWithRegionRank = await fetchRegionRank(players);
-  const fetchTime = Date.now() - startTime;
-  log.info(`Region ranks fetched successfully in ${fetchTime}ms`);
-
-  return playersWithRegionRank;
-}
+  return { regionRank, rank, lp };
+};
 
 /**
  * Cached version of KC leaderboard fetching.
