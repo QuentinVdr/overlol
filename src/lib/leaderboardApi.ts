@@ -62,17 +62,25 @@ async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
 async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeaderboard | undefined> {
   const log = logger.child('leaderboard-service:player-data');
 
-  let bestAccount: TPlayerLeaderboard | undefined = undefined;
-  for (const account of kcPlayerList[kcPlayer]) {
+  // Fetch all accounts in parallel
+  const accountPromises = kcPlayerList[kcPlayer].map(async (account) => {
     try {
-      const playerData = await fetchAccountInfo(account);
-      if (!bestAccount || playerData.lp > bestAccount.lp) {
-        bestAccount = playerData;
-      }
+      return await fetchAccountInfo(account);
     } catch (error) {
       log.error(`Failed to fetch data for ${account.riotPseudo}#${account.tagLine}:`, error);
+      return null;
+    }
+  });
+
+  const results = await Promise.all(accountPromises);
+
+  let bestAccount: TPlayerLeaderboard | undefined = undefined;
+  for (const playerData of results) {
+    if (playerData && (!bestAccount || playerData.lp > bestAccount.lp)) {
+      bestAccount = playerData;
     }
   }
+
   if (bestAccount) {
     bestAccount.playerName = kcPlayer;
   }
