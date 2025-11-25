@@ -22,7 +22,6 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'yukino cat', tagLine: 'blue', region: 'EUW' },
     { riotPseudo: 'yukino cat', tagLine: 'cat', region: 'EUW' },
   ],
-  'KR Kamiloo': [{ riotPseudo: 'ÜN ÜN ÜN', tagLine: 'NIKA', region: 'KR' }],
   Kamiloo: [
     { riotPseudo: 'Limitless limits', tagLine: 'FIRE', region: 'EUW' },
     { riotPseudo: 'TODOROKI RAICHI', tagLine: 'rank1', region: 'EUW' },
