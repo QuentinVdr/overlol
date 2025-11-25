@@ -143,14 +143,12 @@ const extractData = (html: string): { regionRank: string; rank: string; lp: numb
   let rank = '';
   let lp: number | null = null;
 
-  if (!rank || lp === null) {
-    const escapedMatch = RegExp(
-      /rank_entries\\":\{\\"high_rank_info\\":\{\\"tier\\":\\"([^"\\]+)\\",\\"lp\\":\\"([\d,]+)\\"/,
-    ).exec(html);
-    if (escapedMatch) {
-      rank = formatRank(escapedMatch[1]);
-      lp = parseInt(escapedMatch[2].replace(/,/g, ''), 10);
-    }
+  const escapedMatch = RegExp(
+    /rank_entries\\":\{\\"high_rank_info\\":\{\\"tier\\":\\"([^"\\]+)\\",\\"lp\\":\\"([\d,]+)\\"/,
+  ).exec(html);
+  if (escapedMatch) {
+    rank = formatRank(escapedMatch[1]);
+    lp = parseInt(escapedMatch[2].replace(/,/g, ''), 10);
   }
 
   if (!rank || lp === null) {
