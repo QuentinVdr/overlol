@@ -1,10 +1,8 @@
 export type TPlayerLeaderboard = {
-  team: string;
-  player: string;
+  playerName: string;
   inGameName: string;
   tagLine: string;
   rank: string;
-  tier: string;
   lp: number;
-  regionRank?: string;
+  regionRank: string;
 };
