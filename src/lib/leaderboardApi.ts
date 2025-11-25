@@ -96,7 +96,7 @@ async function fetchAccountInfo(riotAccount: TRiotAccount): Promise<TPlayerLeade
   )}-${encodeURIComponent(riotAccount.tagLine)}`;
 
   const response = await fetch(url, {
-    signal: AbortSignal.timeout(15000),
+    signal: AbortSignal.timeout(5000),
     cache: 'no-store',
     headers: {
       Accept: 'text/html',
@@ -136,32 +136,23 @@ const formatRank = (tierString: string): string => {
     .join(' ');
 };
 
+const REGEX_LADDER_RANK = /Ladder Rank\s*<span[^>]*>([\d,]+)<\/span>/;
+const REGEX_RANK =
+  /<strong[^>]*first-letter:uppercase[^>]*>([^<]+)<\/strong><span[^>]*>([\d,]+)<!--[^>]*-->\s*LP<\/span>/;
+
 const extractData = (html: string): { regionRank: string; rank: string; lp: number | null } => {
-  const regionRankRaw = RegExp(/Ladder Rank\s*<span[^>]*>([\d,]+)<\/span>/).exec(html)?.[1] ?? '';
-  const regionRank = regionRankRaw; // keep formatting (commas) for display consistency
+  const regionRank = REGEX_LADDER_RANK.exec(html)?.[1] ?? '';
 
-  let rank = '';
-  let lp: number | null = null;
-
-  const escapedMatch = RegExp(
-    /rank_entries\\":\{\\"high_rank_info\\":\{\\"tier\\":\\"([^"\\]+)\\",\\"lp\\":\\"([\d,]+)\\"/,
-  ).exec(html);
-  if (escapedMatch) {
-    rank = formatRank(escapedMatch[1]);
-    lp = parseInt(escapedMatch[2].replace(/,/g, ''), 10);
+  const htmlRankInfo = REGEX_RANK.exec(html);
+  if (htmlRankInfo) {
+    return {
+      regionRank,
+      rank: formatRank(htmlRankInfo[1]),
+      lp: parseInt(htmlRankInfo[2].replace(/,/g, ''), 10),
+    };
   }
 
-  if (!rank || lp === null) {
-    const htmlRankMatch = RegExp(
-      /<strong[^>]*first-letter:uppercase[^>]*>([^<]+)<\/strong><span[^>]*>([\d,]+)<!--[^>]*-->\s*LP<\/span>/,
-    ).exec(html);
-    if (htmlRankMatch) {
-      rank = formatRank(htmlRankMatch[1]);
-      lp = parseInt(htmlRankMatch[2].replace(/,/g, ''), 10);
-    }
-  }
-
-  return { regionRank, rank, lp };
+  return { regionRank, rank: '', lp: null };
 };
 
 /**
