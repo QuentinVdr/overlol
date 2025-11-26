@@ -59,7 +59,7 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
  */
 async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
   const log = logger.child('leaderboard-service:leaderboard');
-  log.debug('Fetching and processing KC leaderboard data');
+  log.info('Fetching and processing KC leaderboard data');
 
   const allGroups = await Promise.all(
     Object.keys(kcPlayerList).map((kcPlayer) => getPlayerLeaderboardData(kcPlayer)),
@@ -85,7 +85,7 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
 
   let bestAccount: TPlayerLeaderboard | undefined = undefined;
   for (const playerData of results) {
-    if (playerData && (!bestAccount || playerData.lp > bestAccount.lp)) {
+    if (playerData && (!bestAccount || playerData.rank > bestAccount.rank)) {
       bestAccount = playerData;
     }
   }
