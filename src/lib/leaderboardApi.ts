@@ -85,7 +85,7 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
 
   let bestAccount: TPlayerLeaderboard | undefined = undefined;
   for (const playerData of results) {
-    if (playerData && (!bestAccount || playerData.rank > bestAccount.rank)) {
+    if (playerData && (!bestAccount || playerData.rank < bestAccount.rank)) {
       bestAccount = playerData;
     }
   }
