@@ -84,15 +84,21 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
   const results = await Promise.all(accountPromises);
 
   let bestAccount: TPlayerLeaderboard | undefined = undefined;
+  let bestAccountRank: number = Infinity;
   for (const playerData of results) {
-    if (playerData && (!bestAccount || playerData.rank < bestAccount.rank)) {
+    if (
+      playerData &&
+      (!bestAccount || parseInt(playerData.regionRank.replaceAll(',', '')) < bestAccountRank)
+    ) {
       bestAccount = playerData;
+      bestAccountRank = parseInt(playerData.regionRank.replaceAll(',', ''));
     }
   }
 
   if (bestAccount) {
     bestAccount.playerName = kcPlayer;
   }
+  log.debug(`${kcPlayer} bestAccount:`, bestAccount);
 
   return bestAccount;
 }
