@@ -37,7 +37,7 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'POBC', tagLine: '6162', region: 'EUW' },
   ],
   // KC BS Roster
-  Tao: [{ riotPseudo: 'Loose Ends999', tagLine: 'EUW', region: 'EUW' }],
+  Tao: [{ riotPseudo: 'xhtao', tagLine: '3100', region: 'EUW' }],
   BAASHH: [{ riotPseudo: 'TTV BAASHH', tagLine: 'EUW', region: 'EUW' }],
   MathisV: [{ riotPseudo: 'MathisV', tagLine: 'ARCHE', region: 'EUW' }],
   Hazel: [
