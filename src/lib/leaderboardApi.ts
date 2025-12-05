@@ -12,7 +12,6 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' },
     { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW', region: 'EUW' },
   ],
-  Targamas: [{ riotPseudo: 'Targamas', tagLine: '5555', region: 'EUW' }],
   // KC Blue Roster
   Maynter: [
     { riotPseudo: 'Maynter', tagLine: 'EUW', region: 'EUW' },
@@ -26,11 +25,6 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'Limitless limits', tagLine: 'FIRE', region: 'EUW' },
     { riotPseudo: 'TODOROKI RAICHI', tagLine: 'rank1', region: 'EUW' },
     { riotPseudo: 'Labubu IRL', tagLine: 'macha', region: 'EUW' },
-  ],
-  '3XA': [
-    { riotPseudo: '永遠の拷問', tagLine: 'xox', region: 'EUW' },
-    { riotPseudo: 'Atomic Habits', tagLine: '2809', region: 'EUW' },
-    { riotPseudo: 'Requiem', tagLine: '1302', region: 'EUW' },
   ],
   Prime: [
     { riotPseudo: 'Céleste', tagLine: '6162', region: 'EUW' },
