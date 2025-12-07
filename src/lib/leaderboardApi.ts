@@ -7,16 +7,11 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
   // KC LEC Roster
   Canna: [{ riotPseudo: 'K C', tagLine: 'kcwin', region: 'EUW' }],
   Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111', region: 'EUW' }],
-  Vladi: [{ riotPseudo: 'dmsdklb', tagLine: 'vivi', region: 'EUW' }],
   Caliste: [
     { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' },
     { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW', region: 'EUW' },
   ],
   // KC Blue Roster
-  Maynter: [
-    { riotPseudo: 'Maynter', tagLine: 'EUW', region: 'EUW' },
-    { riotPseudo: 'vovalaclasse', tagLine: 'EUW', region: 'EUW' },
-  ],
   Yukino: [
     { riotPseudo: 'yukino cat', tagLine: 'blue', region: 'EUW' },
     { riotPseudo: 'yukino cat', tagLine: 'cat', region: 'EUW' },
