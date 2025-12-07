@@ -5,7 +5,10 @@ import { unstable_cache } from 'next/cache';
 
 const kcPlayerList: { [key: string]: TRiotAccount[] } = {
   // KC LEC Roster
-  Canna: [{ riotPseudo: 'K C', tagLine: 'kcwin', region: 'EUW' }],
+  Canna: [
+    { riotPseudo: 'Katze', tagLine: 'myao', region: 'EUW' },
+    { riotPseudo: 'K C', tagLine: 'kcwin', region: 'EUW' },
+  ],
   Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111', region: 'EUW' }],
   Caliste: [
     { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' },
