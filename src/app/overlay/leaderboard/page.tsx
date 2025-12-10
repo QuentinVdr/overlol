@@ -1,15 +1,9 @@
 import { getKcLeaderboard } from '@/lib/leaderboardApi';
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
-import { cacheLife } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
 
 export default async function LeaderboardOverlay() {
-  'use cache';
-  cacheLife({
-    stale: 900, // 15 minutes until considered stale
-    revalidate: 900, // 15 minutes until revalidated
-    expire: 900, // 15 minutes until expired
-  });
-
   let leaderboard: TPlayerLeaderboard[];
 
   try {
