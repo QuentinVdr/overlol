@@ -33,7 +33,7 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
   Hazel: [
     { riotPseudo: 'Antarctica', tagLine: 'S B', region: 'EUW' },
     { riotPseudo: 'Hazel', tagLine: 'KCorp', region: 'EUW' },
-    { riotPseudo: 'one last dance', tagLine: '114', region: 'EUW' },
+    { riotPseudo: 'Blue', tagLine: 'HZL', region: 'EUW' },
     { riotPseudo: '114', tagLine: '1405', region: 'EUW' },
   ],
   Prime: [
@@ -95,7 +95,7 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
   if (bestAccount) {
     bestAccount.playerName = kcPlayer;
   }
-  log.debug(`${kcPlayer} bestAccount:`, bestAccount);
+  log.info(`${kcPlayer} bestAccount:`, bestAccount);
 
   return bestAccount;
 }
