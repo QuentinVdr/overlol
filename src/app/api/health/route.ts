@@ -1,8 +1,6 @@
 import { OverlayService } from '@/lib/overlayService';
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic';
-
 export async function GET() {
   try {
     const stats = OverlayService.getStats();
@@ -16,7 +14,7 @@ export async function GET() {
       },
       {
         headers: {
-          'Cache-Control': 'no-store',
+          'Cache-Control': 'no-store, must-revalidate',
         },
       },
     );
@@ -31,7 +29,7 @@ export async function GET() {
       {
         status: 503,
         headers: {
-          'Cache-Control': 'no-store',
+          'Cache-Control': 'no-store, must-revalidate',
         },
       },
     );
