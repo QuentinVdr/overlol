@@ -1,7 +1,9 @@
+'use server';
+
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 import { TRiotAccount } from '@/types/RiotAccountType';
 import { logger } from '@/utils/logger';
-import { unstable_cache } from 'next/cache';
+import { cacheLife, unstable_cache } from 'next/cache';
 
 const kcPlayerList: { [key: string]: TRiotAccount[] } = {
   // KC LEC Roster
@@ -55,6 +57,13 @@ const kcPlayerList: { [key: string]: TRiotAccount[] } = {
  * This does all the heavy lifting: API calls, data transformation, region rank fetching.
  */
 async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
+  'use cache';
+  cacheLife({
+    stale: 900, // 15 minutes until considered stale
+    revalidate: 900, // 15 minutes until revalidated
+    expire: 900, // 15 minutes until expired
+  });
+
   const log = logger.child('leaderboard-service:leaderboard');
   log.info('Fetching and processing KC leaderboard data');
 
@@ -177,7 +186,7 @@ const getCachedKcLeaderboard = unstable_cache(
   fetchAndProcessKcLeaderboard,
   ['kc-leaderboard'], // cache key
   {
-    revalidate: 1800, // 30 minutes cache
+    revalidate: 900, // 15 minutes cache
     tags: ['lol-leaderboard'],
   },
 );
