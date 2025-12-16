@@ -20,15 +20,12 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
   const kcPlayerMap = new Map<string, string>();
   Object.keys(kcPlayerList).forEach((kcPlayer) => {
     kcPlayerList[kcPlayer].forEach((account) => {
-      kcPlayerMap.set(`${account.riotPseudo}#${account.tagLine}`, kcPlayer);
+      kcPlayerMap.set(`${account.riotPseudo}#${account.tagLine}`.toLowerCase(), kcPlayer);
     });
   });
 
-  const getKcPlayerInfo = (gameName: string, tagLine: string, riotId: string) => {
-    if (`${gameName}#${tagLine}` !== riotId) {
-      return riotId?.replace(/#[^#]*$/, '') || '';
-    }
-    return kcPlayerMap.get(`${gameName}#${tagLine}`);
+  const getKcPlayerInfo = (riotId: string) => {
+    return kcPlayerMap.get(riotId.toLowerCase()) || riotId?.replace(/#[^#]*$/, '') || '';
   };
 
   const handleSearchMatchOf = async (data: { matchOf: string }) => {
@@ -62,14 +59,14 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
       const blueTeam = participants
         .filter((p: { teamId: number }) => p.teamId === 100)
         .map((p: { riotId?: string; championName?: string }) => ({
-          playerName: getKcPlayerInfo(gameName, tagLine, p.riotId ?? ''),
+          playerName: getKcPlayerInfo(p.riotId ?? ''),
           championName: p.championName ?? '',
           teamName: '',
         }));
       const redTeam = participants
         .filter((p: { teamId: number }) => p.teamId === 200)
         .map((p: { riotId?: string; championName?: string }) => ({
-          playerName: getKcPlayerInfo(gameName, tagLine, p.riotId ?? ''),
+          playerName: getKcPlayerInfo(p.riotId ?? ''),
           championName: p.championName ?? '',
           teamName: '',
         }));
