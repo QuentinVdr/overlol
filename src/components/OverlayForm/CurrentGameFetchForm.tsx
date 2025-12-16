@@ -21,7 +21,7 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
     const map = new Map<string, string>();
     Object.keys(kcPlayerList).forEach((kcPlayer) => {
       kcPlayerList[kcPlayer].forEach((account) => {
-        map.set(`${account.riotPseudo}#${account.tagLine}`, kcPlayer);
+        map.set(`${account.riotPseudo}#${account.tagLine}`.toLowerCase(), kcPlayer);
       });
     });
     return map;
