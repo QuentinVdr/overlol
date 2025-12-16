@@ -1,7 +1,7 @@
 import { kcPlayerList } from '@/lib/KcPlayerList';
 import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm, UseFormSetValue } from 'react-hook-form';
 
 type CurrentGameFetchFormProps = {
@@ -17,12 +17,15 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
   } = useForm<{ matchOf: string }>();
   const [loading, setLoading] = useState(false);
 
-  const kcPlayerMap = new Map<string, string>();
-  Object.keys(kcPlayerList).forEach((kcPlayer) => {
-    kcPlayerList[kcPlayer].forEach((account) => {
-      kcPlayerMap.set(`${account.riotPseudo}#${account.tagLine}`.toLowerCase(), kcPlayer);
+  const kcPlayerMap = useMemo(() => {
+    const map = new Map<string, string>();
+    Object.keys(kcPlayerList).forEach((kcPlayer) => {
+      kcPlayerList[kcPlayer].forEach((account) => {
+        map.set(`${account.riotPseudo}#${account.tagLine}`, kcPlayer);
+      });
     });
-  });
+    return map;
+  }, []);
 
   const getKcPlayerInfo = (riotId: string) => {
     return kcPlayerMap.get(riotId.toLowerCase()) || riotId?.replace(/#[^#]*$/, '') || '';
