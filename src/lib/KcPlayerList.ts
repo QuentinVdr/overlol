@@ -45,4 +45,5 @@ export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'Full Drip Nsurr', tagLine: 'EUW', region: 'EUW' },
     { riotPseudo: 'Nsurr', tagLine: 'EUWFR', region: 'EUW' },
   ],
+  Alaric: [{ riotPseudo: 'Taking Souls', tagLine: 'FIGHT', region: 'EUW' }],
 };
