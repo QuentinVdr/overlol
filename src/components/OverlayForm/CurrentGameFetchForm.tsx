@@ -27,8 +27,13 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
     return map;
   }, []);
 
-  const getKcPlayerInfo = (riotId: string) => {
-    return kcPlayerMap.get(riotId.toLowerCase()) || riotId?.replace(/#[^#]*$/, '') || '';
+  const getKcPlayerInfo = (riotId: string, championName: string) => {
+    const playerName =
+      (kcPlayerMap.get(riotId.toLowerCase()) ?? riotId?.replace(/#[^#]*$/, '')) || '';
+    if (playerName === championName) {
+      return '';
+    }
+    return playerName;
   };
 
   const handleSearchMatchOf = async (data: { matchOf: string }) => {
@@ -62,14 +67,14 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
       const blueTeam = participants
         .filter((p: { teamId: number }) => p.teamId === 100)
         .map((p: { riotId?: string; championName?: string }) => ({
-          playerName: getKcPlayerInfo(p.riotId ?? ''),
+          playerName: getKcPlayerInfo(p.riotId ?? '', p.championName ?? ''),
           championName: p.championName ?? '',
           teamName: '',
         }));
       const redTeam = participants
         .filter((p: { teamId: number }) => p.teamId === 200)
         .map((p: { riotId?: string; championName?: string }) => ({
-          playerName: getKcPlayerInfo(p.riotId ?? ''),
+          playerName: getKcPlayerInfo(p.riotId ?? '', p.championName ?? ''),
           championName: p.championName ?? '',
           teamName: '',
         }));
@@ -90,14 +95,14 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
       className="flex w-full flex-row items-center gap-4"
       onSubmit={handleMatchOfSubmit(handleSearchMatchOf)}
     >
-      <div className="flex w-100 flex-col">
+      <div className="w-100 flex flex-col">
         <label htmlFor="matchOf" className="pb-1 pl-0.5 text-gray-500">
           Load data from match of :
         </label>
         <input
           id="matchOf"
           type="text"
-          className="rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm transition-all outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+          className="rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
           placeholder="gameName#tagLine"
           {...registerMatchOf('matchOf', {
             pattern: {
