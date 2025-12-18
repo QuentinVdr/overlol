@@ -29,8 +29,8 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
 
   const getKcPlayerInfo = (riotId: string, championName: string) => {
     const playerName =
-      (kcPlayerMap.get(riotId.toLowerCase()) ?? riotId?.replace(/#[^#]*$/, '')) || '';
-    if (playerName === championName) {
+      (kcPlayerMap.get(riotId.toLowerCase()) ?? riotId.replace(/#[^#]*$/, '')) || '';
+    if (playerName.toLowerCase() === championName.toLowerCase()) {
       return '';
     }
     return playerName;
