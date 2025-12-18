@@ -38,9 +38,7 @@ export function OverlayForm({
       <CurrentGameFetchForm setValue={setValue} />
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-row flex-wrap gap-4">
-          <div
-            className={`flex grow basis-xl flex-col gap-2 rounded-2xl border border-blue-600 bg-blue-50 px-5 py-3`}
-          >
+          <div className="basis-xl flex grow flex-col gap-2 rounded-2xl border border-blue-600 bg-blue-50 px-5 py-3">
             <h2 className={`text-blue-600`}>Blue team</h2>
             <PlayersForm
               register={register}
@@ -49,9 +47,7 @@ export function OverlayForm({
               teamName="blueTeam"
             />
           </div>
-          <div
-            className={`flex grow basis-xl flex-col gap-2 rounded-2xl border border-red-600 bg-red-50 px-5 py-3`}
-          >
+          <div className="basis-xl flex grow flex-col gap-2 rounded-2xl border border-red-600 bg-red-50 px-5 py-3">
             <h2 className={`text-red-600`}>Red team</h2>
             <PlayersForm
               register={register}
