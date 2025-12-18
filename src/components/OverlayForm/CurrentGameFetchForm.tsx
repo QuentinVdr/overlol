@@ -27,13 +27,27 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
     return map;
   }, []);
 
-  const getKcPlayerInfo = (riotId: string, championName: string) => {
-    const playerName =
-      (kcPlayerMap.get(riotId.toLowerCase()) ?? riotId.replace(/#[^#]*$/, '')) || '';
-    if (playerName.toLowerCase() === championName.toLowerCase()) {
-      return '';
+  const getKcPlayerInfo = ({
+    riotId,
+    championName,
+  }: {
+    riotId?: string;
+    championName?: string;
+  }) => {
+    const kcPlayer = kcPlayerMap.get(riotId?.toLowerCase() ?? '');
+    if (kcPlayer) {
+      return {
+        playerName: kcPlayer,
+        championName: championName || '',
+        teamName: 'KC',
+      };
     }
-    return playerName;
+    return {
+      playerName:
+        riotId?.toLowerCase() !== championName?.toLowerCase() ? riotId?.toLowerCase() : '',
+      championName: championName || '',
+      teamName: '',
+    };
   };
 
   const handleSearchMatchOf = async (data: { matchOf: string }) => {
@@ -66,18 +80,10 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
       const { participants } = await response.json();
       const blueTeam = participants
         .filter((p: { teamId: number }) => p.teamId === 100)
-        .map((p: { riotId?: string; championName?: string }) => ({
-          playerName: getKcPlayerInfo(p.riotId ?? '', p.championName ?? ''),
-          championName: p.championName ?? '',
-          teamName: '',
-        }));
+        .map(getKcPlayerInfo);
       const redTeam = participants
         .filter((p: { teamId: number }) => p.teamId === 200)
-        .map((p: { riotId?: string; championName?: string }) => ({
-          playerName: getKcPlayerInfo(p.riotId ?? '', p.championName ?? ''),
-          championName: p.championName ?? '',
-          teamName: '',
-        }));
+        .map(getKcPlayerInfo);
       setValue('blueTeam', blueTeam);
       setValue('redTeam', redTeam);
     } catch (error: unknown) {
