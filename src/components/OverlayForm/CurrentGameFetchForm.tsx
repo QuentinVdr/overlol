@@ -43,8 +43,7 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
       };
     }
     return {
-      playerName:
-        riotId?.toLowerCase() !== championName?.toLowerCase() ? riotId?.toLowerCase() : '',
+      playerName: riotId?.toLowerCase() !== championName?.toLowerCase() ? riotId : '',
       championName: championName || '',
       teamName: '',
     };
