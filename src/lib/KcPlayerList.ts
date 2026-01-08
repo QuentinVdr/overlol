@@ -38,12 +38,17 @@ export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'POBC', tagLine: '6162', region: 'EUW' },
   ],
   // KC BS Roster
-  BAASHH: [{ riotPseudo: 'TTV BAASHH', tagLine: 'EUW', region: 'EUW' }],
-  MathisV: [{ riotPseudo: 'MathisV', tagLine: 'ARCHE', region: 'EUW' }],
-  Nsurr: [
-    { riotPseudo: 'TripleMonstre', tagLine: 'EUWFR', region: 'EUW' },
-    { riotPseudo: 'Full Drip Nsurr', tagLine: 'EUW', region: 'EUW' },
-    { riotPseudo: 'Nsurr', tagLine: 'EUWFR', region: 'EUW' },
+  Koala: [
+    { riotPseudo: 'Koalachan', tagLine: 'EUW', region: 'EUW' },
+    { riotPseudo: 'focus', tagLine: 'Koala', region: 'EUW' },
+    { riotPseudo: 'Awful Things', tagLine: 'Koala', region: 'EUW' },
+    { riotPseudo: 'Falling Down', tagLine: 'Koala', region: 'EUW' },
+    { riotPseudo: 'Let Me Bleed', tagLine: 'Koala', region: 'EUW' },
   ],
+  Oleg: [
+    { riotPseudo: 'OLEG INSEC', tagLine: 'OLEG', region: 'EUW' },
+    { riotPseudo: 'OLEG FULLCLEAR', tagLine: 'CLEAR', region: 'EUW' },
+  ],
+  Panda: [{ riotPseudo: 'Panda', tagLine: '32111', region: 'EUW' }],
   Alaric: [{ riotPseudo: 'Taking Souls', tagLine: 'FIGHT', region: 'EUW' }],
 };
