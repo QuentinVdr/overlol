@@ -7,7 +7,10 @@ export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'K C', tagLine: 'kcwin', region: 'EUW' },
   ],
   Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111', region: 'EUW' }],
-  Kyeahoo: [{ riotPseudo: 'superkimchi', tagLine: '123', region: 'EUW' }],
+  Kyeahoo: [
+    { riotPseudo: 'superkimchi', tagLine: '123', region: 'EUW' },
+    { riotPseudo: 'Left Hand', tagLine: 'korea', region: 'EUW' },
+  ],
   Caliste: [
     { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' },
     { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW', region: 'EUW' },
@@ -49,6 +52,6 @@ export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'OLEG INSEC', tagLine: 'OLEG', region: 'EUW' },
     { riotPseudo: 'OLEG FULLCLEAR', tagLine: 'CLEAR', region: 'EUW' },
   ],
-  Panda: [{ riotPseudo: 'Panda', tagLine: '32111', region: 'EUW' }],
+  Panda: [{ riotPseudo: 'KC PANDA', tagLine: 'KCWIN', region: 'EUW' }],
   Alaric: [{ riotPseudo: 'Taking Souls', tagLine: 'FIGHT', region: 'EUW' }],
 };
