@@ -14,11 +14,13 @@ export default async function LeaderboardOverlay() {
   }
 
   const sortedLeaderboard = [...leaderboard].sort(
-    (a, b) => parseInt(a.regionRank.replace(/,/g, '')) - parseInt(b.regionRank.replace(/,/g, '')),
+    (a, b) =>
+      (parseInt(a.regionRank.replace(/,/g, '')) || Infinity) -
+      (parseInt(b.regionRank.replace(/,/g, '')) || Infinity),
   );
 
   return (
-    <div className="absolute top-[148px] left-[72px] flex h-174 w-[454px] flex-col justify-evenly gap-2 bg-zinc-900/40 text-[20px] font-bold text-white">
+    <div className="h-174 absolute left-[72px] top-[148px] flex w-[454px] flex-col justify-evenly gap-2 bg-zinc-900/40 text-[20px] font-bold text-white">
       {sortedLeaderboard.length > 0 ? (
         sortedLeaderboard.map((player, index) => (
           <div key={player.playerName}>
