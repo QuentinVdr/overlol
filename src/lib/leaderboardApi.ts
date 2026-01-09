@@ -5,6 +5,7 @@ import { TRiotAccount } from '@/types/RiotAccountType';
 import { logger } from '@/utils/logger';
 import { unstable_cache } from 'next/cache';
 import { kcPlayerList } from './KcPlayerList';
+import { Strings } from '@/utils/stringUtils';
 
 /**
  * Internal function to fetch and process KC leaderboard data.
@@ -39,12 +40,12 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
   let bestAccount: TPlayerLeaderboard | undefined = undefined;
   let bestAccountRank: number = Infinity;
   for (const playerData of results) {
-    if (
-      playerData &&
-      (!bestAccount || parseInt(playerData.regionRank.replaceAll(',', '')) < bestAccountRank)
-    ) {
+    const accRegRank = Strings.isBlank(playerData?.regionRank)
+      ? Infinity
+      : parseInt(playerData!.regionRank.replaceAll(',', ''));
+    if (playerData && (!bestAccount || accRegRank < bestAccountRank)) {
       bestAccount = playerData;
-      bestAccountRank = parseInt(playerData.regionRank.replaceAll(',', ''));
+      bestAccountRank = accRegRank;
     }
   }
 

@@ -25,8 +25,8 @@ export default async function LeaderboardOverlay() {
         sortedLeaderboard.map((player, index) => (
           <div key={player.playerName}>
             #{index + 1}. {player.playerName}:{' '}
-            <span className="capitalize">{player.rank.toLowerCase()}</span> {player.lp}LP [Rank:{' '}
-            {player.regionRank}]
+            <span className="capitalize">{player.rank.toLowerCase()}</span>
+            {player.rank !== 'Unranked' && ` ${player.lp}LP [Rank: ${player.regionRank}]`}
           </div>
         ))
       ) : (
