@@ -53,5 +53,6 @@ export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'OLEG FULLCLEAR', tagLine: 'CLEAR', region: 'EUW' },
   ],
   Panda: [{ riotPseudo: 'KC PANDA', tagLine: 'KCWIN', region: 'EUW' }],
+  Looki: [{ riotPseudo: 'Looki', tagLine: 'KCBS', region: 'EUW' }],
   Alaric: [{ riotPseudo: 'Taking Souls', tagLine: 'FIGHT', region: 'EUW' }],
 };
