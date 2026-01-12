@@ -37,8 +37,8 @@ export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: '114', tagLine: '1405', region: 'EUW' },
   ],
   Prime: [
+    { riotPseudo: 'KC Prime', tagLine: '6162', region: 'EUW' },
     { riotPseudo: 'Céleste', tagLine: '6162', region: 'EUW' },
-    { riotPseudo: 'POBC', tagLine: '6162', region: 'EUW' },
   ],
   // KC BS Roster
   Koala: [
