@@ -1,4 +1,4 @@
-import { kcPlayerList } from '@/lib/KcPlayerList';
+import { kcPlayersAccountList } from '@/lib/KcPlayerList';
 import { TOverlay } from '@/types/OverlayType';
 import { Strings } from '@/utils/stringUtils';
 import { useMemo, useState } from 'react';
@@ -19,8 +19,8 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
 
   const kcPlayerMap = useMemo(() => {
     const map = new Map<string, string>();
-    Object.keys(kcPlayerList).forEach((kcPlayer) => {
-      kcPlayerList[kcPlayer].forEach((account) => {
+    Object.keys(kcPlayersAccountList).forEach((kcPlayer) => {
+      kcPlayersAccountList[kcPlayer].forEach((account) => {
         map.set(`${account.riotPseudo}#${account.tagLine}`.toLowerCase(), kcPlayer);
       });
     });

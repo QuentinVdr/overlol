@@ -3,9 +3,9 @@
 import { TPlayerLeaderboard } from '@/types/PlayerLeaderboard';
 import { TRiotAccount } from '@/types/RiotAccountType';
 import { logger } from '@/utils/logger';
-import { unstable_cache } from 'next/cache';
-import { kcPlayerList } from './KcPlayerList';
 import { Strings } from '@/utils/stringUtils';
+import { unstable_cache } from 'next/cache';
+import { kcPlayersAccountList } from './KcPlayerList';
 
 /**
  * Internal function to fetch and process KC leaderboard data.
@@ -16,7 +16,7 @@ async function fetchAndProcessKcLeaderboard(): Promise<TPlayerLeaderboard[]> {
   log.info('Fetching and processing KC leaderboard data');
 
   const allGroups = await Promise.all(
-    Object.keys(kcPlayerList).map((kcPlayer) => getPlayerLeaderboardData(kcPlayer)),
+    Object.keys(kcPlayersAccountList).map((kcPlayer) => getPlayerLeaderboardData(kcPlayer)),
   );
 
   return allGroups.filter((player): player is TPlayerLeaderboard => player !== undefined);
@@ -26,7 +26,7 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
   const log = logger.child('leaderboard-service:player-data');
 
   // Fetch all accounts in parallel
-  const accountPromises = kcPlayerList[kcPlayer].map(async (account) => {
+  const accountPromises = kcPlayersAccountList[kcPlayer].map(async (account) => {
     try {
       return await fetchAccountInfo(account);
     } catch (error) {

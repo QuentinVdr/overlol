@@ -1,6 +1,6 @@
 import { TRiotAccount } from '@/types/RiotAccountType';
 
-export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
+export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
   // KC LEC Roster
   Canna: [
     { riotPseudo: 'Katze', tagLine: 'myao', region: 'EUW' },
@@ -54,5 +54,8 @@ export const kcPlayerList: { [key: string]: TRiotAccount[] } = {
   ],
   Panda: [{ riotPseudo: 'KC PANDA', tagLine: 'KCWIN', region: 'EUW' }],
   Looki: [{ riotPseudo: 'Looki', tagLine: 'KCBS', region: 'EUW' }],
-  Alaric: [{ riotPseudo: 'Taking Souls', tagLine: 'FIGHT', region: 'EUW' }],
+  Alaric: [
+    { riotPseudo: 'KCBS Fan', tagLine: 'Looki', region: 'EUW' },
+    { riotPseudo: 'Taking Souls', tagLine: 'FIGHT', region: 'EUW' },
+  ],
 };
