@@ -16,8 +16,8 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW', region: 'EUW' },
   ],
   Busio: [
+    { riotPseudo: 'basil', tagLine: 'fan', region: 'EUW' },
     { riotPseudo: 'Busio JNG', tagLine: 'NA1', region: 'EUW' },
-    { riotPseudo: 'OG Mithy', tagLine: 'Moo', region: 'EUW' },
   ],
   // KC Blue Roster
   Tao: [{ riotPseudo: 'xhtao', tagLine: '3100', region: 'EUW' }],
