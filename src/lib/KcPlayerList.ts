@@ -26,7 +26,7 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'yukino cat', tagLine: 'cat', region: 'EUW' },
   ],
   Kamiloo: [
-    { riotPseudo: 'Limitless limits', tagLine: 'FIRE', region: 'EUW' },
+    { riotPseudo: 'KC Kamiloo', tagLine: 'FIRE', region: 'EUW' },
     { riotPseudo: 'TODOROKI RAICHI', tagLine: 'rank1', region: 'EUW' },
     { riotPseudo: 'Labubu IRL', tagLine: 'macha', region: 'EUW' },
   ],
