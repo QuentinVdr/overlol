@@ -23,7 +23,7 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
   Tao: [{ riotPseudo: 'xhtao', tagLine: '3100', region: 'EUW' }],
   Yukino: [
     { riotPseudo: 'yukino cat', tagLine: 'blue', region: 'EUW' },
-    { riotPseudo: 'yukino cat', tagLine: 'cat', region: 'EUW' },
+    { riotPseudo: 'kaoruko', tagLine: '1903', region: 'EUW' },
   ],
   Kamiloo: [
     { riotPseudo: 'KC Kamiloo', tagLine: 'FIRE', region: 'EUW' },
