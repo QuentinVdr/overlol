@@ -31,8 +31,8 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'Labubu IRL', tagLine: 'macha', region: 'EUW' },
   ],
   Hazel: [
-    { riotPseudo: 'Antarctica', tagLine: 'S B', region: 'EUW' },
-    { riotPseudo: 'dracula', tagLine: 'hzl', region: 'EUW' },
+    { riotPseudo: 'hachiware', tagLine: 'lucia', region: 'EUW' },
+    { riotPseudo: 'hachiware', tagLine: 'hzl', region: 'EUW' },
     { riotPseudo: 'Blue', tagLine: 'HZL', region: 'EUW' },
     { riotPseudo: '114', tagLine: '1405', region: 'EUW' },
   ],
