@@ -2,57 +2,24 @@ import { TRiotAccount } from '@/types/RiotAccountType';
 
 export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
   // KC LEC Roster
-  Canna: [
-    { riotPseudo: 'Katze', tagLine: 'myao', region: 'EUW' },
-    { riotPseudo: 'K C', tagLine: 'kcwin', region: 'EUW' },
-  ],
+  Canna: [{ riotPseudo: 'Katze', tagLine: 'myao', region: 'EUW' }],
   Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111', region: 'EUW' }],
-  Kyeahoo: [
-    { riotPseudo: 'superkimchi', tagLine: '123', region: 'EUW' },
-    { riotPseudo: 'Left Hand', tagLine: 'korea', region: 'EUW' },
-  ],
-  Caliste: [
-    { riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' },
-    { riotPseudo: 'I NEED SOLOQ', tagLine: 'EUW', region: 'EUW' },
-  ],
-  Busio: [
-    { riotPseudo: 'basil', tagLine: 'fan', region: 'EUW' },
-    { riotPseudo: 'Busio JNG', tagLine: 'NA1', region: 'EUW' },
-  ],
+  Kyeahoo: [{ riotPseudo: 'Left Hand', tagLine: 'korea', region: 'EUW' }],
+  Caliste: [{ riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' }],
+  Busio: [{ riotPseudo: 'basil', tagLine: 'fan', region: 'EUW' }],
   // KC Blue Roster
   Tao: [{ riotPseudo: 'xhtao', tagLine: '3100', region: 'EUW' }],
-  Yukino: [
-    { riotPseudo: 'Yukino7', tagLine: 'cat', region: 'EUW' },
-    { riotPseudo: 'kaoruko', tagLine: '1903', region: 'EUW' },
-  ],
-  Kamiloo: [
-    { riotPseudo: 'KC Kamiloo', tagLine: 'FIRE', region: 'EUW' },
-    { riotPseudo: 'TODOROKI RAICHI', tagLine: 'rank1', region: 'EUW' },
-    { riotPseudo: 'Labubu IRL', tagLine: 'macha', region: 'EUW' },
-  ],
-  Hazel: [
-    { riotPseudo: 'hachiware', tagLine: 'lucia', region: 'EUW' },
-    { riotPseudo: 'hachiware', tagLine: 'hzl', region: 'EUW' },
-    { riotPseudo: 'Blue', tagLine: 'HZL', region: 'EUW' },
-    { riotPseudo: '114', tagLine: '1405', region: 'EUW' },
-  ],
-  Prime: [
-    { riotPseudo: 'KC Prime', tagLine: '6162', region: 'EUW' },
-    { riotPseudo: 'Céleste', tagLine: '6162', region: 'EUW' },
-  ],
+  Yukino: [{ riotPseudo: 'Yukino7', tagLine: 'cat', region: 'EUW' }],
+  Kamiloo: [{ riotPseudo: 'KC Kamiloo', tagLine: 'FIRE', region: 'EUW' }],
+  Hazel: [{ riotPseudo: 'hachiware', tagLine: 'lucia', region: 'EUW' }],
+  Prime: [{ riotPseudo: 'KC Prime', tagLine: '6162', region: 'EUW' }],
   // KC BS Roster
-  Koala: [
-    { riotPseudo: 'Koalachan', tagLine: 'EUW', region: 'EUW' },
-    { riotPseudo: 'focus', tagLine: 'Koala', region: 'EUW' },
-    { riotPseudo: 'Awful Things', tagLine: 'Koala', region: 'EUW' },
-    { riotPseudo: 'Falling Down', tagLine: 'Koala', region: 'EUW' },
-    { riotPseudo: 'Let Me Bleed', tagLine: 'Koala', region: 'EUW' },
-  ],
+  Koala: [{ riotPseudo: 'Awful Things', tagLine: 'Koala', region: 'EUW' }],
   Oleg: [
     { riotPseudo: 'OLEG INSEC', tagLine: 'OLEG', region: 'EUW' },
     { riotPseudo: 'OLEG FULLCLEAR', tagLine: 'CLEAR', region: 'EUW' },
   ],
-  Panda: [{ riotPseudo: 'KC PANDA', tagLine: 'KCWIN', region: 'EUW' }],
+  Panda: [{ riotPseudo: 'KC NEXT MIDKING', tagLine: 'PANDA', region: 'EUW' }],
   Looki: [{ riotPseudo: 'Looki', tagLine: 'KCBS', region: 'EUW' }],
   Alaric: [{ riotPseudo: 'Tortank', tagLine: 'âne', region: 'EUW' }],
 };
