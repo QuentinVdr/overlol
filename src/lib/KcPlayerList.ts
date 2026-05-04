@@ -9,7 +9,10 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
   Busio: [{ riotPseudo: 'basil', tagLine: 'fan', region: 'EUW' }],
   // KC Blue Roster
   Tao: [{ riotPseudo: 'xhtao', tagLine: '3100', region: 'EUW' }],
-  Yukino: [{ riotPseudo: 'Yukino7', tagLine: 'cat', region: 'EUW' }],
+  Yukino: [
+    { riotPseudo: 'kaoruko', tagLine: 'kawaii', region: 'EUW' },
+    { riotPseudo: 'Yukino7', tagLine: 'cat', region: 'EUW' },
+  ],
   Kamiloo: [{ riotPseudo: 'KC Kamiloo', tagLine: 'FIRE', region: 'EUW' }],
   Hazel: [{ riotPseudo: 'hachiware', tagLine: 'lucia', region: 'EUW' }],
   Prime: [{ riotPseudo: 'KC Prime', tagLine: '6162', region: 'EUW' }],
