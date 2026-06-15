@@ -14,7 +14,7 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'Yukino7', tagLine: 'cat', region: 'EUW' },
   ],
   Kamiloo: [{ riotPseudo: 'KC Kamiloo', tagLine: 'FIRE', region: 'EUW' }],
-  Hazel: [{ riotPseudo: 'hachiware', tagLine: 'lucia', region: 'EUW' }],
+  Looki: [{ riotPseudo: 'Looki', tagLine: 'KCBS', region: 'EUW' }],
   Prime: [{ riotPseudo: 'KC Prime', tagLine: '6162', region: 'EUW' }],
   // KC BS Roster
   Koala: [{ riotPseudo: 'Awful Things', tagLine: 'Koala', region: 'EUW' }],
@@ -23,6 +23,5 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'OLEG FULLCLEAR', tagLine: 'CLEAR', region: 'EUW' },
   ],
   Panda: [{ riotPseudo: 'KC NEXT MIDKING', tagLine: 'PANDA', region: 'EUW' }],
-  Looki: [{ riotPseudo: 'Looki', tagLine: 'KCBS', region: 'EUW' }],
-  Alaric: [{ riotPseudo: 'Tortank', tagLine: 'âne', region: 'EUW' }],
+  Alaric: [{ riotPseudo: '140 6', tagLine: '2027', region: 'EUW' }],
 };
