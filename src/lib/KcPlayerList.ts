@@ -14,7 +14,7 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'Yukino7', tagLine: 'cat', region: 'EUW' },
   ],
   Kamiloo: [{ riotPseudo: 'KC Kamiloo', tagLine: 'FIRE', region: 'EUW' }],
-  Looki: [{ riotPseudo: 'Looki', tagLine: 'KCBS', region: 'EUW' }],
+  Looki: [{ riotPseudo: 'Looki', tagLine: 'KCB', region: 'EUW' }],
   Prime: [{ riotPseudo: 'KC Prime', tagLine: '6162', region: 'EUW' }],
   // KC BS Roster
   Koala: [{ riotPseudo: 'Awful Things', tagLine: 'Koala', region: 'EUW' }],
