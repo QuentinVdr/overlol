@@ -23,5 +23,6 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
     { riotPseudo: 'OLEG FULLCLEAR', tagLine: 'CLEAR', region: 'EUW' },
   ],
   Panda: [{ riotPseudo: 'KC NEXT MIDKING', tagLine: 'PANDA', region: 'EUW' }],
+  Gwen: [{ riotPseudo: 'ttv gwenーnlol', tagLine: 'zeri', region: 'EUW' }],
   Alaric: [{ riotPseudo: '140 6', tagLine: '2027', region: 'EUW' }],
 };
