@@ -1,10 +1,11 @@
 import { TRiotAccount } from '@/types/RiotAccountType';
 
+// https://dpm.lol/leaderboards/kc
 export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
   // KC LEC Roster
   Canna: [{ riotPseudo: 'Katze', tagLine: 'myao', region: 'EUW' }],
   Yike: [{ riotPseudo: 'KC Yiken', tagLine: '1111', region: 'EUW' }],
-  Kyeahoo: [{ riotPseudo: 'Left Hand', tagLine: 'korea', region: 'EUW' }],
+  Kyeahoo: [{ riotPseudo: 'kyeahOOOOOOOOOOO', tagLine: 'FFFFF', region: 'EUW' }],
   Caliste: [{ riotPseudo: 'KC NEXT ADKING', tagLine: 'EUW', region: 'EUW' }],
   Busio: [{ riotPseudo: 'basil', tagLine: 'fan', region: 'EUW' }],
   // KC Blue Roster
