@@ -35,6 +35,7 @@ export function PlayerForm({
 }: Readonly<PlayerFormProps>) {
   const clearPlayer = () => {
     setValue(`${fieldPrefix}.championName`, '');
+    setValue(`${fieldPrefix}.championImage`, '');
     setValue(`${fieldPrefix}.playerName`, '');
     setValue(`${fieldPrefix}.teamName`, '');
   };

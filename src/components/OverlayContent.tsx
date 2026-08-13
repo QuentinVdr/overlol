@@ -62,15 +62,18 @@ export default function OverlayContent({
             .map((player) => (
               <div
                 key={player.playerName}
-                className="flex flex-nowrap items-center px-2 font-semibold text-nowrap text-zinc-50"
+                className="flex flex-nowrap items-center gap-1 text-nowrap px-2 font-semibold text-zinc-50"
               >
+                {player.championImage && (
+                  <img src={player.championImage} alt="" className="size-[1.2rem] rounded" />
+                )}
                 {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
-                {player.playerName}, {player.championName}
+                {player.playerName}
               </div>
             ))}
         </div>
       </div>
-      <div className="absolute right-[276px] bottom-0 flex max-h-[219px] w-[334px] flex-col bg-zinc-900/40 backdrop-blur-sm">
+      <div className="absolute bottom-0 right-[276px] flex max-h-[219px] w-[334px] flex-col bg-zinc-900/40 backdrop-blur-sm">
         <div ref={redRef}>
           {redTeam
             .filter(
@@ -80,10 +83,13 @@ export default function OverlayContent({
             .map((player) => (
               <div
                 key={player.playerName}
-                className="flex flex-nowrap items-center px-2 font-semibold text-nowrap text-zinc-50"
+                className="flex flex-nowrap items-center gap-1 text-nowrap px-2 font-semibold text-zinc-50"
               >
+                {player.championImage && (
+                  <img src={player.championImage} alt="" className="size-[1.2rem] rounded" />
+                )}
                 {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
-                {player.playerName}, {player.championName}
+                {player.playerName}
               </div>
             ))}
         </div>

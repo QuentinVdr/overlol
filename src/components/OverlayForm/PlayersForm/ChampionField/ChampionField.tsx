@@ -53,8 +53,11 @@ export function ChampionField({
       });
   }, [isOpen, highlightedIndex, filteredChampions, listId]);
 
+  const imageName = `${fieldPrefix}.championImage` as const;
+
   const select = (champ: TChampion) => {
     setValue(name, champ.name, { shouldDirty: true, shouldValidate: true });
+    setValue(imageName, champ.image, { shouldDirty: true, shouldValidate: true });
     setIsOpen(false);
   };
 
@@ -63,6 +66,7 @@ export function ChampionField({
     const typed = value.trim().toLowerCase();
     const match = (champions ?? []).find((champ) => champ.name.toLowerCase() === typed);
     setValue(name, match?.name ?? '', { shouldDirty: true, shouldValidate: true });
+    setValue(imageName, match?.image ?? '', { shouldDirty: true, shouldValidate: true });
     setIsOpen(false);
   };
 

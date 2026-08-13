@@ -22,11 +22,13 @@ export function OverlayForm({
         blueTeam: Array.from({ length: 5 }, () => ({
           playerName: '',
           championName: '',
+          championImage: '',
           teamName: '',
         })),
         redTeam: Array.from({ length: 5 }, () => ({
           playerName: '',
           championName: '',
+          championImage: '',
           teamName: '',
         })),
       }),
