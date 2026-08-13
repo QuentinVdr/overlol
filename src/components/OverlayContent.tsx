@@ -51,49 +51,45 @@ export default function OverlayContent({
   }, [redTeam]);
 
   return (
-    <>
-      <div className="absolute bottom-0 left-[288px] flex max-h-[219px] w-[334px] flex-col bg-zinc-900/40 backdrop-blur-sm">
-        <div ref={blueRef}>
-          {blueTeam
-            .filter(
-              (player) =>
-                Strings.isNotBlank(player.championName) && Strings.isNotBlank(player.playerName),
-            )
-            .map((player) => (
-              <div
-                key={player.playerName}
-                className="flex flex-nowrap items-center gap-1 text-nowrap px-2 font-semibold text-zinc-50"
-              >
-                {player.championImage && (
-                  <img src={player.championImage} alt="" className="size-[1.2rem] rounded" />
-                )}
-                {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
-                {player.playerName}
-              </div>
-            ))}
-        </div>
+    <div className="absolute bottom-0 right-[254px] flex w-[356px] flex-row gap-0.5 bg-zinc-900/40 p-1 align-bottom backdrop-blur-sm">
+      <div className="flex w-full flex-col gap-1.5">
+        {blueTeam
+          .filter(
+            (player) =>
+              Strings.isNotBlank(player.championName) && Strings.isNotBlank(player.playerName),
+          )
+          .map((player) => (
+            <div
+              key={player.playerName}
+              className="flex flex-nowrap items-center gap-1 text-nowrap font-semibold text-zinc-50"
+            >
+              {player.championImage && (
+                <img src={player.championImage} alt="" className="size-7 rounded" />
+              )}
+              {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
+              {player.playerName}
+            </div>
+          ))}
       </div>
-      <div className="absolute bottom-0 right-[276px] flex max-h-[219px] w-[334px] flex-col bg-zinc-900/40 backdrop-blur-sm">
-        <div ref={redRef}>
-          {redTeam
-            .filter(
-              (player) =>
-                Strings.isNotBlank(player.championName) && Strings.isNotBlank(player.playerName),
-            )
-            .map((player) => (
-              <div
-                key={player.playerName}
-                className="flex flex-nowrap items-center gap-1 text-nowrap px-2 font-semibold text-zinc-50"
-              >
-                {player.championImage && (
-                  <img src={player.championImage} alt="" className="size-[1.2rem] rounded" />
-                )}
-                {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
-                {player.playerName}
-              </div>
-            ))}
-        </div>
+      <div className="flex w-full flex-col gap-1.5">
+        {redTeam
+          .filter(
+            (player) =>
+              Strings.isNotBlank(player.championName) && Strings.isNotBlank(player.playerName),
+          )
+          .map((player) => (
+            <div
+              key={player.playerName}
+              className="flex flex-row-reverse flex-nowrap items-center gap-1 text-nowrap font-semibold text-zinc-50"
+            >
+              {player.championImage && (
+                <img src={player.championImage} alt="" className="size-7 rounded" />
+              )}
+              {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
+              {player.playerName}
+            </div>
+          ))}
       </div>
-    </>
+    </div>
   );
 }
