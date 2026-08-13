@@ -3,13 +3,14 @@
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
 import { DragEvent, useState } from 'react';
-import { UseFormGetValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { Control, UseFormGetValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { PlayerForm } from './PlayerForm';
 
 type PlayersFormProps = {
   register: UseFormRegister<TOverlay>;
   setValue: UseFormSetValue<TOverlay>;
   getValues: UseFormGetValues<TOverlay>;
+  control: Control<TOverlay>;
   teamName: TeamEnum;
 };
 
@@ -17,6 +18,7 @@ export function PlayersForm({
   register,
   setValue,
   getValues,
+  control,
   teamName,
 }: Readonly<PlayersFormProps>) {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
@@ -82,6 +84,7 @@ export function PlayersForm({
           key={`${teamName}-${i}`}
           register={register}
           setValue={setValue}
+          control={control}
           fieldPrefix={`${teamName}.${i}`}
           onDragStart={() => handleDragStart(i)}
           onDragEnd={handleDragEnd}

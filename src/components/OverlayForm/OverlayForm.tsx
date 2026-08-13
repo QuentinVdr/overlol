@@ -16,7 +16,7 @@ export function OverlayForm({
   submitLabel = 'Generate Overlay',
   defaultValues,
 }: Readonly<OverlayFormProps>) {
-  const { register, handleSubmit, setValue, getValues } = useForm<TOverlay>({
+  const { register, handleSubmit, setValue, getValues, control } = useForm<TOverlay>({
     defaultValues: {
       ...(defaultValues || {
         blueTeam: Array.from({ length: 5 }, () => ({
@@ -44,6 +44,7 @@ export function OverlayForm({
               register={register}
               setValue={setValue}
               getValues={getValues}
+              control={control}
               teamName="blueTeam"
             />
           </div>
@@ -53,6 +54,7 @@ export function OverlayForm({
               register={register}
               setValue={setValue}
               getValues={getValues}
+              control={control}
               teamName="redTeam"
             />
           </div>
