@@ -4,4 +4,5 @@ export type TParticipant = {
   riotId: string;
   championId: number;
   championName: string;
+  championImage: string;
 };

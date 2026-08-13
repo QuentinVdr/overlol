@@ -30,21 +30,25 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
   const getKcPlayerInfo = ({
     riotId,
     championName,
+    championImage,
   }: {
     riotId?: string;
     championName?: string;
+    championImage?: string;
   }) => {
     const kcPlayer = kcPlayerMap.get(riotId?.toLowerCase() ?? '');
     if (kcPlayer) {
       return {
         playerName: kcPlayer,
         championName: championName || '',
+        championImage: championImage || '',
         teamName: 'KC',
       };
     }
     return {
       playerName: riotId?.toLowerCase() !== championName?.toLowerCase() ? riotId : '',
       championName: championName || '',
+      championImage: championImage || '',
       teamName: '',
     };
   };

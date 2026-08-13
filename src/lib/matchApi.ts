@@ -140,15 +140,19 @@ async function getCurrentMatchByPUUID(puuid: string): Promise<TParticipant[]> {
     const champions = await getLatestChampions();
 
     return data.participants.map(
-      (participant: { puuid: string; teamId: number; riotId: string; championId: number }) => ({
-        puuid: participant.puuid,
-        teamId: participant.teamId,
-        riotId: participant.riotId,
-        championId: participant.championId,
-        championName:
-          champions.find((champion) => champion.key === String(participant.championId))?.name ||
-          'Unknown Champion',
-      }),
+      (participant: { puuid: string; teamId: number; riotId: string; championId: number }) => {
+        const champion = champions.find(
+          (champion) => champion.key === String(participant.championId),
+        );
+        return {
+          puuid: participant.puuid,
+          teamId: participant.teamId,
+          riotId: participant.riotId,
+          championId: participant.championId,
+          championName: champion?.name || 'Unknown Champion',
+          championImage: champion?.image || '',
+        };
+      },
     ) as TParticipant[];
   } catch (error) {
     // Re-throw MatchApiError as-is
