@@ -1,12 +1,13 @@
 import { TOverlay } from '@/types/OverlayType';
 import { TeamEnum } from '@/types/TeamEnum';
 import { DragEvent } from 'react';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { Control, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { ChampionField } from './ChampionField/ChampionField';
 
 type PlayerFormProps = {
   register: UseFormRegister<TOverlay>;
   setValue: UseFormSetValue<TOverlay>;
+  control: Control<TOverlay>;
   fieldPrefix: `${TeamEnum}.${number}`;
   onDragStart?: () => void;
   onDragEnd?: () => void;
@@ -21,6 +22,7 @@ type PlayerFormProps = {
 export function PlayerForm({
   register,
   setValue,
+  control,
   fieldPrefix,
   onDragStart,
   onDragEnd,
@@ -41,7 +43,7 @@ export function PlayerForm({
     <div className="relative">
       {isDragOver && (
         <div
-          className={`absolute right-0 left-0 z-10 h-1 rounded-full bg-blue-500 shadow-lg ${
+          className={`absolute left-0 right-0 z-10 h-1 rounded-full bg-blue-500 shadow-lg ${
             showIndicatorAbove ? '-top-1' : '-bottom-1'
           }`}
         ></div>
@@ -56,7 +58,7 @@ export function PlayerForm({
         onDrop={onDrop}
       >
         <div
-          className="cursor-move self-center rounded-lg bg-gray-200 px-[3px] py-1.5 font-bold text-gray-600 transition-colors hover:bg-gray-300 hover:text-gray-800"
+          className="px-0.75 cursor-move self-end rounded-lg bg-gray-200 py-1.5 font-bold text-gray-600 transition-colors hover:bg-gray-300 hover:text-gray-800"
           title="Drag to reorder"
           aria-label="Drag to reorder"
         >
@@ -69,7 +71,7 @@ export function PlayerForm({
           <input
             id={`team-${fieldPrefix}`}
             type="text"
-            className="rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm transition-all outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+            className="rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             {...register(`${fieldPrefix}.teamName`)}
           />
         </div>
@@ -80,12 +82,17 @@ export function PlayerForm({
           <input
             id={`player-${fieldPrefix}`}
             type="text"
-            className="grow rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm transition-all outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+            className="grow rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             {...register(`${fieldPrefix}.playerName`)}
           />
         </div>
         <div className="flex grow flex-col">
-          <ChampionField register={register} fieldPrefix={fieldPrefix} />
+          <ChampionField
+            register={register}
+            setValue={setValue}
+            control={control}
+            fieldPrefix={fieldPrefix}
+          />
         </div>
         <div className="flex flex-col justify-end">
           <button

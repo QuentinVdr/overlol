@@ -21,7 +21,7 @@ export async function getLatestLolVersion(): Promise<string> {
   const versions = await response.json();
 
   if (!Array.isArray(versions) || typeof versions[0] !== 'string') {
-    throw new Error('Unexpected Data Dragon response shape');
+    throw new TypeError('Unexpected Data Dragon response shape');
   }
 
   return versions[0];
