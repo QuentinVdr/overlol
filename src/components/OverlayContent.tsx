@@ -31,7 +31,11 @@ function PlayerCell({ player, reversed }: Readonly<{ player?: TPlayer; reversed?
       className={`flex min-w-0 items-center gap-1 font-bold text-zinc-50 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] ${reversed ? 'flex-row-reverse' : ''}`}
     >
       {player.championImage && (
-        <img src={player.championImage} alt={player.championName} className="size-8 shrink-0" />
+        <img
+          src={player.championImage}
+          alt={player.championName}
+          className={`size-8 shrink-0 ${player.teamName ? 'border-2 border-yellow-400' : ''}`}
+        />
       )}
       <span
         ref={nameRef}
