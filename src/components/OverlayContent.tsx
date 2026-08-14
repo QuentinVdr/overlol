@@ -1,13 +1,49 @@
 'use client';
 
 import { TOverlay } from '@/types/OverlayType';
+import { TPlayer } from '@/types/PlayerType';
 import { Strings } from '@/utils/stringUtils';
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
-const MAX_WIDTH = 334;
-const MAX_HEIGHT = 219;
-const MIN_FONT_SIZE = 12;
-const MAX_FONT_SIZE = 36;
+const MIN_FONT_SIZE = 8;
+const MAX_FONT_SIZE = 24;
+
+function PlayerCell({ player, reversed }: Readonly<{ player?: TPlayer; reversed?: boolean }>) {
+  const nameRef = useRef<HTMLSpanElement>(null);
+  const [fontSize, setFontSize] = useState(MAX_FONT_SIZE);
+
+  useEffect(() => {
+    const el = nameRef.current;
+    if (!el) return;
+    let size = MAX_FONT_SIZE;
+    el.style.fontSize = size + 'px';
+    while (el.scrollWidth > el.clientWidth && size > MIN_FONT_SIZE) {
+      size -= 1;
+      el.style.fontSize = size + 'px';
+    }
+    setFontSize(size);
+  }, [player?.playerName, player?.teamName]);
+
+  if (!player) return <div />;
+
+  return (
+    <div
+      className={`flex min-w-0 items-center gap-1 font-bold text-zinc-50 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] ${reversed ? 'flex-row-reverse' : ''}`}
+    >
+      {player.championImage && (
+        <img src={player.championImage} alt={player.championName} className="size-8 shrink-0" />
+      )}
+      <span
+        ref={nameRef}
+        style={{ fontSize }}
+        className={`min-w-0 flex-1 text-nowrap ${reversed ? 'text-right' : 'text-left'}`}
+      >
+        {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
+        {player.playerName}
+      </span>
+    </div>
+  );
+}
 
 export default function OverlayContent({
   blueTeam,
@@ -16,80 +52,20 @@ export default function OverlayContent({
   blueTeam: TOverlay['blueTeam'];
   redTeam: TOverlay['redTeam'];
 }>) {
-  const blueRef = useRef<HTMLDivElement>(null);
-  const redRef = useRef<HTMLDivElement>(null);
-
-  // Adjust font size to fit content within container constraints
-  useEffect(() => {
-    if (blueRef.current) {
-      let fontSize = MAX_FONT_SIZE;
-      blueRef.current.style.fontSize = fontSize + 'px';
-      let width = blueRef.current.scrollWidth;
-      let height = blueRef.current.scrollHeight;
-      while ((width > MAX_WIDTH || height > MAX_HEIGHT) && fontSize > MIN_FONT_SIZE) {
-        fontSize -= 1;
-        blueRef.current.style.fontSize = fontSize + 'px';
-        width = blueRef.current.scrollWidth;
-        height = blueRef.current.scrollHeight;
-      }
-    }
-  }, [blueTeam]);
-
-  useEffect(() => {
-    if (redRef.current) {
-      let fontSize = MAX_FONT_SIZE;
-      redRef.current.style.fontSize = fontSize + 'px';
-      let width = redRef.current.scrollWidth;
-      let height = redRef.current.scrollHeight;
-      while ((width > MAX_WIDTH || height > MAX_HEIGHT) && fontSize > MIN_FONT_SIZE) {
-        fontSize -= 1;
-        redRef.current.style.fontSize = fontSize + 'px';
-        width = redRef.current.scrollWidth;
-        height = redRef.current.scrollHeight;
-      }
-    }
-  }, [redTeam]);
+  const isValid = (player: TPlayer) =>
+    Strings.isNotBlank(player.championName) && Strings.isNotBlank(player.playerName);
+  const blue = blueTeam.filter(isValid);
+  const red = redTeam.filter(isValid);
+  const rowCount = Math.max(blue.length, red.length);
 
   return (
-    <div className="absolute bottom-0 right-[254px] flex w-[356px] flex-row gap-0.5 bg-zinc-900/40 p-1 align-bottom backdrop-blur-sm">
-      <div className="flex w-full flex-col gap-1.5">
-        {blueTeam
-          .filter(
-            (player) =>
-              Strings.isNotBlank(player.championName) && Strings.isNotBlank(player.playerName),
-          )
-          .map((player) => (
-            <div
-              key={player.playerName}
-              className="flex flex-nowrap items-center gap-1 text-nowrap font-semibold text-zinc-50"
-            >
-              {player.championImage && (
-                <img src={player.championImage} alt="" className="size-7 rounded" />
-              )}
-              {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
-              {player.playerName}
-            </div>
-          ))}
-      </div>
-      <div className="flex w-full flex-col gap-1.5">
-        {redTeam
-          .filter(
-            (player) =>
-              Strings.isNotBlank(player.championName) && Strings.isNotBlank(player.playerName),
-          )
-          .map((player) => (
-            <div
-              key={player.playerName}
-              className="flex flex-row-reverse flex-nowrap items-center gap-1 text-nowrap font-semibold text-zinc-50"
-            >
-              {player.championImage && (
-                <img src={player.championImage} alt="" className="size-7 rounded" />
-              )}
-              {player.teamName && <span className="uppercase">{player.teamName}&nbsp;</span>}
-              {player.playerName}
-            </div>
-          ))}
-      </div>
+    <div className="rounded-xs absolute bottom-0 right-[264px] grid w-[350px] grid-cols-2 items-center gap-x-2 gap-y-1 border-2 border-solid bg-[radial-gradient(ellipse_at_50%_40%,hsl(217_60%_44%/0.3)_0%,hsl(217_60%_24%/0.5)_55%,hsl(217_65%_16%/0.8)_100%)] p-1 shadow-[0_0_0_1px_rgba(20,15,4,0.55),0_10px_30px_rgba(0,0,0,0.18)] [border-image:linear-gradient(140deg,hsl(42,67%,29%)_0%,hsl(43,59%,59%)_50%,hsl(42,67%,29%)_100%)_1]">
+      {Array.from({ length: rowCount }, (_, i) => (
+        <Fragment key={i}>
+          <PlayerCell player={blue[i]} />
+          <PlayerCell player={red[i]} reversed />
+        </Fragment>
+      ))}
     </div>
   );
 }
