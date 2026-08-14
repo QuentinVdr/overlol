@@ -1,4 +1,5 @@
 import OverlayContent from '@/components/OverlayContent';
+import { kcPlayerNameAndTeamList } from '@/lib/KcPlayerList';
 import { OverlayService } from '@/lib/overlayService';
 import { Great_Vibes } from 'next/font/google';
 import Image from 'next/image';
@@ -24,8 +25,13 @@ export default async function Overlay({ params }: Readonly<{ params: Promise<{ i
   }
 
   const { blueTeam, redTeam, kcPlayerSpec } = overlay.data;
-  const hasSpecPortrait =
+  const isKnownKcPlayer =
     !!kcPlayerSpec &&
+    kcPlayerNameAndTeamList.some(
+      (kc) => kc.name === kcPlayerSpec.name && kc.team === kcPlayerSpec.team,
+    );
+  const hasSpecPortrait =
+    isKnownKcPlayer &&
     fs.existsSync(path.join(process.cwd(), 'public', 'players', `${kcPlayerSpec.name}.png`));
 
   return (
