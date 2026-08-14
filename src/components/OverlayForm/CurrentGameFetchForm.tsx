@@ -102,7 +102,7 @@ export function CurrentGameFetchForm({ setValue }: Readonly<CurrentGameFetchForm
 
   return (
     <form
-      className="flex w-full flex-row items-center gap-4"
+      className="flex flex-row items-center gap-4"
       onSubmit={handleMatchOfSubmit(handleSearchMatchOf)}
     >
       <div className="w-100 flex flex-col">

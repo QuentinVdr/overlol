@@ -3,7 +3,7 @@
 import { kcPlayerNameAndTeamList } from '@/lib/KcPlayerList';
 import { TOverlay } from '@/types/OverlayType';
 import { useEffect } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { CurrentGameFetchForm } from './CurrentGameFetchForm';
 import { PlayersForm } from './PlayersForm/PlayersForm';
 
@@ -18,7 +18,7 @@ export function OverlayForm({
   submitLabel = 'Generate Overlay',
   defaultValues,
 }: Readonly<OverlayFormProps>) {
-  const { register, handleSubmit, setValue, getValues, watch, control } = useForm<TOverlay>({
+  const { register, handleSubmit, setValue, getValues, control } = useForm<TOverlay>({
     defaultValues: {
       ...(defaultValues || {
         blueTeam: Array.from({ length: 5 }, () => ({
@@ -33,19 +33,23 @@ export function OverlayForm({
           championImage: '',
           teamName: '',
         })),
-        kcPlayerSpec: '',
       }),
     },
   });
 
-  const [blueTeam, redTeam, kcPlayerSpec] = watch(['blueTeam', 'redTeam', 'kcPlayerSpec']);
+  // useWatch (not the imperative `watch()`) so nested team-array edits reliably re-render this.
+  const blueTeam = useWatch({ control, name: 'blueTeam' });
+  const redTeam = useWatch({ control, name: 'redTeam' });
+  const kcPlayerSpec = useWatch({ control, name: 'kcPlayerSpec' });
 
   useEffect(() => {
-    if (kcPlayerSpec) return;
-    const match = [...(blueTeam ?? []), ...(redTeam ?? [])].find((player) =>
-      kcPlayerNameAndTeamList.some((kc) => kc.name === player.playerName),
+    const playerNames = new Set(
+      [...(blueTeam ?? []), ...(redTeam ?? [])].map((p) => p.playerName?.toLowerCase()),
     );
-    if (match) setValue('kcPlayerSpec', match.playerName);
+    // Keep the current pick if it's still in the roster; only auto-fill/override otherwise.
+    if (kcPlayerSpec && playerNames.has(kcPlayerSpec.name.toLowerCase())) return;
+    const match = kcPlayerNameAndTeamList.find((kc) => playerNames.has(kc.name.toLowerCase()));
+    if (match) setValue('kcPlayerSpec', match);
   }, [blueTeam, redTeam, kcPlayerSpec, setValue]);
 
   return (
@@ -59,7 +63,11 @@ export function OverlayForm({
           <select
             id="kcPlayerSpec"
             className="rounded-lg border border-gray-300 bg-white px-2 py-1 shadow-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-            {...register('kcPlayerSpec')}
+            value={kcPlayerSpec?.name ?? ''}
+            onChange={(e) => {
+              const selected = kcPlayerNameAndTeamList.find((kc) => kc.name === e.target.value);
+              setValue('kcPlayerSpec', selected, { shouldDirty: true });
+            }}
           >
             <option value="">None</option>
             {kcPlayerNameAndTeamList.map(({ name, team }) => (
