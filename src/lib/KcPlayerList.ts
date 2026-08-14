@@ -1,3 +1,4 @@
+import { TKcPlayer } from '@/types/KcPlayerType';
 import { TRiotAccount } from '@/types/RiotAccountType';
 
 // https://dpm.lol/leaderboards/kc
@@ -41,7 +42,7 @@ export const kcPlayersAccountList: { [key: string]: TRiotAccount[] } = {
   ...kcbsPlayerAccountList,
 };
 
-export const kcPlayerNameAndTeamList: { name: string; team: string }[] = [
+export const kcPlayerNameAndTeamList: TKcPlayer[] = [
   ...Object.keys(kcLecPlayerAccountList).map((name) => ({ name, team: 'KC' })),
   ...Object.keys(kcbPlayerAccountList).map((name) => ({ name, team: 'KCB' })),
   ...Object.keys(kcbsPlayerAccountList).map((name) => ({ name, team: 'KCBS' })),
