@@ -42,7 +42,7 @@ async function getPlayerLeaderboardData(kcPlayer: string): Promise<TPlayerLeader
   for (const playerData of results) {
     const accRegRank = Strings.isBlank(playerData?.regionRank)
       ? Infinity
-      : parseInt(playerData!.regionRank.replaceAll(',', ''));
+      : Number.parseInt(playerData!.regionRank.replaceAll(',', ''));
     if (playerData && (!bestAccount || accRegRank < bestAccountRank)) {
       bestAccount = playerData;
       bestAccountRank = accRegRank;
@@ -108,7 +108,7 @@ const formatRank = (tierString: string): string => {
 
 const REGEX_LADDER_RANK = /Ladder Rank\s*<span[^>]*>([\d,]+)<\/span>/;
 const REGEX_RANK =
-  /<strong[^>]*first-letter:uppercase[^>]*>([^<]+)<\/strong><span[^>]*>([\d,]+)<!--[^>]*-->\s*LP<\/span>/;
+  /<strong class="text-xl">([^<]+)<\/strong><span[^>]*>([\d,]+)<!--[^>]*-->\s*LP<\/span>/;
 
 const extractData = (html: string): { regionRank: string; rank: string; lp: number | null } => {
   const regionRank = REGEX_LADDER_RANK.exec(html)?.[1] ?? '';
@@ -118,7 +118,7 @@ const extractData = (html: string): { regionRank: string; rank: string; lp: numb
     return {
       regionRank,
       rank: formatRank(htmlRankInfo[1]),
-      lp: parseInt(htmlRankInfo[2].replace(/,/g, ''), 10),
+      lp: Number.parseInt(htmlRankInfo[2].replaceAll(',', ''), 10),
     };
   }
 
